@@ -648,7 +648,7 @@
         };
         window.addEventListener('resize', workshopResizeHandler);
 
-        const glbURL = 'https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/ByWQ-uWAlUCyrA';
+        const glbURL = 'assets/models/ovchinnikov_workshop_balanced.glb';
         const loader = new THREE.GLTFLoader();
         loader.setCrossOrigin('anonymous');
 
