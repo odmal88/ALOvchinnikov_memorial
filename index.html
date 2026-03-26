@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- PROTECTED: meta type -->
+    <meta name="type" value="app" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пространство памяти — Мемориальная выставка Л.А. и А.Л. Овчинниковых</title>
+    <meta property="og:title" content="Пространство памяти — Мемориальная выставка Л.А. и А.Л. Овчинниковых">
+    <meta property="og:description" content="Мемориальная выставка произведений Л.А. и А.Л. Овчинниковых: 13–26 апреля 2026, Голубой зал Союза художников, каталог работ, 3D-мастерская, ожившие полотна, цифровой архив.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="nav" id="mainNav">
+        <a href="#/" class="nav-logo" data-route="/">
+            Пространство памяти
+            <span>Выставка Л.А. и А.Л. Овчинниковых</span>
+        </a>
+        <ul class="nav-center">
+            <li><a href="#/" data-route="/">Главная</a></li>
+            <li><a href="#/artist" data-route="/artist">Художник</a></li>
+            <li><a href="#/exhibition" data-route="/exhibition">Выставка</a></li>
+            <li><a href="#/works" data-route="/works">Работы</a></li>
+            <li><a href="#/digital" data-route="/digital">Цифровое пространство</a></li>
+            <li><a href="#/visit" data-route="/visit">Посещение</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="#/visit" class="nav-btn" data-route="/visit">Посещение</a>
+            <button class="nav-burger" id="burgerBtn" aria-label="Меню">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#/" data-route="/" onclick="closeMobile()">Главная</a>
+        <a href="#/artist" data-route="/artist" onclick="closeMobile()">Художник</a>
+        <a href="#/exhibition" data-route="/exhibition" onclick="closeMobile()">Выставка</a>
+        <a href="#/works" data-route="/works" onclick="closeMobile()">Работы</a>
+        <a href="#/digital" data-route="/digital" onclick="closeMobile()">Цифровое пространство</a>
+        <a href="#/visit" data-route="/visit" onclick="closeMobile()">Посещение</a>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PAGE: ГЛАВНАЯ (/) -->
+    <!-- ============================================ -->
+    <div class="page active" id="page-home">
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-texture"></div>
+            <div class="hero-content">
+                <div class="hero-label">Мемориальная выставка</div>
+                <h1>Александр Львович<br><em>Овчинников</em></h1>
+                <div class="hero-subtitle">Пространство памяти</div>
+                <div class="hero-text">Мемориальная выставка произведений Льва Авксентьевича и Александра Львовича Овчинниковых. Русский Север, русский город, история, интерьер, предметный мир.</div>
+                <div class="hero-meta">
+                    <div class="hero-meta-item">
+                        <span class="label">Даты</span>
+                        <span class="value">13–26 апреля 2026</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <span class="label">Место</span>
+                        <span class="value">Голубой зал Союза художников</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <span class="label">Город</span>
+                        <span class="value">Санкт-Петербург</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#/works" data-route="/works" class="btn btn-gold"><i class="fa-solid fa-eye" style="color: inherit;"></i> Смотреть работы</a>
+                    <a href="#/artist" data-route="/artist" class="btn btn-white">О художнике</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-visual-frame">
+                    <div class="hero-visual-inner">
+                        <i class="fa-solid fa-image"></i>
+                        <span>Фрагмент живописи из коллекции</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-scroll">
+                <span>Далее</span>
+                <div class="hero-scroll-line"></div>
+            </div>
+        </section>
+
+        <!-- Краткое введение -->
+        <section class="section-light">
+            <div class="container">
+                <div class="intro-section reveal">
+                    <h2 class="section-title dark">О проекте</h2>
+                    <div class="section-subtitle dark">Выставка, архив, цифровое продолжение</div>
+                    <div class="divider gold" style="margin: 28px auto;"></div>
+                    <p class="section-lead dark" style="max-width: 100%;">Сайт продолжает выставку за пределами зала. Здесь собраны материалы о художнике, коллекция произведений, виртуальный зал и цифровой архив, чтобы раскрыть его наследие как цельный художественный мир.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Краткий блок: Художник -->
+        <section class="section-cool">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-number dark">01</div>
+                    <h2 class="section-title dark">О художнике</h2>
+                    <div class="divider gold"></div>
+                </div>
+                <div class="artist-grid reveal">
+                    <div class="artist-portrait">
+                        <div class="artist-portrait-placeholder">
+                            <i class="fa-solid fa-image-portrait"></i>
+                            <span>Архивный портрет А.Л. Овчинникова</span>
+                        </div>
+                        <div class="artist-portrait-frame"></div>
+                    </div>
+                    <div class="artist-text">
+                        <h3>«Смотреть Овчинникова важно не как художника одной темы, а как мастера большого национального пространства»</h3>
+                        <p>Александр Львович Овчинников — художник, в творчестве которого академическая школа, историческая память и живое чувство национального пространства соединились в цельный художественный мир.</p>
+                        <div class="artist-buttons">
+                            <a href="#/artist" data-route="/artist" class="btn btn-light">Подробнее о художнике</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Краткий блок: Выставка -->
+        <section class="section-dark">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-number light">02</div>
+                    <h2 class="section-title light">О выставке</h2>
+                    <div class="divider gold"></div>
+                </div>
+                <div class="exhibition-content reveal">
+                    <div class="exhibition-text">
+                        <p>Мемориальная выставка приурочена к 70-летию со дня рождения художника. Экспозиция открывает его наследие как цельную художественную систему, где Русский Север остается главной духовной осью.</p>
+                        <a href="#/exhibition" data-route="/exhibition" class="btn btn-gold">Подробнее о выставке</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Избранные работы -->
+        <section class="section-light">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-number dark">03</div>
+                    <h2 class="section-title dark">Избранные работы</h2>
+                    <div class="divider burgundy"></div>
+                    <p class="section-lead dark">Четыре работы для первого знакомства с северной, городской и волжской линиями искусства Овчинникова.</p>
+                </div>
+                <div class="works-grid reveal">
+                    <a class="work-card" href="#/works/severniy-peyzazh" data-route="/works/severniy-peyzazh" style="text-decoration: none;">
+                        <div class="work-image">
+                            <div class="work-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4 style="color: var(--deep-blue);">Северный пейзаж</h4>
+                        <span class="work-meta" style="color: var(--text-muted);">А.Л. Овчинников · 1998 · 80 x 120 см</span>
+                    </div>
+                    <a class="work-card" href="#/works/vecherniy-svet-vologda" data-route="/works/vecherniy-svet-vologda" style="text-decoration: none;">
+                        <div class="work-image">
+                            <div class="work-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4 style="color: var(--deep-blue);">Вечерний свет. Вологда</h4>
+                        <span class="work-meta" style="color: var(--text-muted);">А.Л. Овчинников · 2005 · 60 x 90 см</span>
+                    </div>
+                    <a class="work-card" href="#/works/zimniy-den-v-peterburge" data-route="/works/zimniy-den-v-peterburge" style="text-decoration: none;">
+                        <div class="work-image">
+                            <div class="work-image-inner">
+                                <i class="fa-solid fa-pen-nib" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4 style="color: var(--deep-blue);">Зимний день в Петербурге</h4>
+                        <span class="work-meta" style="color: var(--text-muted);">А.Л. Овчинников · 2010 · 50 x 70 см</span>
+                    </div>
+                    <a class="work-card" href="#/works/nizhegorodskie-dali" data-route="/works/nizhegorodskie-dali" style="text-decoration: none;">
+                        <div class="work-image">
+                            <div class="work-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4 style="color: var(--deep-blue);">Нижегородские дали</h4>
+                        <span class="work-meta" style="color: var(--text-muted);">А.Л. Овчинников · 2012 · 70 x 100 см</span>
+                    </a>
+                </div>
+                <div style="text-align: center; margin-top: 48px;" class="reveal">
+                    <a href="#/works" data-route="/works" class="btn btn-burgundy">Смотреть всю коллекцию</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Краткий блок: Цифровое пространство -->
+        <section class="section-dark">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-number light">04</div>
+                    <h2 class="section-title light">Цифровое пространство</h2>
+                    <div class="divider gold"></div>
+                </div>
+                <div class="digital-blocks reveal">
+                    <div class="digital-block">
+                        <div class="digital-block-icon">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+                        <h4>Виртуальный зал</h4>
+                        <p>Посетите выставку онлайн в формате 360°.</p>
+                        <a href="#/digital" data-route="/digital" class="btn btn-gold">Подробнее</a>
+                    </div>
+                    <a class="digital-block" href="#/digital/animated" data-route="/digital/animated" style="text-decoration: none; color: inherit;">
+                        <div class="digital-block-icon">
+                            <i class="fa-solid fa-image"></i>
+                        </div>
+                        <h4>Ожившие полотна</h4>
+                        <p>Статичные пейзажи обретают движение и звук.</p>
+                        <span class="btn btn-gold">Смотреть</span>
+                    </a>
+                    <a class="digital-block" href="#/digital/workshop" data-route="/digital/workshop" style="text-decoration: none; color: inherit;">
+                        <div class="digital-block-icon">
+                            <i class="fa-solid fa-cube"></i>
+                        </div>
+                        <h4>3D-мастерская</h4>
+                        <p>Виртуальная реконструкция мастерской художника.</p>
+                        <span class="btn btn-gold">Перейти</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- География творчества -->
+        <section class="section-burgundy">
+            <div class="container">
+                <div class="geo-inner reveal">
+                    <div class="geo-text">
+                        <h3>География творчества</h3>
+                        <p>От Русского Севера до Нижнего Новгорода, Васильсурска, Алупки и других удалённых мест — география его искусства показывает художника не одной темы, а большого национального и пространственного диапазона.</p>
+                        <a href="#/artist" data-route="/artist" class="btn btn-white" style="margin-top: 8px;">Изучить географию</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Краткий блок: Посещение -->
+        <section class="section-cool">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-number dark">05</div>
+                    <h2 class="section-title dark">Посещение</h2>
+                    <div class="divider gold"></div>
+                </div>
+                <div class="visit-grid reveal">
+                    <div class="visit-info">
+                        <h3>Голубой зал Союза художников</h3>
+                        <div class="visit-text">13–26 апреля 2026, Санкт-Петербург.<br>Вход свободный.</div>
+                        <div class="visit-buttons">
+                            <a href="#/visit" data-route="/visit" class="btn btn-light">Подробнее о посещении</a>
+                        </div>
+                    </div>
+                    <div class="visit-map">
+                        <div class="visit-map-inner">
+                            <i class="fa-solid fa-map-location-dot" style="color: var(--gold-muted);"></i>
+                            <span style="color: var(--text-light);">Схема расположения</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PAGE: ХУДОЖНИК (/artist) -->
+    <!-- ============================================ -->
+    <div class="page" id="page-artist">
+
+        <div class="page-hero">
+            <div class="hero-texture"></div>
+            <div class="container">
+                <div class="page-hero-label">О художнике</div>
+                <h1>Александр Львович <em>Овчинников</em></h1>
+                <div class="page-hero-subtitle">Личность, школа, семейный контекст, наследие</div>
+            </div>
+        </div>
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <a href="#/" data-route="/">Главная</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <span class="current">Художник</span>
+            </div>
+        </div>
+
+        <!-- Вводный блок -->
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <div class="content-two-col">
+                    <div class="artist-portrait">
+                        <div class="artist-portrait-placeholder">
+                            <i class="fa-solid fa-image-portrait"></i>
+                            <span></span>
+                        </div>
+                        <div class="artist-portrait-frame"></div>
+                    </div>
+                    <div>
+                        <div class="quote">«Смотреть Овчинникова важно не как художника одной темы, а как мастера большого национального пространства»</div>
+                        <p class="dark" style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Александр Львович Овчинников — художник, в творчестве которого академическая школа, историческая память и живое чувство национального пространства соединились в цельный художественный мир. Русский Север составляет центральную и наиболее последовательно разработанную тему его искусства, однако ею его творчество не исчерпывается.</p>
+                        <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Наряду с северным циклом в наследии мастера важное место занимают историческая тема, городской и архитектурный пейзаж, камерный интерьер, предметный мир русской культуры, южные впечатления, графика и дальние художественные маршруты.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Художественный путь -->
+        <section class="content-section bg-light">
+            <div class="content-block reveal">
+                <h2 class="dark">Художественный путь</h2>
+                <div class="divider gold"></div>
+                <div class="content-two-col" style="margin-top: 40px;">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="year">1956</div>
+                            <h4>Рождение</h4>
+                            <p>Родился 26 апреля 1956 года. Рос в семье художника Льва Авксентьевича Овчинникова.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="year">1970-е</div>
+                            <h4>Становление</h4>
+                            <p>Обучение в художественной школе, первые поездки на Русский Север, формирование творческого метода.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="year">1980-е</div>
+                            <h4>Академическая школа</h4>
+                            <p>Институт имени И.Е. Репина. Углублённая работа с историческим пейзажем и архитектурной темой.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="year">1990–2000-е</div>
+                            <h4>Зрелый период</h4>
+                            <p>Масштабные северные циклы, городские серии, волжские и южные впечатления. Линогравюра.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="year">2010-е</div>
+                            <h4>Позднее творчество</h4>
+                            <p>Камерные работы, интерьеры, предметный мир. Осмысление пространства памяти.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Его искусство соединяет эпическое и камерное, декоративное и этюдное, народно-поэтическое и академически выверенное. Поэтому смотреть Овчинникова важно не как художника одной темы, а как мастера большого национального пространства, где Север, русский город, дом, история, вещь и память существуют в единой образной системе.</p>
+                        <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Работа на натуре была для него не этапом подготовки, а самостоятельным творческим актом. Этюды с натуры, выполненные в экспедициях по Русскому Северу, обладают той же степенью завершённости и образной силы, что и большие станковые композиции.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Семейный контекст -->
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <h2 class="dark">Семейный контекст</h2>
+                <div class="subtitle dark">Преемственность поколений</div>
+                <div class="divider gold"></div>
+                <div class="content-narrow" style="margin-top: 32px;">
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Выставка «Пространство памяти» объединяет произведения двух поколений — Льва Авксентьевича и Александра Львовича Овчинниковых. Это не просто семейная преемственность, а передача художественного метода, отношения к натуре и понимания национального пространства.</p>
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Лев Авксентьевич Овчинников — художник старшего поколения, чьё творчество было связано с традицией русского реалистического пейзажа. Его сын продолжил и развил эту линию, придав ей новый масштаб и глубину.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Маршруты -->
+        <section class="content-section bg-burgundy">
+            <div class="content-block reveal">
+                <div class="geo-inner" style="max-width: 100%;">
+                    <div class="geo-text" style="max-width: 100%; text-align: left;">
+                        <h3>География творчества</h3>
+                        <p>От Русского Севера до Нижнего Новгорода, Васильсурска, Алупки и других удалённых мест — география его искусства показывает художника не одной темы, а большого национального и пространственного диапазона.</p>
+                        <p>Каждое место становилось для него не просто мотивом, а пространством, в котором проявлялась историческая и культурная память.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Наследие -->
+        <section class="content-section bg-light">
+            <div class="content-block reveal">
+                <h2 class="dark">Наследие</h2>
+                <div class="divider gold"></div>
+                <div class="content-narrow" style="margin-top: 32px;">
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Наследие Александра Овчинникова — это не только корпус произведений, но и художественный метод, который может быть осмыслен и продолжен. Мастерская художника сохранена как мемориальное пространство. Цифровой архив и виртуальная реконструкция мастерской позволяют познакомиться с его творческим процессом.</p>
+                    <div style="margin-top: 32px; display: flex; gap: 16px; flex-wrap: wrap;">
+                        <a href="#/works" data-route="/works" class="btn btn-burgundy">Смотреть работы</a>
+                        <a href="#/digital/workshop" data-route="/digital/workshop" class="btn btn-light">3D-мастерская</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PAGE: ВЫСТАВКА (/exhibition) -->
+    <!-- ============================================ -->
+    <div class="page" id="page-exhibition">
+
+        <div class="page-hero">
+            <div class="hero-texture"></div>
+            <div class="container">
+                <div class="page-hero-label">О выставке</div>
+                <h1>Пространство <em>памяти</em></h1>
+                <div class="page-hero-subtitle">Мемориальная выставка произведений Льва Авксентьевича и Александра Львовича Овчинниковых</div>
+            </div>
+        </div>
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <a href="#/" data-route="/">Главная</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <span class="current">Выставка</span>
+            </div>
+        </div>
+
+        <!-- Концепция -->
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <h2 class="dark">Концепция</h2>
+                <div class="subtitle dark">Почему эта выставка важна</div>
+                <div class="divider gold"></div>
+                <div class="content-narrow" style="margin-top: 32px;">
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Мемориальная выставка, проходящая с 13 по 26 апреля 2026 года в Голубом зале Союза художников, приурочена к 70-летию со дня рождения художника и завершается 26 апреля — в день, когда Александру Овчинникову исполнилось бы 70 лет.</p>
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Эта экспозиция открывает его наследие не как набор отдельных произведений, а как цельную художественную систему. Русский Север в ней остается главной духовной осью, но рядом с ним выступают и другие значимые линии: исторические замыслы, русский город, волжские и южные впечатления, архитектурная память, камерный интерьер, народный предметный мир и линогравюра.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Смысл названия -->
+        <section class="content-section bg-light">
+            <div class="content-block reveal">
+                <h2 class="dark">Смысл названия</h2>
+                <div class="divider gold"></div>
+                <div class="content-narrow" style="margin-top: 32px;">
+                    <div class="quote">«Пространство памяти» — это не метафора утраты, а способ описания того, как устроено искусство Овчинникова: через пространство — пейзаж, дом, город, мастерскую — проступает память.</div>
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Название объединяет два ключевых понятия: пространство как предмет живописи и память как её содержание. Для Овчинникова каждое место — Север, Петербург, Волга — было не просто мотивом, а вместилищем культурной и личной памяти.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Структура экспозиции -->
+        <section class="content-section bg-dark">
+            <div class="content-block reveal">
+                <h2 class="light">Структура экспозиции</h2>
+                <div class="subtitle light">Тематические разделы выставки</div>
+                <div class="divider gold"></div>
+                <div class="expo-sections" style="margin-top: 40px;">
+                    <div class="expo-card">
+                        <div class="expo-card-num">Раздел I</div>
+                        <h4>Русский Север</h4>
+                        <p>Центральная ось выставки. Деревянное зодчество, северные пейзажи, этюды с натуры, большие станковые композиции.</p>
+                    </div>
+                    <div class="expo-card">
+                        <div class="expo-card-num">Раздел II</div>
+                        <h4>Русский город</h4>
+                        <p>Петербург, Вологда, Нижний Новгород. Архитектурный пейзаж, городская память, свет и пространство улиц.</p>
+                    </div>
+                    <div class="expo-card">
+                        <div class="expo-card-num">Раздел III</div>
+                        <h4>Историческая тема</h4>
+                        <p>Исторические замыслы, связь с национальной традицией, осмысление прошлого через живопись.</p>
+                    </div>
+                    <div class="expo-card">
+                        <div class="expo-card-num">Раздел IV</div>
+                        <h4>Камерный мир</h4>
+                        <p>Интерьеры, предметный мир, натюрморты. Тихая, сосредоточенная линия творчества.</p>
+                    </div>
+                    <div class="expo-card">
+                        <div class="expo-card-num">Раздел V</div>
+                        <h4>Волга и Юг</h4>
+                        <p>Волжские и южные впечатления. Васильсурск, Алупка, дальние маршруты.</p>
+                    </div>
+                    <div class="expo-card">
+                        <div class="expo-card-num">Раздел VI</div>
+                        <h4>Графика</h4>
+                        <p>Линогравюра, рисунок, графические серии. Отдельная грань мастерства.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Память, пространство, преемственность -->
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <h2 class="dark">Память, пространство, преемственность</h2>
+                <div class="divider gold"></div>
+                <div class="content-narrow" style="margin-top: 32px;">
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Выставка объединяет произведения двух поколений — отца и сына. Это позволяет увидеть не только индивидуальный путь каждого, но и преемственность метода, отношения к натуре и понимания национального пространства.</p>
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Пространство памяти здесь — это и физическое пространство зала, и пространство культурной памяти, которое раскрывается через произведения.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Связь физической и цифровой частей -->
+        <section class="content-section bg-light">
+            <div class="content-block reveal">
+                <h2 class="dark">Физическое и цифровое</h2>
+                <div class="subtitle dark">Выставка продолжается в цифровом пространстве</div>
+                <div class="divider gold"></div>
+                <div class="content-narrow" style="margin-top: 32px;">
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">В цифровом пространстве выставка получает продолжение: виртуальный зал, карта маршрутов и избранные «ожившие» произведения расширяют реальную экспозицию, помогая увидеть масштаб художника в тех связях, которые трудно полностью раскрыть в камерном пространстве зала.</p>
+                    <div style="margin-top: 32px; display: flex; gap: 16px; flex-wrap: wrap;">
+                        <a href="#/digital" data-route="/digital" class="btn btn-light">Цифровое пространство</a>
+                        <a href="#/digital/workshop" data-route="/digital/workshop" class="btn btn-burgundy">3D-мастерская</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PAGE: РАБОТЫ (/works) -->
+    <!-- ============================================ -->
+    <div class="page" id="page-works">
+
+        <div class="page-hero">
+            <div class="hero-texture"></div>
+            <div class="container">
+                <div class="page-hero-label">Коллекция</div>
+                <h1>Работы</h1>
+                <div class="page-hero-subtitle">Каталог произведений Александра Львовича Овчинникова</div>
+            </div>
+        </div>
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <a href="#/" data-route="/">Главная</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <span class="current">Работы</span>
+            </div>
+        </div>
+
+        <section class="content-section bg-cool">
+            <div class="content-block">
+                <!-- Фильтры -->
+                <div class="works-filters reveal">
+                    <button class="filter-btn active" data-filter="all">Все работы</button>
+                    <button class="filter-btn" data-filter="north">Русский Север</button>
+                    <button class="filter-btn" data-filter="city">Русский город</button>
+                    <button class="filter-btn" data-filter="history">Историческая тема</button>
+                    <button class="filter-btn" data-filter="interior">Камерный мир</button>
+                    <button class="filter-btn" data-filter="volga">Волга и Юг</button>
+                    <button class="filter-btn" data-filter="graphics">Графика</button>
+                </div>
+
+                <!-- Каталог -->
+                <div class="catalog-grid reveal" id="catalogGrid">
+                    <div class="catalog-card" data-category="north" onclick="navigateTo('/works/severniy-peyzazh')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Северный пейзаж</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">1998</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="city" onclick="navigateTo('/works/vecherniy-svet-vologda')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Вечерний свет. Вологда</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2005</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="city" onclick="navigateTo('/works/zimniy-den-v-peterburge')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-pen-nib" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Зимний день в Петербурге</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2010</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Картон, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="volga" onclick="navigateTo('/works/nizhegorodskie-dali')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Нижегородские дали</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2012</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="north" onclick="navigateTo('/works/derevyannaya-tserkov')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Деревянная церковь</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2001</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="interior" onclick="navigateTo('/works/masterskaya-utro')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Мастерская. Утро</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2014</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="graphics" onclick="navigateTo('/works/severnaya-derevnya-gravyura')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-pen-nib" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Северная деревня</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2003</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Линогравюра</div>
+                    </div>
+                    <div class="catalog-card" data-category="history" onclick="navigateTo('/works/istoricheskiy-motiv')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Исторический мотив</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2008</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="volga" onclick="navigateTo('/works/vasilsursk')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Васильсурск</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2007</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PAGE: ОТДЕЛЬНАЯ РАБОТА (/works/:slug) -->
+    <!-- ============================================ -->
+    <div class="page" id="page-work-single">
+
+        <div class="page-hero" id="workSingleHero">
+            <div class="hero-texture"></div>
+            <div class="container">
+                <div class="page-hero-label" id="workHeroCategory">Коллекция</div>
+                <h1 id="workHeroTitle">Название <em>работы</em></h1>
+                <div class="page-hero-subtitle" id="workHeroMeta">Александр Львович Овчинников</div>
+            </div>
+        </div>
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <a href="#/" data-route="/">Главная</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <a href="#/works" data-route="/works">Работы</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <span class="current" id="workBreadcrumbTitle">Название работы</span>
+            </div>
+        </div>
+
+        <section class="content-section bg-cool">
+            <div class="work-single">
+                <div class="work-single-grid reveal">
+                    <div class="work-single-image">
+                        <div class="work-single-image-inner">
+                            <i class="fa-solid fa-image" id="workSingleIcon"></i>
+                        </div>
+                    </div>
+                    <div class="work-single-info">
+                        <h1 id="workTitle">Название работы</h1>
+                        <div class="work-author" id="workAuthor">Александр Львович Овчинников</div>
+                        <dl class="work-details">
+                            <dt>Год</dt>
+                            <dd id="workYear">—</dd>
+                            <dt>Техника</dt>
+                            <dd id="workTechnique">—</dd>
+                            <dt>Размер</dt>
+                            <dd id="workSize">—</dd>
+                            <dt>Раздел</dt>
+                            <dd id="workSection">—</dd>
+                            <dt>Коллекция</dt>
+                            <dd id="workCollection">—</dd>
+                        </dl>
+                        <div class="work-single-description" id="workDescription">
+                            Описание произведения.
+                        </div>
+                        <div class="work-single-links" id="workLinks"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Навигация между работами -->
+        <section class="content-section bg-light">
+            <div class="content-block">
+                <div class="work-nav reveal">
+                    <a href="#" id="workPrev" style="visibility: hidden;"><i class="fa-solid fa-arrow-left" style="color: inherit;"></i> Предыдущая</a>
+                    <a href="#/works" data-route="/works" style="color: var(--text-muted); text-decoration: none; font-family: var(--sans); font-size: 13px;"><i class="fa-solid fa-grid-2" style="color: var(--text-muted); margin-right: 6px;"></i>Все работы</a>
+                    <a href="#" id="workNext" style="visibility: hidden;">Следующая <i class="fa-solid fa-arrow-right" style="color: inherit;"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Связанные работы -->
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <h3 class="dark" style="margin-bottom: 32px;">Другие работы из этого раздела</h3>
+                <div class="works-grid" id="workRelated" style="grid-template-columns: repeat(3, 1fr);">
+                    <!-- Заполняется динамически -->
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PAGE: ЦИФРОВОЕ ПРОСТРАНСТВО (/digital) -->
+    <!-- ============================================ -->
+    <div class="page" id="page-digital">
+
+        <div class="page-hero">
+            <div class="hero-texture"></div>
+            <div class="container">
+                <div class="page-hero-label">Цифровое пространство</div>
+                <h1>Виртуальное <em>продолжение</em> выставки</h1>
+                <div class="page-hero-subtitle">Виртуальный зал, ожившие полотна, 3D-мастерская, цифровой архив</div>
+            </div>
+        </div>
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <a href="#/" data-route="/">Главная</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <span class="current">Цифровое пространство</span>
+            </div>
+        </div>
+
+        <!-- Вводный блок -->
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <div class="content-narrow">
+                    <h2 class="dark">О цифровом пространстве</h2>
+                    <div class="subtitle dark">Роль цифрового слоя</div>
+                    <div class="divider gold"></div>
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8; margin-top: 24px;">Виртуальное пространство выставки не дублирует реальный зал, а расширяет его. Здесь собраны те смысловые связи, которые трудно полностью показать в камерном физическом пространстве: переходы между Севером и городом, между историей и интерьером, между крупной композицией и этюдом, между живописью и графикой.</p>
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Виртуальный зал позволяет увидеть творчество Овчинникова как цельную систему, где пейзаж, дом, архитектура, предмет и память существуют в едином художественном поле. Цифровое пространство — не замена физической выставке, а её продолжение для тех, кто не может приехать, и углубление для тех, кто уже побывал в зале.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Направления -->
+        <section class="content-section bg-light">
+            <div class="content-block reveal">
+                <h2 class="dark">Направления</h2>
+                <div class="divider gold"></div>
+                <div class="info-cards" style="margin-top: 40px;">
+                    <div class="info-card">
+                        <div class="info-card-icon">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+                        <h4>Виртуальный зал</h4>
+                        <p>Посетите выставку онлайн в формате 360°. Виртуальный зал воспроизводит пространство Голубого зала Союза художников с размещёнными произведениями. Раздел в подготовке.</p>
+                    </div>
+                    <a class="info-card" href="#/digital/animated" data-route="/digital/animated" style="cursor: pointer; text-decoration: none; color: inherit;">
+                        <div class="info-card-icon">
+                            <i class="fa-solid fa-image"></i>
+                        </div>
+                        <h4>Ожившие полотна</h4>
+                        <p>Уникальный цифровой слой выставки, где статичные пейзажи обретают движение и звук. Избранные произведения получают анимированную версию.</p>
+                    </div>
+                    <a class="info-card" href="#/digital/workshop" data-route="/digital/workshop" style="cursor: pointer; text-decoration: none; color: inherit;">
+                        <div class="info-card-icon">
+                            <i class="fa-solid fa-cube"></i>
+                        </div>
+                        <h4>3D-мастерская</h4>
+                        <p>Виртуальная реконструкция мастерской художника. Пройдите по пространству, где рождались произведения, рассмотрите инструменты и незавершённые работы.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Цифровой архив -->
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <h2 class="dark">Цифровой архив</h2>
+                <div class="subtitle dark">Раздел в разработке</div>
+                <div class="divider gold"></div>
+                <div class="content-narrow" style="margin-top: 32px;">
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Цифровой архив будет включать документы, фотографии, письма и другие материалы, связанные с жизнью и творчеством художника. Этот раздел находится в стадии подготовки и будет дополняться по мере оцифровки материалов.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PAGE: 3D-МАСТЕРСКАЯ (/digital/workshop) -->
+    <!-- ============================================ -->
+    <div class="page" id="page-workshop">
+
+        <div class="page-hero">
+            <div class="hero-texture"></div>
+            <div class="container">
+                <div class="page-hero-label">Цифровое пространство</div>
+                <h1>3D-<em>мастерская</em></h1>
+                <div class="page-hero-subtitle">Виртуальная реконструкция мастерской Александра Львовича Овчинникова</div>
+            </div>
+        </div>
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <a href="#/" data-route="/">Главная</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <a href="#/digital" data-route="/digital">Цифровое пространство</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <span class="current">3D-мастерская</span>
+            </div>
+        </div>
+
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <div class="content-narrow">
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Мастерская для Овчинникова — не просто рабочее место. Это пространство, накопившее десятилетия работы: этюды с натуры, незавершённые холсты, стопки альбомов, инструменты граверного дела. Мы сохранили мастерскую как мемориальное и живое пространство — место, которое продолжает рассказывать о том, как художник думал и работал.</p>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section bg-dark">
+            <div class="content-block reveal">
+                <div class="workshop-viewer" id="workshopViewer">
+                    <div class="workshop-loader" id="workshopLoader">
+                        <div class="workshop-loader-spinner"></div>
+                        <div class="workshop-loader-text">Загрузка 3D-мастерской...</div>
+                        <div class="workshop-loader-progress">
+                            <div class="workshop-loader-bar" id="workshopProgressBar"></div>
+                        </div>
+                    </div>
+                    <div class="workshop-error" id="workshopError">
+                        <i class="fa-solid fa-cube" style="font-size: 48px; color: var(--gold-muted); opacity: 0.3; margin-bottom: 20px;"></i>
+                        <div style="font-family: var(--serif); font-size: 20px; color: #fff; margin-bottom: 8px; opacity: 0.7;">Мастерская временно недоступна</div>
+                        <div class="workshop-error-text">Не удалось загрузить 3D-модель мастерской. Это может быть связано с подключением к интернету или временной недоступностью сервера.</div>
+                        <button class="btn btn-gold" onclick="initWorkshop3D()" style="margin-top: 24px;">
+                            <i class="fa-solid fa-rotate-right" style="color: inherit;"></i> Повторить загрузку
+                        </button>
+                        <div style="font-family: var(--sans); font-size: 12px; color: var(--text-light); opacity: 0.35; margin-top: 16px;">Виртуальная реконструкция мастерской А.Л. Овчинникова</div>
+                    </div>
+                    <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 0; pointer-events: none;">
+                        <i class="fa-solid fa-cube" style="font-size: 64px; color: var(--gold-muted); opacity: 0.12; margin-bottom: 12px;"></i>
+                        <span style="font-family: var(--sans); font-size: 11px; color: var(--text-light); opacity: 0.2; letter-spacing: 0.1em; text-transform: uppercase;">Виртуальная мастерская</span>
+                    </div>
+                    <div class="workshop-controls-hint" id="workshopHint">
+                        <span><i class="fa-solid fa-computer-mouse"></i> Вращение</span>
+                        <span><i class="fa-solid fa-arrows-up-down"></i> Масштаб</span>
+                        <span><i class="fa-solid fa-hand"></i> Перемещение (ПКМ)</span>
+                    </div>
+                </div>
+                <div class="content-narrow">
+                    <h3 class="light">Навигация по мастерской</h3>
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-light); line-height: 1.8;">Используйте мышь для вращения камеры. Нажимайте на выделенные объекты, чтобы узнать больше о каждом предмете. Мастерская содержит этюды, инструменты, незавершённые работы и личные вещи художника.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <h2 class="dark">Что можно увидеть</h2>
+                <div class="divider gold"></div>
+                <div class="info-cards" style="margin-top: 32px;">
+                    <div class="info-card">
+                        <div class="info-card-icon"><i class="fa-solid fa-paintbrush"></i></div>
+                        <h4>Инструменты</h4>
+                        <p>Кисти, мастихины, инструменты граверного дела — всё, чем работал художник.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-icon"><i class="fa-solid fa-image"></i></div>
+                        <h4>Незавершённые работы</h4>
+                        <p>Холсты на мольберте, этюды, подготовительные рисунки — процесс работы.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <h4>Альбомы и архив</h4>
+                        <p>Стопки альбомов, фотографии, документы — память мастерской.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PAGE: ОЖИВШИЕ РАБОТЫ (/digital/animated) -->
+    <!-- ============================================ -->
+    <div class="page" id="page-animated">
+
+        <div class="page-hero">
+            <div class="hero-texture"></div>
+            <div class="container">
+                <div class="page-hero-label">Цифровое пространство</div>
+                <h1>Ожившие <em>полотна</em></h1>
+                <div class="page-hero-subtitle">Статичные пейзажи обретают движение и звук</div>
+            </div>
+        </div>
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <a href="#/" data-route="/">Главная</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <a href="#/digital" data-route="/digital">Цифровое пространство</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <span class="current">Ожившие полотна</span>
+            </div>
+        </div>
+
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <div class="content-narrow">
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Уникальный цифровой слой выставки. Избранные произведения Александра Овчинникова получают анимированную версию: статичные пейзажи обретают движение облаков, колыхание воды, смену света. Звуковое сопровождение дополняет визуальный ряд.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section bg-dark">
+            <div class="content-block reveal">
+                <div class="animated-grid">
+                    <div class="animated-card">
+                        <div class="animated-card-preview">
+                            <i class="fa-solid fa-play-circle"></i>
+                        </div>
+                        <div class="animated-card-info">
+                            <h4>Северный пейзаж</h4>
+                            <p>Движение облаков над деревянной церковью, тихий северный ветер, колыхание травы.</p>
+                            <a href="#/works/severniy-peyzazh" data-route="/works/severniy-peyzazh" class="btn btn-gold" style="font-size: 12px; padding: 10px 20px;">Оригинал</a>
+                        </div>
+                    </div>
+                    <div class="animated-card">
+                        <div class="animated-card-preview">
+                            <i class="fa-solid fa-play-circle"></i>
+                        </div>
+                        <div class="animated-card-info">
+                            <h4>Вечерний свет. Вологда</h4>
+                            <p>Закатный свет медленно перемещается по фасадам, тени удлиняются, город затихает.</p>
+                            <a href="#/works/vecherniy-svet-vologda" data-route="/works/vecherniy-svet-vologda" class="btn btn-gold" style="font-size: 12px; padding: 10px 20px;">Оригинал</a>
+                        </div>
+                    </div>
+                    <div class="animated-card">
+                        <div class="animated-card-preview">
+                            <i class="fa-solid fa-play-circle"></i>
+                        </div>
+                        <div class="animated-card-info">
+                            <h4>Васильсурск</h4>
+                            <p>Волжская вода, отражения, далёкий берег. Медленное течение реки и смена освещения.</p>
+                            <a href="#/works/vasilsursk" data-route="/works/vasilsursk" class="btn btn-gold" style="font-size: 12px; padding: 10px 20px;">Оригинал</a>
+                        </div>
+                    </div>
+                    <div class="animated-card">
+                        <div class="animated-card-preview">
+                            <i class="fa-solid fa-play-circle"></i>
+                        </div>
+                        <div class="animated-card-info">
+                            <h4>Деревянная церковь</h4>
+                            <p>Снегопад, дым из трубы, тёплый свет в окне. Зимний Север оживает.</p>
+                            <a href="#/works/derevyannaya-tserkov" data-route="/works/derevyannaya-tserkov" class="btn btn-gold" style="font-size: 12px; padding: 10px 20px;">Оригинал</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PAGE: ПОСЕЩЕНИЕ (/visit) -->
+    <!-- ============================================ -->
+    <div class="page" id="page-visit">
+
+        <div class="page-hero">
+            <div class="hero-texture"></div>
+            <div class="container">
+                <div class="page-hero-label">Практическая информация</div>
+                <h1>Посещение</h1>
+                <div class="page-hero-subtitle">Голубой зал Союза художников, Санкт-Петербург</div>
+            </div>
+        </div>
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <a href="#/" data-route="/">Главная</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <span class="current">Посещение</span>
+            </div>
+        </div>
+
+        <!-- Основная информация -->
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <div class="visit-details-grid">
+                    <div>
+                        <div class="visit-detail-block">
+                            <h4>Даты проведения</h4>
+                            <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.75;">13–26 апреля 2026 года</p>
+                        </div>
+                        <div class="visit-detail-block">
+                            <h4>Место</h4>
+                            <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.75;">Голубой зал Союза художников<br>Большая Морская ул., д. 38<br>Санкт-Петербург</p>
+                        </div>
+                        <div class="visit-detail-block">
+                            <h4>Часы работы</h4>
+                            <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.75;">Ежедневно с 11:00 до 19:00<br>Касса закрывается в 18:30<br>Понедельник — выходной</p>
+                        </div>
+                        <div class="visit-detail-block">
+                            <h4>Стоимость</h4>
+                            <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.75;">Вход свободный</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="visit-detail-block">
+                            <h4>Как добраться</h4>
+                            <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.75;">Метро: «Адмиралтейская» (5 мин. пешком)<br>Автобус: маршруты 3, 22, 27 (остановка «Исаакиевская площадь»)</p>
+                        </div>
+                        <div class="visit-detail-block">
+                            <h4>Контакты</h4>
+                            <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.75;">Подробная контактная информация будет опубликована дополнительно.</p>
+                        </div>
+                        <div class="visit-detail-block">
+                            <h4>Условия посещения</h4>
+                            <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.75;">Фотосъёмка без вспышки разрешена.<br>Групповые экскурсии — по предварительной записи.<br>Выставка доступна для маломобильных посетителей.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Карта -->
+        <section class="content-section bg-light">
+            <div class="content-block reveal">
+                <h2 class="dark">На карте</h2>
+                <div class="divider gold"></div>
+                <div class="visit-map" style="margin-top: 32px; aspect-ratio: 16/7;">
+                    <div class="visit-map-inner">
+                        <i class="fa-solid fa-map-location-dot" style="color: var(--gold-muted);"></i>
+                        <span style="color: var(--text-light);">Схема расположения · Большая Морская ул., д. 38</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Цифровая версия -->
+        <section class="content-section bg-cool">
+            <div class="content-block reveal" style="text-align: center; max-width: 640px; margin: 0 auto;">
+                <h2 class="dark" style="font-size: 28px;">Не можете приехать?</h2>
+                <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8; margin-top: 16px;">Посетите выставку в цифровом пространстве: виртуальный зал, ожившие полотна и 3D-мастерская доступны онлайн.</p>
+                <div style="margin-top: 28px;">
+                    <a href="#/digital" data-route="/digital" class="btn btn-burgundy">Цифровое пространство</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer (общий для всех страниц) -->
+    <footer class="footer" id="siteFooter" style="position: relative; z-index: 1;">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <h3>Пространство памяти</h3>
+                    <div class="footer-brand-sub">Мемориальная выставка Л.А. и А.Л. Овчинниковых</div>
+                    <p>13–26 апреля 2026<br>Голубой зал Союза художников, Санкт-Петербург</p>
+                </div>
+                <div class="footer-nav">
+                    <a href="#/artist" data-route="/artist">Художник</a>
+                    <a href="#/exhibition" data-route="/exhibition">Выставка</a>
+                    <a href="#/works" data-route="/works">Работы</a>
+                    <a href="#/digital" data-route="/digital">Цифровое пространство</a>
+                    <a href="#/digital/workshop" data-route="/digital/workshop">3D-мастерская</a>
+                    <a href="#/visit" data-route="/visit">Посещение</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copy">&copy; 2026 Наследники А.Л. Овчинникова. Все права на изображения принадлежат правообладателям.</div>
+                <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;" style="font-size: 13px; color: var(--text-light); text-decoration: none; opacity: 0.5; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'">
+                    <i class="fa-solid fa-arrow-up" style="color: var(--text-light); margin-right: 6px;"></i>Наверх
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
