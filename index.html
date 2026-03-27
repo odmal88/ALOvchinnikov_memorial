@@ -28,7 +28,6 @@
             <span>Выставка Л.А. и А.Л. Овчинниковых</span>
         </a>
         <ul class="nav-center">
-            <li><a href="#/" data-route="/">Главная</a></li>
             <li><a href="#/artist" data-route="/artist">Художник</a></li>
             <li><a href="#/exhibition" data-route="/exhibition">Выставка</a></li>
             <li><a href="#/works" data-route="/works">Работы</a></li>
@@ -45,7 +44,6 @@
 
     <!-- Mobile menu -->
     <div class="mobile-menu" id="mobileMenu">
-        <a href="#/" data-route="/" onclick="closeMobile()">Главная</a>
         <a href="#/artist" data-route="/artist" onclick="closeMobile()">Художник</a>
         <a href="#/exhibition" data-route="/exhibition" onclick="closeMobile()">Выставка</a>
         <a href="#/works" data-route="/works" onclick="closeMobile()">Работы</a>
@@ -82,7 +80,7 @@
                 </div>
                 <div class="hero-buttons">
                     <a href="#/works" data-route="/works" class="btn btn-gold"><i class="fa-solid fa-eye" style="color: inherit;"></i> Смотреть работы</a>
-                    <a href="#/artist" data-route="/artist" class="btn btn-white">О художнике</a>
+                    <a href="#/visit" data-route="/visit" class="btn btn-white">Посещение</a>
                 </div>
             </div>
             <div class="hero-visual">
@@ -93,58 +91,27 @@
                     </div>
                 </div>
             </div>
+<div class="hero-scroll">
+    <a href="#home-intro" class="hero-scroll-btn" aria-label="Перейти к следующему разделу">
+        Далее
+    </a>
+    <div class="hero-scroll-line" aria-hidden="true"></div>
+</div>
         </section>
 
         <!-- Краткое введение -->
-        <section class="section-light">
+        <section class="section-light" id="home-intro">
             <div class="container">
                 <div class="intro-section reveal">
                     <h2 class="section-title dark">О проекте</h2>
                     <div class="section-subtitle dark">Выставка, архив, цифровое продолжение</div>
                     <div class="divider gold" style="margin: 28px auto;"></div>
-                    <p class="section-lead dark" style="max-width: 100%;">Сайт продолжает выставку за пределами зала. Здесь собраны материалы о художнике, коллекция произведений, виртуальный зал и цифровой архив, чтобы раскрыть его наследие как цельный художественный мир.</p>
+<p class="section-lead dark" style="max-width: 100%;">
+    Сайт продолжает выставку за пределами зала. Здесь собраны материалы о художнике, коллекция произведений, виртуальный зал и цифровой архив. Экспозиция, приуроченная к 70-летию со дня рождения художника, раскрывает его наследие как цельный художественный мир.
+</p>
                 </div>
             </div>
         </section>
-
-        <!-- Краткий блок: Художник -->
-        <section class="section-cool">
-            <div class="container">
-                <div class="section-header reveal">
-                    <h2 class="section-title dark">О художнике</h2>
-                    <div class="divider gold"></div>
-                </div>
-                <div class="artist-grid reveal">
-                    <div class="artist-portrait">
-                        <div class="artist-portrait-placeholder">
-                            <i class="fa-solid fa-image-portrait"></i>
-                            <span>Архивный портрет А.Л. Овчинникова</span>
-                        </div>
-                        <div class="artist-portrait-frame"></div>
-                    </div>
-                    <div class="artist-text">
-                        <h3>«Смотреть Овчинникова важно не как художника одной темы, а как мастера большого национального пространства»</h3>
-                        <p>Александр Львович Овчинников — художник, в творчестве которого академическая школа, историческая память и живое чувство национального пространства соединились в цельный художественный мир.</p>
-                        <div class="artist-buttons">
-                            <a href="#/artist" data-route="/artist" class="btn btn-light">Подробнее о художнике</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Краткий блок: Выставка -->
-        <section class="section-dark">
-            <div class="container">
-                <div class="section-header reveal">
-                    <h2 class="section-title light">О выставке</h2>
-                    <div class="divider gold"></div>
-                </div>
-                <div class="exhibition-content reveal">
-                    <div class="exhibition-text">
-                        <p>Мемориальная выставка приурочена к 70-летию со дня рождения художника. Экспозиция открывает его наследие как цельную художественную систему, где Русский Север остается главной духовной осью.</p>
-                        <a href="#/exhibition" data-route="/exhibition" class="btn btn-gold">Подробнее о выставке</a>
-                    </div>
                 </div>
             </div>
         </section>
@@ -196,13 +163,39 @@
                     </a>
                 </div>
                 <div style="text-align: center; margin-top: 48px;" class="reveal">
-                    <a href="#/works" data-route="/works" class="btn btn-burgundy">Смотреть всю коллекцию</a>
+                    <a href="#/works" data-route="/works" class="btn btn-burgundy">Все работы</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Краткий блок: Художник -->
+        <section class="section-cool">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2 class="section-title dark">О художнике</h2>
+                    <div class="divider gold"></div>
+                </div>
+                <div class="artist-grid reveal">
+                    <div class="artist-portrait">
+                        <div class="artist-portrait-placeholder">
+                            <i class="fa-solid fa-image-portrait"></i>
+                            <span>Архивный портрет А.Л. Овчинникова</span>
+                        </div>
+                        <div class="artist-portrait-frame"></div>
+                    </div>
+                    <div class="artist-text">
+                        <h3>«Смотреть Овчинникова важно не как художника одной темы, а как мастера большого национального пространства»</h3>
+                        <p>Короткое досье о художнике, его маршрутах, методе, семейном контексте и мастерской как пространстве памяти.</p>
+                        <div class="artist-buttons">
+                            <a href="#/artist" data-route="/artist" class="btn btn-light">Подробнее о художнике</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Краткий блок: Цифровое пространство -->
-        <section class="section-dark">
+        <section class="section-burgundy">
             <div class="container">
                 <div class="section-header reveal">
                     <h2 class="section-title light">Цифровое пространство</h2>
@@ -214,16 +207,16 @@
                             <i class="fa-solid fa-building-columns"></i>
                         </div>
                         <h4>Виртуальный зал</h4>
-                        <p>Посетите выставку онлайн в формате 360°.</p>
+<p>Экспозиция онлайн в формате виртуального зала.</p>
                         <a href="#/digital" data-route="/digital" class="btn btn-white">Подробнее</a>
                     </div>
-                    <a class="digital-block" href="#/digital/animated" data-route="/digital/animated" style="text-decoration: none; color: inherit;">
+                    <a class="digital-block" href="#/digital" data-route="/digital" style="text-decoration: none; color: inherit;">
                         <div class="digital-block-icon">
-                            <i class="fa-solid fa-image"></i>
+                            <i class="fa-solid fa-route"></i>
                         </div>
-                        <h4>Ожившие полотна</h4>
-                        <p>Статичные пейзажи обретают движение и звук.</p>
-                        <span class="btn btn-white">Смотреть</span>
+<h4>Маршрут и карта</h4>
+<p>Маршрут художника и карта ключевых пространств его искусства.</p>
+<span class="btn btn-white">Открыть</span>
                     </a>
                     <a class="digital-block" href="#/digital/workshop" data-route="/digital/workshop" style="text-decoration: none; color: inherit;">
                         <div class="digital-block-icon">
@@ -237,30 +230,17 @@
             </div>
         </section>
 
-        <!-- География творчества -->
-        <section class="section-burgundy">
-            <div class="container">
-                <div class="geo-inner reveal">
-                    <div class="geo-text">
-                        <h3>География творчества</h3>
-                        <p>От Русского Севера до Нижнего Новгорода, Васильсурска, Алупки и других удалённых мест — география его искусства показывает художника не одной темы, а большого национального и пространственного диапазона.</p>
-                        <a href="#/artist" data-route="/artist" class="btn btn-white" style="margin-top: 8px;">Изучить географию</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Краткий блок: Посещение -->
         <section class="section-cool">
             <div class="container">
-                <div class="section-header reveal">
-                    <h2 class="section-title dark">Посещение</h2>
-                    <div class="divider gold"></div>
-                </div>
+<div class="section-header">
+    <h2 class="section-title dark">Посещение</h2>
+    <div class="divider gold" aria-hidden="true"></div>
+</div>
                 <div class="visit-grid reveal">
                     <div class="visit-info">
                         <h3>Голубой зал Союза художников</h3>
-                        <div class="visit-text">13–26 апреля 2026, Санкт-Петербург.<br>Вход свободный.</div>
+                        <div class="visit-text">13–26 апреля 2026<br>Санкт-Петербург, Большая Морская ул., д. 38<br>Вход свободный.</div>
                         <div class="visit-buttons">
                             <a href="#/visit" data-route="/visit" class="btn btn-light">Подробнее о посещении</a>
                         </div>
@@ -271,6 +251,17 @@
                             <span style="color: var(--text-light);">Схема расположения</span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-light">
+            <div class="container">
+                <div class="intro-section reveal" style="max-width: 680px;">
+                    <h2 class="section-title dark">Книга памяти</h2>
+                    <div class="divider gold" style="margin: 20px auto;"></div>
+                    <p class="section-lead dark" style="max-width: 100%;">Материалы памяти, архивные свидетельства и цифровые следы выставки будут дополняться по мере оцифровки и каталогизации.</p>
+                    <a href="#/digital" data-route="/digital" class="btn btn-light" style="margin-top: 12px;">Открыть раздел</a>
                 </div>
             </div>
         </section>
