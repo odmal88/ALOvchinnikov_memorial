@@ -166,7 +166,7 @@
                         </div>
                         <h4 style="color: var(--deep-blue);">Северный пейзаж</h4>
                         <span class="work-meta" style="color: var(--text-muted);">А.Л. Овчинников · 1998 · 80 x 120 см</span>
-                    </div>
+                    </a>
                     <a class="work-card" href="#/works/vecherniy-svet-vologda" data-route="/works/vecherniy-svet-vologda" style="text-decoration: none;">
                         <div class="work-image">
                             <div class="work-image-inner">
@@ -175,7 +175,7 @@
                         </div>
                         <h4 style="color: var(--deep-blue);">Вечерний свет. Вологда</h4>
                         <span class="work-meta" style="color: var(--text-muted);">А.Л. Овчинников · 2005 · 60 x 90 см</span>
-                    </div>
+                    </a>
                     <a class="work-card" href="#/works/zimniy-den-v-peterburge" data-route="/works/zimniy-den-v-peterburge" style="text-decoration: none;">
                         <div class="work-image">
                             <div class="work-image-inner">
@@ -184,7 +184,7 @@
                         </div>
                         <h4 style="color: var(--deep-blue);">Зимний день в Петербурге</h4>
                         <span class="work-meta" style="color: var(--text-muted);">А.Л. Овчинников · 2010 · 50 x 70 см</span>
-                    </div>
+                    </a>
                     <a class="work-card" href="#/works/nizhegorodskie-dali" data-route="/works/nizhegorodskie-dali" style="text-decoration: none;">
                         <div class="work-image">
                             <div class="work-image-inner">
@@ -287,7 +287,7 @@
             <div class="container">
                 <div class="page-hero-label">О художнике</div>
                 <h1>Александр Львович <em>Овчинников</em></h1>
-                <div class="page-hero-subtitle">Личность, школа, семейный контекст, наследие</div>
+                <div class="page-hero-subtitle">Досье выставки: художественный путь, география, метод, семейная преемственность и архив</div>
             </div>
         </div>
 
@@ -299,104 +299,240 @@
             </div>
         </div>
 
-        <!-- Вводный блок -->
-        <section class="content-section bg-cool">
-            <div class="content-block reveal">
-                <div class="content-two-col">
-                    <div class="artist-portrait">
-                        <div class="artist-portrait-placeholder">
-                            <i class="fa-solid fa-image-portrait"></i>
-                            <span>Архивный портрет</span>
-                        </div>
-                        <div class="artist-portrait-frame"></div>
+<section class="content-section bg-cool" id="artist-intro">
+    <div class="content-block reveal artist-dossier-layout">
+        <aside class="artist-toc" aria-label="Оглавление страницы художника">
+            <h3>Содержание</h3>
+            <button type="button" onclick="document.getElementById('artist-life-geo').scrollIntoView({behavior:'smooth', block:'start'});">Жизнь и география</button>
+            <button type="button" onclick="document.getElementById('artist-north').scrollIntoView({behavior:'smooth', block:'start'});">Русский Север</button>
+            <button type="button" onclick="document.getElementById('artist-method').scrollIntoView({behavior:'smooth', block:'start'});">Как он работал</button>
+            <button type="button" onclick="document.getElementById('artist-index').scrollIntoView({behavior:'smooth', block:'start'});">Круг мотивов</button>
+            <button type="button" onclick="document.getElementById('artist-family').scrollIntoView({behavior:'smooth', block:'start'});">Отец и сын</button>
+            <button type="button" onclick="document.getElementById('artist-archive').scrollIntoView({behavior:'smooth', block:'start'});">Архивный кабинет</button>
+            <button type="button" onclick="document.getElementById('artist-workshop').scrollIntoView({behavior:'smooth', block:'start'});">Мастерская</button>
+            <button type="button" onclick="document.getElementById('artist-etude').scrollIntoView({behavior:'smooth', block:'start'});">Незавершённое и этюдное</button>
+            <button type="button" onclick="document.getElementById('artist-legacy').scrollIntoView({behavior:'smooth', block:'start'});">Наследие</button>
+        </aside>
+
+        <div class="artist-intro-main">
+            <div class="artist-intro-headline">
+                «Смотреть Овчинникова важно не как художника одной темы, а как мастера большого национального пространства»
+            </div>
+
+            <div class="artist-intro-grid">
+                <div class="artist-portrait">
+                    <div class="artist-portrait-placeholder">
+                        <i class="fa-solid fa-image-portrait"></i>
+                        <span>Архивный портрет</span>
                     </div>
-                    <div>
-                        <div class="quote">«Смотреть Овчинникова важно не как художника одной темы, а как мастера большого национального пространства»</div>
-                        <p class="dark" style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Александр Львович Овчинников — художник, в творчестве которого академическая школа, историческая память и живое чувство национального пространства соединились в цельный художественный мир. Русский Север составляет центральную и наиболее последовательно разработанную тему его искусства, однако ею его творчество не исчерпывается.</p>
-                        <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Наряду с северным циклом в наследии мастера важное место занимают историческая тема, городской и архитектурный пейзаж, камерный интерьер, предметный мир русской культуры, южные впечатления, графика и дальние художественные маршруты.</p>
-                    </a>
+                    <div class="artist-portrait-frame"></div>
+                </div>
+
+                <div class="artist-intro-text">
+                    <p>Александр Львович Овчинников — художник, в творчестве которого академическая школа, историческая память и живое чувство национального пространства соединились в цельный художественный мир. Русский Север составляет центральную и наиболее последовательно разработанную тему его искусства, однако ею его творчество не исчерпывается.</p>
+                    <p>Наряду с северным циклом в наследии мастера важное место занимают историческая тема, городской и архитектурный пейзаж, камерный интерьер, предметный мир русской культуры, южные впечатления, графика и дальние художественные маршруты.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Художественный путь -->
-        <section class="content-section bg-light">
+        <section class="content-section bg-light" id="artist-life-geo">
             <div class="content-block reveal">
-                <h2 class="dark">Художественный путь</h2>
+                <h2 class="dark">Жизнь и география</h2>
+                <div class="subtitle dark">Художественный путь и маршруты как единая линия</div>
                 <div class="divider gold"></div>
-                <div class="content-two-col" style="margin-top: 40px;">
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="year">1956</div>
-                            <h4>Рождение</h4>
-                            <p>Родился 26 апреля 1956 года. Рос в семье художника Льва Авксентьевича Овчинникова.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="year">1970-е</div>
-                            <h4>Становление</h4>
-                            <p>Обучение в художественной школе, первые поездки на Русский Север, формирование творческого метода.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="year">1980-е</div>
-                            <h4>Академическая школа</h4>
-                            <p>Институт имени И.Е. Репина. Углублённая работа с историческим пейзажем и архитектурной темой.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="year">1990–2000-е</div>
-                            <h4>Зрелый период</h4>
-                            <p>Масштабные северные циклы, городские серии, волжские и южные впечатления. Линогравюра.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="year">2010-е</div>
-                            <h4>Позднее творчество</h4>
-                            <p>Камерные работы, интерьеры, предметный мир. Осмысление пространства памяти.</p>
+                <div class="artist-life-geo-grid" style="margin-top: 40px;">
+                    <div class="artist-module">
+                        <h3 class="dark">Хронология</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="year">1956</div>
+                                <h4>Рождение</h4>
+                                <p>Родился 26 апреля 1956 года. Рос в семье художника Льва Авксентьевича Овчинникова.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="year">1970-е</div>
+                                <h4>Становление</h4>
+                                <p>Обучение в художественной школе, первые поездки на Русский Север, формирование творческого метода.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="year">1980-е</div>
+                                <h4>Академическая школа</h4>
+                                <p>Институт имени И.Е. Репина. Углублённая работа с историческим пейзажем и архитектурной темой.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="year">1990–2000-е</div>
+                                <h4>Зрелый период</h4>
+                                <p>Масштабные северные циклы, городские серии, волжские и южные впечатления. Линогравюра.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="year">2010-е</div>
+                                <h4>Позднее творчество</h4>
+                                <p>Камерные работы, интерьеры, предметный мир. Осмысление пространства памяти.</p>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Его искусство соединяет эпическое и камерное, декоративное и этюдное, народно-поэтическое и академически выверенное. Поэтому смотреть Овчинникова важно не как художника одной темы, а как мастера большого национального пространства, где Север, русский город, дом, история, вещь и память существуют в единой образной системе.</p>
-                        <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Работа на натуре была для него не этапом подготовки, а самостоятельным творческим актом. Этюды с натуры, выполненные в экспедициях по Русскому Северу, обладают той же степенью завершённости и образной силы, что и большие станковые композиции.</p>
+                    <div class="artist-module">
+                        <h3 class="dark">География творчества</h3>
+                        <p class="dark">От Русского Севера до Нижнего Новгорода, Васильсурска, Алупки и других удалённых мест — география его искусства показывает художника не одной темы, а большого национального и пространственного диапазона.</p>
+                        <p class="dark">Каждое место становилось для него не просто мотивом, а пространством, в котором проявлялась историческая и культурная память.</p>
+                        <div class="artist-map-placeholder">
+                            <i class="fa-solid fa-map"></i>
+                            <span>Карта маршрутов художника</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Семейный контекст -->
-        <section class="content-section bg-cool">
+        <section class="content-section bg-cool" id="artist-north">
             <div class="content-block reveal">
-                <h2 class="dark">Семейный контекст</h2>
-                <div class="subtitle dark">Преемственность поколений</div>
+                <h2 class="dark">Русский Север</h2>
+                <div class="subtitle dark">Главная духовная ось творчества</div>
                 <div class="divider gold"></div>
-                <div class="content-narrow" style="margin-top: 32px;">
-                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Выставка «Пространство памяти» объединяет произведения двух поколений — Льва Авксентьевича и Александра Львовича Овчинниковых. Это не просто семейная преемственность, а передача художественного метода, отношения к натуре и понимания национального пространства.</p>
-                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Лев Авксентьевич Овчинников — художник старшего поколения, чьё творчество было связано с традицией русского реалистического пейзажа. Его сын продолжил и развил эту линию, придав ей новый масштаб и глубину.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Маршруты -->
-        <section class="content-section bg-burgundy">
-            <div class="content-block reveal">
-                <div class="geo-inner" style="max-width: 100%;">
-                    <div class="geo-text" style="max-width: 100%; text-align: left;">
-                        <h3>География творчества</h3>
-                        <p>От Русского Севера до Нижнего Новгорода, Васильсурска, Алупки и других удалённых мест — география его искусства показывает художника не одной темы, а большого национального и пространственного диапазона.</p>
-                        <p>Каждое место становилось для него не просто мотивом, а пространством, в котором проявлялась историческая и культурная память.</p>
+                <div class="artist-focus-grid" style="margin-top: 36px;">
+                    <div>
+                        <p class="dark">Его искусство соединяет эпическое и камерное, декоративное и этюдное, народно-поэтическое и академически выверенное. Поэтому смотреть Овчинникова важно не как художника одной темы, а как мастера большого национального пространства, где Север, русский город, дом, история, вещь и память существуют в единой образной системе.</p>
+                        <p class="dark">Работа на натуре была для него не этапом подготовки, а самостоятельным творческим актом. Этюды с натуры, выполненные в экспедициях по Русскому Северу, обладают той же степенью завершённости и образной силы, что и большие станковые композиции.</p>
+                    </div>
+                    <div class="artist-focus-card">
+                        <div class="artist-focus-image">
+                            <i class="fa-solid fa-mountain-sun"></i>
+                            <span>Фокусный мотив северного цикла</span>
+                        </div>
+                        <h4>Работа в фокусе</h4>
+                        <p>Северный пейзаж в этом разделе понимается как пространство памяти, в котором натура, история и архитектура соединяются в едином образе.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Наследие -->
-        <section class="content-section bg-light">
+        <section class="content-section bg-light" id="artist-method">
+            <div class="content-block reveal">
+                <h2 class="dark">Как он работал</h2>
+                <div class="subtitle dark">Процесс: от натуры к завершённой форме</div>
+                <div class="divider gold"></div>
+                <div class="artist-method-grid" style="margin-top: 36px;">
+                    <article class="artist-method-item">
+                        <h4>Натура</h4>
+                        <p>Полевые поездки и живое наблюдение оставались постоянной опорой его метода.</p>
+                    </article>
+                    <article class="artist-method-item">
+                        <h4>Этюд</h4>
+                        <p>Этюд рассматривался как самостоятельный художественный акт, а не только подготовка.</p>
+                    </article>
+                    <article class="artist-method-item">
+                        <h4>Мастерская</h4>
+                        <p>Материал натуры проходил через мастерскую как пространство медленного анализа и сборки композиции.</p>
+                    </article>
+                    <article class="artist-method-item">
+                        <h4>Завершённая работа</h4>
+                        <p>Большая форма сохраняла точность натурного наблюдения, но расширялась до исторического масштаба.</p>
+                    </article>
+                    <article class="artist-method-item">
+                        <h4>Графика</h4>
+                        <p>Линогравюра и рисунок развивали ту же образную систему в иной пластике и ритме.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section bg-cool" id="artist-index">
+            <div class="content-block reveal">
+                <h2 class="dark">Круг мотивов</h2>
+                <div class="subtitle dark">Тематический индекс</div>
+                <div class="divider gold"></div>
+                <div class="artist-index-list" style="margin-top: 32px;">
+                    <span>Русский Север</span>
+                    <span>Русский город</span>
+                    <span>Историческая тема</span>
+                    <span>Интерьер</span>
+                    <span>Предметный мир</span>
+                    <span>Волга и Юг</span>
+                    <span>Графика</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section bg-light" id="artist-family">
+            <div class="content-block reveal">
+                <h2 class="dark">Отец и сын</h2>
+                <div class="subtitle dark">Семейный контекст как диптих</div>
+                <div class="divider gold"></div>
+                <div class="artist-diptych" style="margin-top: 36px;">
+                    <article class="artist-diptych-card">
+                        <h4>Лев Авксентьевич Овчинников</h4>
+                        <p>Художник старшего поколения, чьё творчество было связано с традицией русского реалистического пейзажа.</p>
+                        <ul>
+                            <li>Передаётся: школа, отношение к натуре, культурная память пейзажа.</li>
+                            <li>Линия основы: дисциплина формы и реалистическая традиция.</li>
+                        </ul>
+                    </article>
+                    <article class="artist-diptych-card">
+                        <h4>Александр Львович Овчинников</h4>
+                        <p>Продолжил и развил семейную линию, придав ей новый масштаб и пространственную глубину.</p>
+                        <ul>
+                            <li>Меняется: диапазон маршрутов, тематическая широта, акцент на пространстве памяти.</li>
+                            <li>Самостоятельность: расширение темы от Севера к городу, истории, интерьеру, графике.</li>
+                        </ul>
+                    </article>
+                </div>
+                <p class="dark" style="margin-top: 28px;">Выставка «Пространство памяти» объединяет произведения двух поколений — Льва Авксентьевича и Александра Львовича Овчинниковых. Это не просто семейная преемственность, а передача художественного метода, отношения к натуре и понимания национального пространства.</p>
+            </div>
+        </section>
+
+        <section class="content-section bg-cool" id="artist-archive">
+            <div class="content-block reveal">
+                <h2 class="dark">Архивный кабинет</h2>
+                <div class="subtitle dark">Рабочий архив художника</div>
+                <div class="divider gold"></div>
+                <div class="artist-archive-grid" style="margin-top: 32px;">
+                    <div class="artist-archive-item"><i class="fa-solid fa-file-lines"></i><span>Документы</span></div>
+                    <div class="artist-archive-item"><i class="fa-solid fa-camera"></i><span>Фотографии</span></div>
+                    <div class="artist-archive-item"><i class="fa-solid fa-book"></i><span>Записные книжки</span></div>
+                    <div class="artist-archive-item"><i class="fa-solid fa-envelope-open-text"></i><span>Письма</span></div>
+                    <div class="artist-archive-item"><i class="fa-solid fa-layer-group"></i><span>Листы и эскизы</span></div>
+                    <div class="artist-archive-item"><i class="fa-solid fa-box-archive"></i><span>Рабочие материалы</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section bg-light" id="artist-workshop">
+            <div class="content-block reveal">
+                <h2 class="dark">Мастерская как автопортрет</h2>
+                <div class="divider gold"></div>
+                <div class="artist-workshop-entry">
+                    <p class="dark">Мастерская художника сохранена как мемориальное пространство. В её устройстве читается биография метода: натурные этюды, рабочие состояния, инструменты и материалы складываются в автопортрет художника, созданный не словами, а вещами и следами работы.</p>
+                    <a href="#/digital/workshop" data-route="/digital/workshop" class="btn btn-light">Перейти в 3D-мастерскую</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section bg-cool" id="artist-etude">
+            <div class="content-block reveal">
+                <h2 class="dark">Незавершённое и этюдное</h2>
+                <div class="subtitle dark">Рабочие состояния как часть наследия</div>
+                <div class="divider gold"></div>
+                <div class="artist-etude-note">
+                    <p class="dark">Незавершённые вещи, этюды и промежуточные состояния показывают живой ход работы: как формируется композиция, как уточняется цветовая среда, как меняется масштаб замысла от листа к большому полотну.</p>
+                    <p class="dark">Этот слой важен не меньше завершённых произведений, поскольку позволяет увидеть внутреннюю лабораторию художника и ритм его мышления.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section bg-light" id="artist-legacy">
             <div class="content-block reveal">
                 <h2 class="dark">Наследие</h2>
                 <div class="divider gold"></div>
                 <div class="content-narrow" style="margin-top: 32px;">
-                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Наследие Александра Овчинникова — это не только корпус произведений, но и художественный метод, который может быть осмыслен и продолжен. Мастерская художника сохранена как мемориальное пространство. Цифровой архив и виртуальная реконструкция мастерской позволяют познакомиться с его творческим процессом.</p>
-                    <div style="margin-top: 32px; display: flex; gap: 16px; flex-wrap: wrap;">
-                        <a href="#/works" data-route="/works" class="btn btn-burgundy">Смотреть работы</a>
-                        <a href="#/digital/workshop" data-route="/digital/workshop" class="btn btn-light">3D-мастерская</a>
-                    </div>
+                    <p>Наследие Александра Овчинникова — это не только корпус произведений, но и художественный метод, который может быть осмыслен и продолжен.</p>
+                    <p>Сегодня память о художнике поддерживается в нескольких взаимосвязанных формах: выставочная работа, сохранение мастерской, каталогизация произведений, цифровой архив и виртуальная реконструкция пространства мастерской.</p>
                 </div>
             </div>
         </section>
