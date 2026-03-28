@@ -91,10 +91,12 @@
                     </div>
                 </div>
             </div>
-            <div class="hero-scroll" aria-hidden="true">
-                <button type="button" class="hero-scroll-btn" onclick="document.getElementById('home-intro').scrollIntoView({behavior:'smooth', block:'start'});">Далее</button>
-                <div class="hero-scroll-line"></div>
-            </div>
+<div class="hero-scroll">
+    <a href="#home-intro" class="hero-scroll-btn" aria-label="Перейти к следующему разделу">
+        Далее
+    </a>
+    <div class="hero-scroll-line" aria-hidden="true"></div>
+</div>
         </section>
 
         <!-- Краткое введение -->
@@ -104,7 +106,12 @@
                     <h2 class="section-title dark">О проекте</h2>
                     <div class="section-subtitle dark">Выставка, архив, цифровое продолжение</div>
                     <div class="divider gold" style="margin: 28px auto;"></div>
-                    <p class="section-lead dark" style="max-width: 100%;">Сайт продолжает выставку за пределами зала. Здесь собраны материалы о художнике, коллекция произведений, виртуальный зал и цифровой архив, чтобы раскрыть его наследие как цельный художественный мир. Экспозиция приурочена к 70-летию со дня рождения художника и показывает его искусство как единую художественную систему.</p>
+<p class="section-lead dark" style="max-width: 100%;">
+    Сайт продолжает выставку за пределами зала. Здесь собраны материалы о художнике, коллекция произведений, виртуальный зал и цифровой архив. Экспозиция, приуроченная к 70-летию со дня рождения художника, раскрывает его наследие как цельный художественный мир.
+</p>
+                </div>
+            </div>
+        </section>
                 </div>
             </div>
         </section>
@@ -200,16 +207,16 @@
                             <i class="fa-solid fa-building-columns"></i>
                         </div>
                         <h4>Виртуальный зал</h4>
-                        <p>Экспозиция онлайн в формате цифрового зала.</p>
+<p>Экспозиция онлайн в формате виртуального зала.</p>
                         <a href="#/digital" data-route="/digital" class="btn btn-white">Подробнее</a>
                     </div>
                     <a class="digital-block" href="#/digital" data-route="/digital" style="text-decoration: none; color: inherit;">
                         <div class="digital-block-icon">
                             <i class="fa-solid fa-route"></i>
                         </div>
-                        <h4>Маршрут и карта</h4>
-                        <p>Маршруты художника и карта пространств его искусства.</p>
-                        <span class="btn btn-white">Открыть</span>
+<h4>Маршрут и карта</h4>
+<p>Маршрут художника и карта ключевых пространств его искусства.</p>
+<span class="btn btn-white">Открыть</span>
                     </a>
                     <a class="digital-block" href="#/digital/workshop" data-route="/digital/workshop" style="text-decoration: none; color: inherit;">
                         <div class="digital-block-icon">
@@ -226,6 +233,10 @@
         <!-- Краткий блок: Посещение -->
         <section class="section-cool">
             <div class="container">
+<div class="section-header">
+    <h2 class="section-title dark">Посещение</h2>
+    <div class="divider gold" aria-hidden="true"></div>
+</div>
                 <div class="visit-grid reveal">
                     <div class="visit-info">
                         <h3>Голубой зал Союза художников</h3>
@@ -279,33 +290,43 @@
             </div>
         </div>
 
-        <section class="content-section bg-cool" id="artist-intro">
-            <div class="content-block reveal artist-dossier-layout">
-                <aside class="artist-toc" aria-label="Оглавление страницы художника">
-                    <h3>Содержание</h3>
-                    <button type="button" onclick="document.getElementById('artist-life-geo').scrollIntoView({behavior:'smooth', block:'start'});">Жизнь и география</button>
-                    <button type="button" onclick="document.getElementById('artist-north').scrollIntoView({behavior:'smooth', block:'start'});">Русский Север</button>
-                    <button type="button" onclick="document.getElementById('artist-method').scrollIntoView({behavior:'smooth', block:'start'});">Как он работал</button>
-                    <button type="button" onclick="document.getElementById('artist-index').scrollIntoView({behavior:'smooth', block:'start'});">Круг мотивов</button>
-                    <button type="button" onclick="document.getElementById('artist-family').scrollIntoView({behavior:'smooth', block:'start'});">Отец и сын</button>
-                    <button type="button" onclick="document.getElementById('artist-archive').scrollIntoView({behavior:'smooth', block:'start'});">Архивный кабинет</button>
-                    <button type="button" onclick="document.getElementById('artist-workshop').scrollIntoView({behavior:'smooth', block:'start'});">Мастерская</button>
-                    <button type="button" onclick="document.getElementById('artist-etude').scrollIntoView({behavior:'smooth', block:'start'});">Незавершённое и этюдное</button>
-                    <button type="button" onclick="document.getElementById('artist-legacy').scrollIntoView({behavior:'smooth', block:'start'});">Наследие</button>
-                </aside>
-                <div class="artist-intro-main">
-                    <div class="artist-intro-headline">«Смотреть Овчинникова важно не как художника одной темы, а как мастера большого национального пространства»</div>
-                    <div class="artist-intro-grid">
-                        <div class="artist-portrait">
-                            <div class="artist-portrait-placeholder">
-                                <i class="fa-solid fa-image-portrait"></i>
-                                <span>Архивный портрет</span>
-                            </div>
-                            <div class="artist-portrait-frame"></div>
-                        </div>
-                        <div class="artist-intro-text">
-                            <p>Александр Львович Овчинников — художник, в творчестве которого академическая школа, историческая память и живое чувство национального пространства соединились в цельный художественный мир. Русский Север составляет центральную и наиболее последовательно разработанную тему его искусства, однако ею его творчество не исчерпывается.</p>
-                            <p>Наряду с северным циклом в наследии мастера важное место занимают историческая тема, городской и архитектурный пейзаж, камерный интерьер, предметный мир русской культуры, южные впечатления, графика и дальние художественные маршруты.</p>
+<section class="content-section bg-cool" id="artist-intro">
+    <div class="content-block reveal artist-dossier-layout">
+        <aside class="artist-toc" aria-label="Оглавление страницы художника">
+            <h3>Содержание</h3>
+            <button type="button" onclick="document.getElementById('artist-life-geo').scrollIntoView({behavior:'smooth', block:'start'});">Жизнь и география</button>
+            <button type="button" onclick="document.getElementById('artist-north').scrollIntoView({behavior:'smooth', block:'start'});">Русский Север</button>
+            <button type="button" onclick="document.getElementById('artist-method').scrollIntoView({behavior:'smooth', block:'start'});">Как он работал</button>
+            <button type="button" onclick="document.getElementById('artist-index').scrollIntoView({behavior:'smooth', block:'start'});">Круг мотивов</button>
+            <button type="button" onclick="document.getElementById('artist-family').scrollIntoView({behavior:'smooth', block:'start'});">Отец и сын</button>
+            <button type="button" onclick="document.getElementById('artist-archive').scrollIntoView({behavior:'smooth', block:'start'});">Архивный кабинет</button>
+            <button type="button" onclick="document.getElementById('artist-workshop').scrollIntoView({behavior:'smooth', block:'start'});">Мастерская</button>
+            <button type="button" onclick="document.getElementById('artist-etude').scrollIntoView({behavior:'smooth', block:'start'});">Незавершённое и этюдное</button>
+            <button type="button" onclick="document.getElementById('artist-legacy').scrollIntoView({behavior:'smooth', block:'start'});">Наследие</button>
+        </aside>
+
+        <div class="artist-intro-main">
+            <div class="artist-intro-headline">
+                «Смотреть Овчинникова важно не как художника одной темы, а как мастера большого национального пространства»
+            </div>
+
+            <div class="artist-intro-grid">
+                <div class="artist-portrait">
+                    <div class="artist-portrait-placeholder">
+                        <i class="fa-solid fa-image-portrait"></i>
+                        <span>Архивный портрет</span>
+                    </div>
+                    <div class="artist-portrait-frame"></div>
+                </div>
+
+                <div class="artist-intro-text">
+                    <p>Александр Львович Овчинников — художник, в творчестве которого академическая школа, историческая память и живое чувство национального пространства соединились в цельный художественный мир. Русский Север составляет центральную и наиболее последовательно разработанную тему его искусства, однако ею его творчество не исчерпывается.</p>
+                    <p>Наряду с северным циклом в наследии мастера важное место занимают историческая тема, городской и архитектурный пейзаж, камерный интерьер, предметный мир русской культуры, южные впечатления, графика и дальние художественные маршруты.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
                         </div>
                     </div>
                 </div>
