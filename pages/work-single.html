@@ -1,0 +1,77 @@
+    <div class="page" id="page-work-single">
+
+        <div class="page-hero" id="workSingleHero">
+            <div class="hero-texture"></div>
+            <div class="container">
+                <div class="page-hero-label" id="workHeroCategory">Коллекция</div>
+                <h1 id="workHeroTitle">Название <em>работы</em></h1>
+                <div class="page-hero-subtitle" id="workHeroMeta">Александр Львович Овчинников</div>
+            </div>
+        </div>
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <a href="#/" data-route="/">Главная</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <a href="#/works" data-route="/works">Работы</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <span class="current" id="workBreadcrumbTitle">Название работы</span>
+            </div>
+        </div>
+
+        <section class="content-section bg-cool">
+            <div class="work-single">
+                <div class="work-single-grid reveal">
+                    <div class="work-single-image">
+                        <div class="work-single-image-inner">
+                            <i class="fa-solid fa-image" id="workSingleIcon"></i>
+                            <span>Произведение из коллекции</span>
+                        </div>
+                    </div>
+                    <div class="work-single-info">
+                        <h1 id="workTitle">Название работы</h1>
+                        <div class="work-author" id="workAuthor">Александр Львович Овчинников</div>
+                        <dl class="work-details">
+                            <dt>Год</dt>
+                            <dd id="workYear">—</dd>
+                            <dt>Техника</dt>
+                            <dd id="workTechnique">—</dd>
+                            <dt>Размер</dt>
+                            <dd id="workSize">—</dd>
+                            <dt>Раздел</dt>
+                            <dd id="workSection">—</dd>
+                            <dt>Коллекция</dt>
+                            <dd id="workCollection">—</dd>
+                        </dl>
+                        <div class="work-single-description" id="workDescription">
+                            Описание произведения.
+                        </div>
+                        <div class="work-single-links" id="workLinks"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Навигация между работами -->
+        <section class="content-section bg-light">
+            <div class="content-block">
+                <div class="work-nav reveal">
+                    <a href="#" id="workPrev" style="visibility: hidden;"><i class="fa-solid fa-arrow-left" style="color: inherit;"></i> Предыдущая</a>
+                    <a href="#/works" data-route="/works" style="color: var(--text-muted); text-decoration: none; font-family: var(--sans); font-size: 13px;"><i class="fa-solid fa-grid-2" style="color: var(--text-muted); margin-right: 6px;"></i>Все работы</a>
+                    <a href="#" id="workNext" style="visibility: hidden;">Следующая <i class="fa-solid fa-arrow-right" style="color: inherit;"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Связанные работы -->
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <h3 class="dark" style="margin-bottom: 32px;">Другие работы из этого раздела</h3>
+                <div class="works-grid" id="workRelated" style="grid-template-columns: repeat(3, 1fr);">
+                    <!-- Заполняется динамически -->
+                </div>
+            </div>
+        </section>
+
+    </div>
+

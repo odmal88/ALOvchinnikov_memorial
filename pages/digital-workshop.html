@@ -1,0 +1,92 @@
+    <div class="page" id="page-workshop">
+
+        <div class="page-hero">
+            <div class="hero-texture"></div>
+            <div class="container">
+                <div class="page-hero-label">Цифровое пространство</div>
+                <h1>3D-<em>мастерская</em></h1>
+                <div class="page-hero-subtitle">Виртуальная реконструкция мастерской Александра Львовича Овчинникова</div>
+            </div>
+        </div>
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <a href="#/" data-route="/">Главная</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <a href="#/digital" data-route="/digital">Цифровое пространство</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <span class="current">3D-мастерская</span>
+            </div>
+        </div>
+
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <div class="content-narrow">
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">Мастерская для Овчинникова — не просто рабочее место. Это пространство, накопившее десятилетия работы: этюды с натуры, незавершённые холсты, стопки альбомов, инструменты граверного дела. Мы сохранили мастерскую как мемориальное и живое пространство — место, которое продолжает рассказывать о том, как художник думал и работал.</p>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section bg-dark">
+            <div class="content-block reveal">
+                <div class="workshop-viewer" id="workshopViewer">
+                    <div class="workshop-loader" id="workshopLoader">
+                        <div class="workshop-loader-spinner"></div>
+                        <div class="workshop-loader-text">Загрузка 3D-мастерской...</div>
+                        <div class="workshop-loader-progress">
+                            <div class="workshop-loader-bar" id="workshopProgressBar"></div>
+                        </div>
+                    </div>
+                    <div class="workshop-error" id="workshopError">
+                        <i class="fa-solid fa-cube" style="font-size: 48px; color: var(--gold-muted); opacity: 0.3; margin-bottom: 20px;"></i>
+                        <div style="font-family: var(--serif); font-size: 20px; color: #fff; margin-bottom: 8px; opacity: 0.7;">Мастерская временно недоступна</div>
+                        <div class="workshop-error-text">Не удалось загрузить 3D-модель мастерской. Это может быть связано с подключением к интернету или временной недоступностью сервера.</div>
+                        <button class="btn btn-gold" onclick="initWorkshop3D()" style="margin-top: 24px;">
+                            <i class="fa-solid fa-rotate-right" style="color: inherit;"></i> Повторить загрузку
+                        </button>
+                        <div style="font-family: var(--sans); font-size: 12px; color: var(--text-light); opacity: 0.35; margin-top: 16px;">Виртуальная реконструкция мастерской А.Л. Овчинникова</div>
+                    </div>
+                    <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 0; pointer-events: none;">
+                        <i class="fa-solid fa-cube" style="font-size: 64px; color: var(--gold-muted); opacity: 0.12; margin-bottom: 12px;"></i>
+                        <span style="font-family: var(--sans); font-size: 11px; color: var(--text-light); opacity: 0.2; letter-spacing: 0.1em; text-transform: uppercase;">Виртуальная мастерская</span>
+                    </div>
+                    <div class="workshop-controls-hint" id="workshopHint">
+                        <span><i class="fa-solid fa-computer-mouse"></i> Вращение</span>
+                        <span><i class="fa-solid fa-arrows-up-down"></i> Масштаб</span>
+                        <span><i class="fa-solid fa-hand"></i> Перемещение (ПКМ)</span>
+                    </div>
+                </div>
+                <div class="content-narrow">
+                    <h3 class="light">Навигация по мастерской</h3>
+                    <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-light); line-height: 1.8;">Используйте мышь для вращения камеры. Нажимайте на выделенные объекты, чтобы узнать больше о каждом предмете. Мастерская содержит этюды, инструменты, незавершённые работы и личные вещи художника.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section bg-cool">
+            <div class="content-block reveal">
+                <h2 class="dark">Что можно увидеть</h2>
+                <div class="divider gold"></div>
+                <div class="info-cards" style="margin-top: 32px;">
+                    <div class="info-card">
+                        <div class="info-card-icon"><i class="fa-solid fa-paintbrush"></i></div>
+                        <h4>Инструменты</h4>
+                        <p>Кисти, мастихины, инструменты граверного дела — всё, чем работал художник.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-icon"><i class="fa-solid fa-image"></i></div>
+                        <h4>Незавершённые работы</h4>
+                        <p>Холсты на мольберте, этюды, подготовительные рисунки — процесс работы.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <h4>Альбомы и архив</h4>
+                        <p>Стопки альбомов, фотографии, документы — память мастерской.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
