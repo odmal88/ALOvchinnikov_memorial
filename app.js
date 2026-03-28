@@ -245,6 +245,21 @@
     const nav = document.getElementById('mainNav');
     const burgerBtn = document.getElementById('burgerBtn');
     const mobileMenu = document.getElementById('mobileMenu');
+    const pageHost = (() => {
+        const host = document.createElement('main');
+        host.id = 'pageHost';
+        const firstPage = document.querySelector('.page');
+        if (firstPage && firstPage.parentNode) {
+            firstPage.parentNode.insertBefore(host, firstPage);
+        }
+        return host;
+    })();
+    const pageRegistry = new Map();
+    document.querySelectorAll('.page').forEach((page) => {
+        page.classList.remove('active', 'page-enter');
+        pageRegistry.set(page.id, page);
+        page.remove();
+    });
 
     let menuOpen = false;
     let lastScroll = 0;
@@ -295,13 +310,17 @@
     }
 
     function activatePage(pageId) {
-        document.querySelectorAll('.page').forEach((page) => {
+        pageRegistry.forEach((page) => {
             page.classList.remove('active', 'page-enter');
         });
 
-        const target = document.getElementById(pageId);
+        const target = pageRegistry.get(pageId);
         if (!target) return;
 
+        if (pageHost.firstElementChild !== target) {
+            pageHost.innerHTML = '';
+            pageHost.appendChild(target);
+        }
         target.classList.add('active', 'page-enter');
     }
 
@@ -736,6 +755,7 @@
         const safePath = isValidPath(path) ? path : '/';
 
         if (isWorkPath(safePath)) {
+            activatePage('page-work-single');
             const slug = safePath.replace('/works/', '');
             const ok = showWorkPage(slug);
             if (!ok) return;
@@ -813,17 +833,17 @@
     // ══════════════════════════════════════════════
     // WORKS FILTERS
     // ══════════════════════════════════════════════
-    document.querySelectorAll('.filter-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const filter = btn.getAttribute('data-filter');
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.filter-btn');
+        if (!btn) return;
 
-            document.querySelectorAll('.filter-btn').forEach((b) => b.classList.remove('active'));
-            btn.classList.add('active');
+        const filter = btn.getAttribute('data-filter');
+        document.querySelectorAll('.filter-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
 
-            document.querySelectorAll('.catalog-card').forEach((card) => {
-                const category = card.getAttribute('data-category');
-                card.style.display = (filter === 'all' || category === filter) ? '' : 'none';
-            });
+        document.querySelectorAll('#page-works .catalog-card').forEach((card) => {
+            const category = card.getAttribute('data-category');
+            card.style.display = (filter === 'all' || category === filter) ? '' : 'none';
         });
     });
 
