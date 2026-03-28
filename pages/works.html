@@ -1,0 +1,130 @@
+    <div class="page" id="page-works">
+
+        <div class="page-hero">
+            <div class="hero-texture"></div>
+            <div class="container">
+                <div class="page-hero-label">Коллекция</div>
+                <h1>Работы</h1>
+                <div class="page-hero-subtitle">Каталог произведений Александра Львовича Овчинникова</div>
+            </div>
+        </div>
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <a href="#/" data-route="/">Главная</a>
+                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+                <span class="current">Работы</span>
+            </div>
+        </div>
+
+        <section class="content-section bg-cool">
+            <div class="content-block">
+                <!-- Фильтры -->
+                <div class="works-filters reveal">
+                    <button class="filter-btn active" data-filter="all">Все работы</button>
+                    <button class="filter-btn" data-filter="north">Русский Север</button>
+                    <button class="filter-btn" data-filter="city">Русский город</button>
+                    <button class="filter-btn" data-filter="history">Историческая тема</button>
+                    <button class="filter-btn" data-filter="interior">Камерный мир</button>
+                    <button class="filter-btn" data-filter="volga">Волга и Юг</button>
+                    <button class="filter-btn" data-filter="graphics">Графика</button>
+                </div>
+
+                <!-- Каталог -->
+                <div class="catalog-grid reveal" id="catalogGrid">
+                    <div class="catalog-card" data-category="north" onclick="navigateTo('/works/severniy-peyzazh')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Северный пейзаж</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">1998</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="city" onclick="navigateTo('/works/vecherniy-svet-vologda')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Вечерний свет. Вологда</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2005</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="city" onclick="navigateTo('/works/zimniy-den-v-peterburge')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-pen-nib" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Зимний день в Петербурге</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2010</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Картон, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="volga" onclick="navigateTo('/works/nizhegorodskie-dali')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Нижегородские дали</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2012</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="north" onclick="navigateTo('/works/derevyannaya-tserkov')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Деревянная церковь</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2001</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="interior" onclick="navigateTo('/works/masterskaya-utro')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Мастерская. Утро</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2014</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="graphics" onclick="navigateTo('/works/severnaya-derevnya-gravyura')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-pen-nib" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Северная деревня</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2003</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Линогравюра</div>
+                    </div>
+                    <div class="catalog-card" data-category="history" onclick="navigateTo('/works/istoricheskiy-motiv')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Исторический мотив</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2008</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                    <div class="catalog-card" data-category="volga" onclick="navigateTo('/works/vasilsursk')">
+                        <div class="catalog-image">
+                            <div class="catalog-image-inner">
+                                <i class="fa-solid fa-palette" style="color: var(--gold-muted);"></i>
+                            </div>
+                        </div>
+                        <h4>Васильсурск</h4>
+                        <span class="catalog-meta" style="color: var(--text-muted);">2007</span>
+                        <div class="catalog-technique" style="color: var(--text-muted);">Холст, масло</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
