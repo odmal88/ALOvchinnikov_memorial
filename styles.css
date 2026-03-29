@@ -1084,6 +1084,12 @@ line-height: 1.6;
             .artist-method-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .artist-archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .artist-toc { position: static; }
+            #page-home .home-flow { display: block; }
+            #page-home [data-component="home-teasers"] { display: block; }
+            #page-home .home-grid-item,
+            #page-home .home-intro-compact,
+            #page-home .home-compact { padding-top: 48px; padding-bottom: 48px; }
+            #page-home .home-memory-quiet { padding-top: 32px; padding-bottom: 32px; }
         }
         @media (max-width: 900px) {
             .nav { padding: 0 24px; }
