@@ -1438,6 +1438,65 @@
             border-left: 2px solid var(--gold);
             padding-left: 20px;
         }
+        .artist-fact-box {
+            margin-top: 18px;
+            padding: 14px 16px;
+            border: 1px solid var(--border-light);
+            background: #fff;
+        }
+        .artist-fact-box strong {
+            display: block;
+            font-family: var(--sans);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold-muted);
+            margin-bottom: 8px;
+        }
+        .artist-fact-box p {
+            margin-bottom: 0;
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--text-muted);
+        }
+        .artist-fact-box.compact {
+            margin-top: 14px;
+            background: var(--museum-bg-cool);
+        }
+        .artist-compact-timeline .timeline-item { margin-bottom: 24px; }
+        .artist-method-intro { max-width: 840px; }
+        .artist-inline-archive {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 14px 16px;
+            border: 1px solid var(--border-light);
+            background: var(--museum-bg-cool);
+            max-width: 840px;
+        }
+        .artist-inline-archive i {
+            color: var(--gold-muted);
+            margin-top: 4px;
+        }
+        .artist-inline-archive p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--text-muted);
+        }
+        .artist-index-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 28px;
+            align-items: start;
+        }
+        .section-status-note {
+            margin: 8px 0 0;
+            font-size: 13px;
+            color: var(--text-muted);
+            max-width: 760px;
+        }
 
         /* ── Timeline ── */
         .timeline {
@@ -1521,6 +1580,14 @@
             color: #fff;
             border-color: var(--deep-blue);
         }
+        .works-editorial-intro {
+            max-width: 760px;
+            margin-bottom: 26px;
+        }
+        .works-editorial-intro p {
+            margin-bottom: 0;
+            color: var(--text-muted);
+        }
 
         .catalog-grid {
             display: grid;
@@ -1564,6 +1631,14 @@
             font-weight: 400;
             color: var(--deep-blue);
             margin-bottom: 4px;
+        }
+        .catalog-card .catalog-cycle {
+            font-family: var(--sans);
+            font-size: 12px;
+            color: var(--gold-muted);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 3px;
         }
         .catalog-card .catalog-meta {
             font-size: 13px;
@@ -1818,6 +1893,78 @@
             line-height: 1.7;
             margin-bottom: 0;
         }
+        .editorial-note-card {
+            background: #fff;
+            border: 1px solid var(--border-light);
+            padding: 22px;
+        }
+        .editorial-note-card h4,
+        .expo-editorial-item h4,
+        .digital-hub-card h4 {
+            font-family: var(--serif);
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--deep-blue);
+            margin-bottom: 10px;
+        }
+        .editorial-note-card p,
+        .expo-editorial-item p,
+        .digital-hub-card p {
+            margin-bottom: 0;
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-muted);
+        }
+        .editorial-note-card.compact { padding: 16px 18px; }
+        .expo-editorial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+        .expo-editorial-item {
+            background: rgba(255,255,255,0.74);
+            border: 1px solid var(--border-light);
+            padding: 20px;
+        }
+        .digital-hub-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+        .digital-hub-card {
+            background: #fff;
+            border: 1px solid var(--border-light);
+            padding: 26px;
+            display: block;
+        }
+        .digital-hub-card .digital-hub-meta {
+            margin-top: 14px;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gold-muted);
+        }
+        .visit-intro-note { padding-bottom: 0; }
+        .visit-dense-grid .visit-detail-block {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .visit-map.visit-map-emphasis {
+            border: 1px solid var(--border-dark);
+            box-shadow: inset 0 0 0 1px rgba(198,150,83,0.2);
+        }
+        .archive-secondary {
+            padding-top: 56px;
+            padding-bottom: 56px;
+        }
+        .archive-secondary .content-block {
+            max-width: 900px;
+            opacity: 0.9;
+        }
+        .archive-secondary h2 {
+            font-size: clamp(22px, 3vw, 32px);
+        }
 
         /* ── 3D Workshop page ── */
         .workshop-viewer {
@@ -2031,6 +2178,9 @@
             .info-cards { grid-template-columns: 1fr; }
             .visit-details-grid { grid-template-columns: 1fr; }
             .expo-sections { grid-template-columns: 1fr; }
+            .expo-editorial-grid { grid-template-columns: 1fr; }
+            .digital-hub-grid { grid-template-columns: 1fr; }
+            .artist-index-layout { grid-template-columns: 1fr; }
             .animated-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 560px) {
