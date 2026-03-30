@@ -458,177 +458,121 @@
         }
 
         /* ── Home compaction / editorial flow ── */
-        #page-home .home-flow {
-            display: grid;
-            grid-template-columns: minmax(300px, 37%) minmax(0, 63%);
-            gap: 14px 18px;
-            align-items: start;
-        }
-
-        #page-home [data-component="home-teasers"] {
-            display: contents;
-        }
-
-        #page-home .home-grid-item {
-            padding-top: 34px;
-            padding-bottom: 34px;
-        }
-
-        #page-home .home-project { grid-column: 1; }
-        #page-home .home-works-section { grid-column: 2; grid-row: 1 / span 2; }
-        #page-home .home-artist-teaser { grid-column: 1; }
-        #page-home .home-visit-teaser { grid-column: 1; }
-        #page-home .home-digital-hub { grid-column: 2; }
-        #page-home .home-full { grid-column: 1 / -1; }
-
         #page-home .home-intro-compact {
-            padding-top: 46px;
-            padding-bottom: 40px;
-        }
-
-        #page-home .home-compact {
-            padding-top: 48px;
-            padding-bottom: 48px;
-        }
-
-        #page-home .home-header-compact {
-            margin-bottom: 22px;
-        }
-
-        #page-home .home-header-compact .section-title {
-            font-size: clamp(22px, 2.8vw, 30px);
-            margin-bottom: 8px;
-        }
-
-        #page-home .home-header-compact .section-lead {
-            font-size: 14px;
-            line-height: 1.55;
-            max-width: 620px;
-        }
-
-        #page-home .home-works-section .works-grid {
-            gap: 16px;
-        }
-
-        #page-home .home-works-section .work-card h4 {
-            font-size: 15px;
-        }
-
-        #page-home .home-works-section .work-meta {
-            font-size: 12px;
-        }
-
-        #page-home .home-artist-teaser .artist-grid {
-            gap: 20px;
-            grid-template-columns: 180px 1fr;
-            align-items: center;
-        }
-
-        #page-home .home-artist-teaser .artist-portrait {
-            aspect-ratio: 4/5;
-        }
-
-        #page-home .home-artist-teaser .artist-text h3 {
-            font-size: 24px;
-            font-style: normal;
-            margin-bottom: 8px;
-            color: var(--deep-blue);
-        }
-
-        #page-home .home-artist-teaser .artist-text p {
-            max-width: 460px;
-            margin-bottom: 10px;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        #page-home .home-artist-teaser .artist-buttons {
-            margin-top: 10px;
-        }
-
-        #page-home .home-digital-hub .digital-blocks {
-            gap: 12px;
-            margin-bottom: 0;
-        }
-
-        #page-home .home-digital-hub .digital-block {
-            padding: 16px 14px;
-        }
-
-        #page-home .home-digital-hub .digital-block-icon {
-            margin-bottom: 10px;
-            width: 36px;
-            height: 36px;
-        }
-
-        #page-home .home-digital-hub .digital-block-icon i {
-            font-size: 18px;
-        }
-
-        #page-home .home-digital-hub .digital-block h4 {
-            font-size: 16px;
-            margin-bottom: 6px;
-        }
-
-        #page-home .home-digital-hub .digital-block p {
-            margin-bottom: 10px;
-            line-height: 1.5;
-            font-size: 13px;
-        }
-
-        #page-home .home-digital-hub .digital-block .btn {
-            padding: 7px 11px;
-            font-size: 11px;
-            letter-spacing: 0.05em;
-        }
-
-        #page-home .home-visit-title {
-            font-size: clamp(22px, 2.6vw, 30px);
-            margin-bottom: 14px;
-        }
-
-        #page-home .home-visit-teaser .visit-grid {
-            grid-template-columns: 1fr;
-            gap: 0;
-            max-width: 560px;
-        }
-
-        #page-home .home-visit-teaser .visit-info h3 {
-            margin-bottom: 8px;
-            font-size: 20px;
+padding-top: 46px;
+padding-bottom: 40px;
+}
+#page-home .home-compact {
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+#page-home .home-header-compact {
+    margin-bottom: 22px;
+}
+#page-home .home-header-compact .section-title {
+    font-size: clamp(22px, 2.8vw, 30px);
+    margin-bottom: 8px;
+}
+#page-home .home-header-compact .section-lead {
+    font-size: 14px;
+    line-height: 1.55;
+    max-width: 620px;
+}
+#page-home .home-works-section .works-grid {
+    gap: 16px;
+}
+#page-home .home-works-section .work-card h4 { font-size: 15px; }
+#page-home .home-works-section .work-meta { font-size: 12px; }
+#page-home .home-artist-teaser .artist-grid {
+    gap: 20px;
+    grid-template-columns: 180px 1fr;
+    align-items: center;
+}
+#page-home .home-artist-teaser .artist-portrait {
+    aspect-ratio: 4/5;
+}
+#page-home .home-artist-teaser .artist-text h3 {
+    font-size: 24px;
+    font-style: normal;
+    margin-bottom: 8px;
+    color: var(--deep-blue);
+}
+#page-home .home-artist-teaser .artist-text p {
+    max-width: 460px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+#page-home .home-artist-teaser .artist-buttons {
+    margin-top: 10px;
+}
+#page-home .home-digital-hub .digital-blocks {
+    gap: 12px;
+    margin-bottom: 0;
+}
+#page-home .home-digital-hub .digital-block {
+    padding: 16px 14px;
+}
+#page-home .home-digital-hub .digital-block-icon {
+    margin-bottom: 10px;
+    width: 36px;
+    height: 36px;
+}
+#page-home .home-digital-hub .digital-block-icon i { font-size: 18px; }
+#page-home .home-digital-hub .digital-block h4 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+#page-home .home-digital-hub .digital-block p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+    font-size: 13px;
+}
+#page-home .home-digital-hub .digital-block .btn {
+    padding: 7px 11px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+}
+#page-home .home-visit-title {
+    font-size: clamp(22px, 2.6vw, 30px);
+    margin-bottom: 14px;
+}
+#page-home .home-visit-teaser .visit-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    max-width: 560px;
+}
+#page-home .home-visit-teaser .visit-info h3 {
+    margin-bottom: 8px;
+    font-size: 20px;
+}
             font-style: normal;
             color: var(--deep-blue);
         }
-
         #page-home .home-visit-teaser .visit-text {
-            margin-bottom: 12px;
-            font-size: 14px;
-            line-height: 1.6;
+margin-bottom: 12px;
+font-size: 14px;
+line-height: 1.6;
+}
+#page-home .home-memory-quiet {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+#page-home .home-memory-quiet .section-title {
+    font-size: clamp(18px, 2vw, 24px);
+    margin-bottom: 4px;
+}
+#page-home .home-memory-quiet .section-lead {
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 4px;
         }
-
-        #page-home .home-memory-quiet {
-            padding-top: 30px;
-            padding-bottom: 30px;
-        }
-
-        #page-home .home-memory-quiet .section-title {
-            font-size: clamp(18px, 2vw, 24px);
-            margin-bottom: 4px;
-        }
-
-        #page-home .home-memory-quiet .section-lead {
-            font-size: 13px;
-            line-height: 1.5;
-            margin-bottom: 4px;
-        }
-
         #page-home .home-memory-link {
             padding: 8px 14px;
             font-size: 11px;
             border-color: var(--border-light);
             color: var(--text-muted);
         }
-
         #page-home .home-memory-link:hover {
             border-color: var(--deep-blue);
             color: var(--deep-blue);
@@ -1146,8 +1090,6 @@
             #page-home .home-intro-compact,
             #page-home .home-compact { padding-top: 48px; padding-bottom: 48px; }
             #page-home .home-memory-quiet { padding-top: 32px; padding-bottom: 32px; }
-            #page-home .home-artist-teaser .artist-grid { grid-template-columns: 1fr; gap: 22px; }
-            #page-home .home-digital-hub .digital-blocks { grid-template-columns: 1fr; }
         }
         @media (max-width: 900px) {
             .nav { padding: 0 24px; }
@@ -1172,6 +1114,11 @@
             .geo-inner { flex-direction: column; text-align: center; }
             .artist-intro-main { padding: 22px; }
             .artist-index-list { grid-template-columns: 1fr; }
+            #page-home .home-intro-compact,
+#page-home .home-compact { padding-top: 42px; padding-bottom: 42px; }
+#page-home .home-memory-quiet { padding-top: 28px; padding-bottom: 28px; }
+#page-home .home-artist-teaser .artist-grid { grid-template-columns: 1fr; gap: 22px; }
+#page-home .home-digital-hub .digital-blocks { grid-template-columns: 1fr; }
         }
         @media (max-width: 560px) {
             .works-grid { grid-template-columns: 1fr; }
