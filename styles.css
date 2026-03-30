@@ -460,26 +460,34 @@
         /* ── Home compaction / editorial flow ── */
 #page-home .home-flow {
     display: grid;
-    grid-template-columns: minmax(300px, 37%) minmax(0, 63%);
-    gap: 14px 18px;
-    align-items: start;
+    gap: 20px;
 }
 
 #page-home [data-component="home-teasers"] {
-    display: contents;
+    display: grid;
+    gap: 20px;
+}
+
+#page-home .home-row {
+    width: 100%;
+}
+
+#page-home .home-row--split {
+    display: grid;
+    grid-template-columns: minmax(280px, 38%) minmax(0, 62%);
+    gap: 20px;
+    align-items: stretch;
+}
+
+#page-home .home-row--full {
+    display: block;
 }
 
 #page-home .home-grid-item {
+    min-width: 0;
     padding-top: 34px;
     padding-bottom: 34px;
 }
-
-#page-home .home-project { grid-column: 1; }
-#page-home .home-works-section { grid-column: 2; grid-row: 1 / span 2; }
-#page-home .home-artist-teaser { grid-column: 1; }
-#page-home .home-visit-teaser { grid-column: 1; }
-#page-home .home-digital-hub { grid-column: 2; }
-#page-home .home-full { grid-column: 1 / -1; }
 
 #page-home .home-intro-compact {
     padding-top: 46px;
@@ -1140,8 +1148,7 @@
             .artist-method-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .artist-archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .artist-toc { position: static; }
-            #page-home .home-flow { display: block; }
-            #page-home [data-component="home-teasers"] { display: block; }
+            #page-home .home-row--split { grid-template-columns: 1fr; }
             #page-home .home-grid-item,
             #page-home .home-intro-compact,
             #page-home .home-compact { padding-top: 48px; padding-bottom: 48px; }
