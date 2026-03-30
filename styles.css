@@ -211,22 +211,9 @@
             color: var(--gold);
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
             opacity: 0;
             animation: fadeUp 0.8s 0.3s forwards;
-            display: inline-block;
-            padding-bottom: 14px;
-            position: relative;
-        }
-        .hero-label::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 36px;
-            height: 1px;
-            background: var(--gold);
-            opacity: 0.6;
         }
         .hero h1 {
             font-family: var(--serif);
@@ -249,7 +236,6 @@
             font-style: italic;
             color: var(--text-light);
             line-height: 1.3;
-            letter-spacing: 0.04em;
             margin-bottom: 24px;
             opacity: 0;
             animation: fadeUp 0.8s 0.7s forwards;
@@ -289,10 +275,6 @@
             font-family: var(--serif);
             font-size: 15px;
             color: var(--text-on-dark);
-        }
-        .hero-meta-item:not(:last-child) {
-            padding-right: 40px;
-            border-right: 1px solid rgba(198,150,83,0.25);
         }
         .hero-buttons {
             display: flex;
@@ -1394,27 +1376,13 @@
 
         .content-block .quote {
             font-family: var(--serif);
-            font-size: clamp(18px, 2vw, 22px);
+            font-size: 20px;
             font-style: italic;
-            line-height: 1.65;
-            padding: 28px 28px 28px 48px;
+            line-height: 1.5;
+            padding: 32px 0 32px 32px;
             border-left: 3px solid var(--gold);
-            margin: 44px 0;
+            margin: 32px 0;
             color: var(--deep-blue);
-            position: relative;
-        }
-        .content-block .quote::before {
-            content: '\201C';
-            font-family: var(--serif);
-            font-size: 90px;
-            font-style: normal;
-            color: var(--gold);
-            opacity: 0.18;
-            position: absolute;
-            top: -8px;
-            left: 8px;
-            line-height: 1;
-            pointer-events: none;
         }
 
         /* ── Artist page: dossier layout ── */
@@ -2095,24 +2063,15 @@
             padding: 32px;
             background: rgba(255,255,255,0.04);
             border: 1px solid var(--border-dark);
-            border-left: 3px solid rgba(198,150,83,0.35);
             border-radius: 2px;
-            transition: background 0.25s, border-left-color 0.25s;
-        }
-        .expo-card:hover {
-            background: rgba(255,255,255,0.07);
-            border-left-color: var(--gold);
         }
         .expo-card-num {
-            font-family: var(--serif);
-            font-size: 28px;
-            font-weight: 400;
-            font-style: italic;
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 500;
             color: var(--gold);
-            opacity: 0.28;
-            letter-spacing: 0;
-            line-height: 1;
-            margin-bottom: 10px;
+            letter-spacing: 0.15em;
+            margin-bottom: 12px;
         }
         .expo-card h4 {
             font-family: var(--serif);
@@ -2131,9 +2090,8 @@
             margin-bottom: 0;
         }
         .editorial-note-card {
-            background: rgba(198,150,83,0.05);
+            background: #fff;
             border: 1px solid var(--border-light);
-            border-left: 3px solid rgba(198,150,83,0.5);
             padding: 22px;
         }
         .editorial-note-card h4,
@@ -2427,33 +2385,4 @@
         }
         @media (max-width: 900px) {
             #workRelated { grid-template-columns: 1fr 1fr !important; }
-        }
-
-        /* ── Deep Rework 2026 ── */
-
-        /* Content narrow: default paragraph style to replace inline styles */
-        .content-narrow p {
-            font-family: var(--sans);
-            font-size: 15px;
-            font-weight: 300;
-            color: var(--text-muted);
-            line-height: 1.8;
-        }
-
-        /* New button: outlined gold — for use on dark backgrounds */
-        .btn-outline-gold {
-            color: var(--gold);
-            border-color: var(--gold);
-        }
-        .btn-outline-gold:hover {
-            background: var(--gold);
-            color: var(--deep-blue);
-        }
-
-        /* Subtle paper texture on light sections */
-        .content-section.bg-light,
-        .content-section.bg-cool,
-        .section-light,
-        .section-cool {
-            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%235A5A5A' fill-opacity='0.04' fill-rule='evenodd'%3E%3Ccircle cx='1' cy='1' r='0.8'/%3E%3Ccircle cx='21' cy='1' r='0.8'/%3E%3Ccircle cx='1' cy='21' r='0.8'/%3E%3Ccircle cx='21' cy='21' r='0.8'/%3E%3Ccircle cx='11' cy='11' r='0.6'/%3E%3Ccircle cx='31' cy='11' r='0.6'/%3E%3Ccircle cx='11' cy='31' r='0.6'/%3E%3Ccircle cx='31' cy='31' r='0.6'/%3E%3C/g%3E%3C/svg%3E");
         }
