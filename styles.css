@@ -458,7 +458,7 @@
         }
 
         /* ── Home compaction / editorial flow ── */
-        #page-home .home-flow {
+#page-home .home-flow {
     display: grid;
     grid-template-columns: minmax(300px, 37%) minmax(0, 63%);
     gap: 14px 18px;
