@@ -2457,3 +2457,68 @@
         .section-cool {
             background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%235A5A5A' fill-opacity='0.04' fill-rule='evenodd'%3E%3Ccircle cx='1' cy='1' r='0.8'/%3E%3Ccircle cx='21' cy='1' r='0.8'/%3E%3Ccircle cx='1' cy='21' r='0.8'/%3E%3Ccircle cx='21' cy='21' r='0.8'/%3E%3Ccircle cx='11' cy='11' r='0.6'/%3E%3Ccircle cx='31' cy='11' r='0.6'/%3E%3Ccircle cx='11' cy='31' r='0.6'/%3E%3Ccircle cx='31' cy='31' r='0.6'/%3E%3C/g%3E%3C/svg%3E");
         }
+
+        /* ── Category Gradient Placeholders ── */
+
+        /* Label inside image placeholder */
+        .artwork-label {
+            position: absolute;
+            bottom: 10px;
+            left: 0; right: 0;
+            text-align: center;
+            font-family: var(--sans);
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.28);
+            pointer-events: none;
+        }
+
+        /* Север: холодный сине-серый, линия горизонта */
+        .catalog-card[data-category="north"] .catalog-image,
+        .work-card[data-category="north"] .work-image,
+        .work-single-image[data-category="north"] {
+            background: linear-gradient(180deg,
+                #1A2E3E 0%, #2C4A5C 45%, #8BA8B8 70%, #C4D8E4 100%);
+        }
+
+        /* Русский город: тёплые сумерки, охра и фиолетовый */
+        .catalog-card[data-category="city"] .catalog-image,
+        .work-card[data-category="city"] .work-image,
+        .work-single-image[data-category="city"] {
+            background: linear-gradient(160deg,
+                #1E1A2E 0%, #2E2840 40%, #4A3858 65%, #8B6E7A 85%, #C4957A 100%);
+        }
+
+        /* История: земля, охра, патина */
+        .catalog-card[data-category="history"] .catalog-image,
+        .work-card[data-category="history"] .work-image,
+        .work-single-image[data-category="history"] {
+            background: linear-gradient(145deg,
+                #251510 0%, #3D2315 35%, #5C3520 55%, #8C6040 75%, #C4A070 100%);
+        }
+
+        /* Камерный мир: тёплый янтарь, рассеянный свет */
+        .catalog-card[data-category="interior"] .catalog-image,
+        .work-card[data-category="interior"] .work-image,
+        .work-single-image[data-category="interior"] {
+            background: linear-gradient(130deg,
+                #1A1E14 0%, #252D1A 30%, #3A4A28 55%, #7A8870 75%, #B8C0A0 100%);
+        }
+
+        /* Волга и Юг: широкое небо, вода, тепло */
+        .catalog-card[data-category="volga"] .catalog-image,
+        .work-card[data-category="volga"] .work-image,
+        .work-single-image[data-category="volga"] {
+            background: linear-gradient(180deg,
+                #0F2030 0%, #1E3E52 30%, #2E6888 55%,
+                #6B9EB2 70%, #A8CCDA 85%, #D8EAF0 100%);
+        }
+
+        /* Графика: монохром, чернила */
+        .catalog-card[data-category="graphics"] .catalog-image,
+        .work-card[data-category="graphics"] .work-image,
+        .work-single-image[data-category="graphics"] {
+            background: linear-gradient(155deg,
+                #0A0A0A 0%, #1A1A1A 30%, #2E2E2E 55%, #5A5A5A 80%, #8E8E8E 100%);
+        }

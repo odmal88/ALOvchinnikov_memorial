@@ -409,10 +409,11 @@
         card.href = '#/works/' + work.slug;
         card.setAttribute('data-route', '/works/' + work.slug);
         card.style.textDecoration = 'none';
+        card.dataset.category = work.category;
         card.innerHTML = `
             <div class="work-image">
                 <div class="work-image-inner">
-                    <i class="fa-solid ${work.icon}" style="color: var(--gold-muted);"></i>
+                    <span class="artwork-label">${categoryLabels[work.category] || ''}</span>
                 </div>
             </div>
             <h4 style="color: var(--deep-blue);">${work.title}</h4>
@@ -447,6 +448,9 @@
         document.getElementById('workSection').textContent = sectionLabel;
         document.getElementById('workCollection').textContent = work.collection;
         document.getElementById('workDescription').textContent = work.description;
+
+        const workSingleImage = document.querySelector('.work-single-image');
+        if (workSingleImage) workSingleImage.dataset.category = work.category;
 
         const iconEl = document.getElementById('workSingleIcon');
         iconEl.className = `fa-solid ${work.icon}`;
