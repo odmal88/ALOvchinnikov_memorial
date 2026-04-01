@@ -2363,6 +2363,13 @@
             opacity: 1;
             transform: translateY(0);
         }
+        #page-home .reveal,
+        #page-artist .reveal,
+        #page-works .reveal,
+        #page-digital .reveal {
+            opacity: 1 !important;
+            transform: none !important;
+        }
 
         @media (max-width: 900px) {
             .page-hero { padding: 120px 24px 56px; }
