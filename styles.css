@@ -1424,7 +1424,7 @@
         }
         .artist-dossier-layout {
             display: grid;
-            grid-template-columns: 240px 1fr;
+            grid-template-columns: minmax(0, 240px) 1fr;
             gap: 40px;
             align-items: start;
         }
@@ -1477,7 +1477,7 @@
         }
         .artist-intro-grid {
             display: grid;
-            grid-template-columns: 340px 1fr;
+            grid-template-columns: minmax(0, 340px) 1fr;
             gap: 36px;
             align-items: start;
         }
@@ -1724,6 +1724,52 @@
             font-size: 13px;
             color: var(--text-muted);
             max-width: 760px;
+        }
+
+        /* ── Artist page: mobile overrides (must come AFTER desktop declarations) ── */
+        @media (max-width: 768px) {
+            .artist-dossier-layout {
+                grid-template-columns: 1fr;
+            }
+            .artist-toc {
+                position: static;
+                width: 100%;
+            }
+            .artist-intro-grid {
+                grid-template-columns: 1fr;
+            }
+            .artist-life-geo-grid {
+                grid-template-columns: 1fr;
+            }
+            .artist-focus-grid {
+                grid-template-columns: 1fr;
+            }
+            .artist-focus-card {
+                order: 2;
+            }
+            .artist-diptych {
+                grid-template-columns: 1fr;
+            }
+            .artist-method-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .artist-archive-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .artist-index-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .artist-method-grid {
+                grid-template-columns: 1fr;
+            }
+            .artist-intro-main {
+                padding: 16px;
+            }
+            .artist-intro-headline {
+                font-size: clamp(16px, 5vw, 20px);
+            }
         }
 
         /* ── Timeline ── */
