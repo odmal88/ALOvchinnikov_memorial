@@ -1,5 +1,102 @@
     <div class="page" id="page-contacts">
 
+        <style>
+            #page-contacts .page-hero {
+                padding-top: 132px;
+                padding-bottom: 56px;
+            }
+
+            #page-contacts .content-section:first-of-type {
+                padding-top: 52px;
+                padding-bottom: 36px;
+            }
+
+            #page-contacts .contacts-chooser-section {
+                padding-top: 8px;
+                padding-bottom: 56px;
+            }
+
+            #page-contacts .contacts-chooser {
+                max-width: 980px;
+            }
+
+            #page-contacts .contacts-chooser-head {
+                max-width: 680px;
+                margin-bottom: 28px;
+            }
+
+            #page-contacts .contacts-chooser-head h2 {
+                margin-bottom: 10px;
+            }
+
+            #page-contacts .contacts-chooser-head p {
+                margin-bottom: 0;
+                color: var(--text-muted);
+            }
+
+            #page-contacts .contacts-topic-grid {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 16px;
+            }
+
+            #page-contacts .contacts-topic-card {
+                border: 1px solid var(--border-light);
+                background: rgba(255,255,255,0.82);
+                padding: 22px 20px;
+                text-align: left;
+                cursor: pointer;
+                transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+            }
+
+            #page-contacts .contacts-topic-card:hover {
+                border-color: rgba(18,28,57,0.24);
+                background: #fff;
+                transform: translateY(-1px);
+            }
+
+            #page-contacts .contacts-topic-card-title {
+                display: block;
+                font-family: var(--serif);
+                font-size: 21px;
+                line-height: 1.2;
+                color: var(--deep-blue);
+                margin-bottom: 10px;
+            }
+
+            #page-contacts .contacts-topic-card-text {
+                display: block;
+                font-family: var(--sans);
+                font-size: 14px;
+                font-weight: 300;
+                line-height: 1.65;
+                color: var(--text-muted);
+            }
+
+            #page-contacts .contacts-topic-note {
+                margin-top: 16px;
+                font-size: 13px;
+                line-height: 1.6;
+                color: var(--text-muted);
+                max-width: 620px;
+            }
+
+            #page-contacts .contact-form {
+                max-width: 780px;
+            }
+
+            #page-contacts .form-note {
+                max-width: 520px;
+                opacity: 0.78;
+            }
+
+            @media (max-width: 900px) {
+                #page-contacts .contacts-topic-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+
         <div class="page-hero">
             <div class="hero-texture"></div>
             <div class="container">
@@ -23,36 +120,32 @@
             </div>
         </section>
 
-        <section class="content-section bg-light">
-            <div class="content-block">
-                <div class="contact-blocks reveal">
-
-                    <div class="contact-block">
-                        <h3 class="dark">Отзыв, воспоминание, текст для публикации</h3>
-                        <p>Если вы хотите прислать отзыв, воспоминание, заметку, эссе или другой текст, который может быть опубликован на сайте, напишите нам. Мы внимательно читаем такие сообщения и, если речь идёт о публикации, связываемся с автором отдельно.</p>
-                        <div class="contact-block-actions">
-                            <button class="btn btn-light contact-prefill-btn" data-topic="Отзыв о выставке или сайте">Оставить отзыв</button>
-                            <button class="btn btn-light contact-prefill-btn" data-topic="Текст для публикации">Прислать текст для публикации</button>
-                        </div>
+        <section class="content-section bg-light contacts-chooser-section">
+            <div class="content-block reveal">
+                <div class="contacts-chooser">
+                    <div class="contacts-chooser-head">
+                        <h2 class="dark">О чём вы хотите написать</h2>
+                        <p>Вместо трёх больших блоков здесь лучше работает короткий выбор сценария. Выберите направление, а ниже форма подскажет точную тему обращения.</p>
                     </div>
 
-                    <div class="contact-block">
-                        <h3 class="dark">Вопрос о произведениях и приобретении</h3>
-                        <p>Если вас интересует конкретная работа, графика, линогравюра или возможность приобретения произведений, пожалуйста, напишите нам отдельным сообщением. Если возможно, укажите название работы, раздел сайта, технику, период или тему, которая вас интересует. Если точное произведение пока не выбрано, можно описать круг интереса.</p>
-                        <div class="contact-block-actions">
-                            <button class="btn btn-light contact-prefill-btn" data-topic="Вопрос о произведении">Задать вопрос о произведении</button>
-                            <button class="btn btn-light contact-prefill-btn" data-topic="Вопрос о произведении">Уточнить возможность приобретения</button>
-                        </div>
+                    <div class="contacts-topic-grid">
+                        <button type="button" class="contacts-topic-card contact-prefill-btn" data-topic="">
+                            <span class="contacts-topic-card-title">Отзыв, воспоминание или текст</span>
+                            <span class="contacts-topic-card-text">Для отзывов о выставке и сайте, воспоминаний об Александре Львовиче и материалов, которые могут быть подготовлены к публикации.</span>
+                        </button>
+
+                        <button type="button" class="contacts-topic-card contact-prefill-btn" data-topic="Вопрос о произведении">
+                            <span class="contacts-topic-card-title">Вопрос о произведении</span>
+                            <span class="contacts-topic-card-text">Если вас интересует конкретная работа, техника, цикл, период или возможность приобретения, лучше начать именно с этого сценария.</span>
+                        </button>
+
+                        <button type="button" class="contacts-topic-card contact-prefill-btn" data-topic="Общий вопрос">
+                            <span class="contacts-topic-card-title">Общий вопрос</span>
+                            <span class="contacts-topic-card-text">Для вопросов о выставке, сайте, материалах, семейном архиве, сотрудничестве и других организационных темах проекта.</span>
+                        </button>
                     </div>
 
-                    <div class="contact-block">
-                        <h3 class="dark">Общий вопрос</h3>
-                        <p>По вопросам выставки, сайта, материалов, семейного архива, сотрудничества и другим организационным темам можно связаться с командой проекта через общий канал.</p>
-                        <div class="contact-block-actions">
-                            <button class="btn btn-light contact-prefill-btn" data-topic="Общий вопрос">Связаться с проектом</button>
-                        </div>
-                    </div>
-
+                    <p class="contacts-topic-note">Если точная тема пока не ясна, можно просто перейти к форме ниже и выбрать её там.</p>
                 </div>
             </div>
         </section>
@@ -60,8 +153,8 @@
         <section class="content-section bg-cool">
             <div class="content-block reveal">
                 <h2 class="dark" style="margin-bottom: 8px;">Написать нам</h2>
-                <div class="subtitle dark" style="margin-bottom: 32px;">Форма обращения</div>
-                <div class="divider gold" style="margin-bottom: 40px;"></div>
+                <div class="subtitle dark" style="margin-bottom: 24px;">Форма обращения</div>
+                <div class="divider gold" style="margin-bottom: 36px;"></div>
 
                 <div id="contactSuccess" class="contact-success" style="display: none;">
                     <p>Спасибо. Ваше сообщение получено.</p>
@@ -95,7 +188,7 @@
                     <div class="form-field">
                         <label class="form-label" for="field-topic">Тема обращения</label>
                         <select class="form-select" id="field-topic" name="topic">
-                            <option value="">— выберите тему —</option>
+                            <option value="">Выберите тему обращения</option>
                             <option value="Отзыв о выставке или сайте">Отзыв о выставке или сайте</option>
                             <option value="Воспоминание">Воспоминание</option>
                             <option value="Текст для публикации">Текст для публикации</option>
@@ -121,7 +214,7 @@
                     </div>
 
                     <div class="form-footer">
-                        <button type="submit" class="btn btn-gold">Отправить</button>
+                        <button type="submit" class="btn btn-gold">Отправить сообщение</button>
                         <p class="form-note">Сообщения для публикации проходят предварительное чтение. Контактные данные не публикуются без отдельного согласия. Если вы присылаете текст для публикации, укажите, как вас подписать.</p>
                     </div>
 
