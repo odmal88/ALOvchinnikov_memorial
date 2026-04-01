@@ -252,6 +252,17 @@
       }
     }
 
+    setText('#artist-life-geo .subtitle', about?.school?.title);
+    if (Array.isArray(about?.school?.paragraphs)) {
+      const schoolTarget = document.querySelector('#artist-life-geo .artist-module:nth-child(2)');
+      if (schoolTarget) {
+        schoolTarget.innerHTML = [
+          '<h3 class="dark">Академическая школа</h3>',
+          ...about.school.paragraphs.map((text) => `<p class="dark">${text}</p>`)
+        ].join('');
+      }
+    }
+
     setText('#artist-north h2', about?.geography?.title);
     if (Array.isArray(about?.geography?.paragraphs)) {
       document.querySelectorAll('#artist-north .artist-focus-grid > div p.dark').forEach((p, idx) => {
@@ -261,10 +272,37 @@
 
     setText('#artist-index h2', about?.themes?.title);
     if (Array.isArray(about?.themes?.items)) {
+      const themeContainer = document.querySelector('#artist-index .artist-index-layout > div');
+      if (themeContainer) {
+        themeContainer.innerHTML = [
+          '<div class="artist-index-list">',
+          ...about.themes.items.map((item) => `<span>${item.title}</span>`),
+          '</div>'
+        ].join('');
+      }
+
+      const themeAside = document.querySelector('#artist-index .artist-index-layout .artist-module');
+      if (themeAside) {
+        themeAside.innerHTML = [
+          '<h3 class="dark">Темы и мотивы</h3>',
+          ...about.themes.items.map((item) => `<p class="dark"><strong>${item.title}.</strong> ${item.text || ''}</p>`)
+        ].join('');
+      }
+
       const chips = document.querySelectorAll('#artist-index .artist-index-list span');
       about.themes.items.slice(0, chips.length).forEach((item, idx) => {
         chips[idx].textContent = item.title;
       });
+    }
+
+    setText('#artist-method h2', about?.language?.title);
+    if (Array.isArray(about?.language?.paragraphs)) {
+      const languageIntro = document.querySelector('#artist-method .artist-method-intro');
+      if (languageIntro) {
+        languageIntro.innerHTML = about.language.paragraphs
+          .map((text) => `<p class="dark">${text}</p>`)
+          .join('');
+      }
     }
 
     setText('#artist-legacy h2', about?.legacy?.title);
@@ -273,6 +311,10 @@
         if (about.legacy.paragraphs[idx]) p.textContent = about.legacy.paragraphs[idx];
       });
     }
+
+    document.querySelectorAll('#page-artist .section-status-note').forEach((note) => {
+      note.remove();
+    });
   }
 
   function syncVisit(visit) {
