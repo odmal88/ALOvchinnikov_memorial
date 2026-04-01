@@ -14,7 +14,8 @@
         'pages/digital.html',
         'pages/digital-workshop.html',
         'pages/digital-animated.html',
-        'pages/visit.html'
+        'pages/visit.html',
+        'pages/contacts.html'
     ];
 
     function fetchText(path) {
