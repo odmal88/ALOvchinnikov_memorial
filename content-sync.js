@@ -77,7 +77,6 @@
 
     valueNode.innerHTML = mergedLines.join('<br>');
   }
-
   function syncShared(site) {
     if (!site) return;
 
