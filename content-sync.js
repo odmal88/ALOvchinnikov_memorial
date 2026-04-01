@@ -234,38 +234,30 @@
     setHTML('#page-artist .page-hero h1', about?.hero?.title ? about.hero.title.replace(/\s+(\S+)$/, ' <em>$1</em>') : null);
     setText('#page-artist .page-hero-subtitle', about?.hero?.subtitle);
 
-    setText('#artist-intro .artist-intro-headline', about?.intro?.headline);
+    setText('#artist-family .artist-intro-headline', about?.intro?.headline);
     if (Array.isArray(about?.intro?.paragraphs)) {
-      document.querySelectorAll('#artist-intro .artist-intro-text p').forEach((p, idx) => {
+      document.querySelectorAll('#artist-family .artist-intro-text p').forEach((p, idx) => {
         if (about.intro.paragraphs[idx]) p.textContent = about.intro.paragraphs[idx];
       });
     }
 
-    setText('#artist-life-geo h2', about?.biography?.title);
+    setText('#artist-family h2', about?.biography?.title);
     if (Array.isArray(about?.biography?.paragraphs)) {
-      const bioTarget = document.querySelector('#artist-life-geo .artist-module:first-child');
-      if (bioTarget) {
-        const ps = bioTarget.querySelectorAll('p.dark');
-        about.biography.paragraphs.slice(0, ps.length).forEach((text, idx) => {
-          ps[idx].textContent = text;
-        });
-      }
+      document.querySelectorAll('#artist-family .artist-family-body p.dark').forEach((p, idx) => {
+        if (about.biography.paragraphs[idx]) p.textContent = about.biography.paragraphs[idx];
+      });
     }
 
-    setText('#artist-life-geo .subtitle', about?.school?.title);
+    setText('#artist-school h2', about?.school?.title);
     if (Array.isArray(about?.school?.paragraphs)) {
-      const schoolTarget = document.querySelector('#artist-life-geo .artist-module:nth-child(2)');
-      if (schoolTarget) {
-        schoolTarget.innerHTML = [
-          '<h3 class="dark">Академическая школа</h3>',
-          ...about.school.paragraphs.map((text) => `<p class="dark">${text}</p>`)
-        ].join('');
-      }
+      document.querySelectorAll('#artist-school .content-narrow p.dark').forEach((p, idx) => {
+        if (about.school.paragraphs[idx]) p.textContent = about.school.paragraphs[idx];
+      });
     }
 
-    setText('#artist-north h2', about?.geography?.title);
+    setText('#artist-routes h2', about?.geography?.title);
     if (Array.isArray(about?.geography?.paragraphs)) {
-      document.querySelectorAll('#artist-north .artist-focus-grid > div p.dark').forEach((p, idx) => {
+      document.querySelectorAll('#artist-routes .artist-focus-grid > div p.dark').forEach((p, idx) => {
         if (about.geography.paragraphs[idx]) p.textContent = about.geography.paragraphs[idx];
       });
     }
@@ -312,9 +304,6 @@
       });
     }
 
-    document.querySelectorAll('#page-artist .section-status-note').forEach((note) => {
-      note.remove();
-    });
   }
 
   function syncVisit(visit) {
