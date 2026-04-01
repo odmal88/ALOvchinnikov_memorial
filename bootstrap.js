@@ -41,6 +41,21 @@
             const teasersHost = document.querySelector('[data-component="home-teasers"]');
             if (teasersHost) teasersHost.innerHTML = teasersHtml;
         })
+        .then(() => new Promise((resolve) => {
+            const contentSyncScript = document.createElement('script');
+            contentSyncScript.src = 'content-sync.js';
+            contentSyncScript.onload = resolve;
+            contentSyncScript.onerror = resolve;
+            document.body.appendChild(contentSyncScript);
+        }))
+        .then(() => {
+            if (window.__contentSyncPromise && typeof window.__contentSyncPromise.then === 'function') {
+                return window.__contentSyncPromise.catch((error) => {
+                    console.error('Content sync promise error:', error);
+                });
+            }
+            return null;
+        })
         .then(() => {
             const appScript = document.createElement('script');
             appScript.src = 'app.js';
