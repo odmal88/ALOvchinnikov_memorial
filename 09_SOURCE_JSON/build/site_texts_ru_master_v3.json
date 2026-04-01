@@ -1,0 +1,72 @@
+{
+  "shared": {
+    "source": "shared/site.json",
+    "projectTitle": "Пространство памяти",
+    "officialSubtitle": "Мемориальная выставка произведений Льва Авксентьевича и Александра Львовича Овчинниковых",
+    "dates": {
+      "start": "2026-04-14",
+      "end": "2026-04-26",
+      "display": "14–26 апреля 2026"
+    },
+    "opening": {
+      "display": "14 апреля 2026 года в 18:30"
+    },
+    "venue": {
+      "name": "Голубой зал Союза художников",
+      "city": "Санкт-Петербург",
+      "address": "Большая Морская ул., д. 38"
+    }
+  },
+  "home": {
+    "source": "pages/home.json",
+    "title": "Главная",
+    "heroTitle": "Александр Львович Овчинников",
+    "subtitle": "Пространство памяти"
+  },
+  "exhibition": {
+    "source": "pages/exhibition.json",
+    "title": "О выставке",
+    "conceptTitle": "Почему эта выставка важна"
+  },
+  "about": {
+    "source": "pages/about.json",
+    "title": "О художнике",
+    "subtitle": "Биография, семья, маршруты и художественный мир"
+  },
+  "collection": {
+    "source": "pages/collection.json",
+    "title": "Коллекция"
+  },
+  "route": {
+    "source": "pages/route.json",
+    "title": "Маршрут и места"
+  },
+  "linocut": {
+    "source": "pages/linocut.json",
+    "title": "Линогравюра"
+  },
+  "virtual": {
+    "source": "pages/virtual.json",
+    "title": "Виртуальный зал"
+  },
+  "memory": {
+    "source": "pages/memory.json",
+    "title": "Книга памяти"
+  },
+  "visit": {
+    "source": "pages/visit.json",
+    "title": "Посещение"
+  },
+  "artTemplate": {
+    "source": "templates/artTemplate.json",
+    "title": "Шаблон страницы произведения"
+  },
+  "qrTemplate": {
+    "source": "templates/qrTemplate.json",
+    "title": "Шаблон QR-страницы"
+  },
+  "meta": {
+    "status": "initial-build",
+    "note": "Начальный сборочный master-файл. Актуализируется скриптом 09_SOURCE_JSON/build_master.mjs по мере синхронизации page-source файлов."
+  }
+}
