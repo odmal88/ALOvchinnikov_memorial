@@ -330,7 +330,6 @@
       });
     }
 
-    setText('#artist-family h2', about?.biography?.title);
     if (Array.isArray(about?.biography?.paragraphs)) {
       document.querySelectorAll('#artist-family .artist-family-body p.dark').forEach((p, idx) => {
         if (about.biography.paragraphs[idx]) p.textContent = about.biography.paragraphs[idx];
