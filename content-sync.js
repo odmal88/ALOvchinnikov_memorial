@@ -196,6 +196,35 @@
 
   function syncExhibition(exhibition) {
     if (!exhibition) return;
+
+    function renderParagraphs(container, paragraphs, className = 'dark') {
+      if (!container || !Array.isArray(paragraphs)) return;
+      container.innerHTML = paragraphs
+        .map((text) => `<p class="${className}">${text}</p>`)
+        .join('');
+    }
+
+    function renderMainLineItems(container, items) {
+      if (!container || !Array.isArray(items)) return;
+      container.innerHTML = items.map((item) => `
+        <article class="expo-editorial-item">
+          <h4>${item.title || ''}</h4>
+          <p>${item.text || ''}</p>
+        </article>
+      `).join('');
+    }
+
+    function renderExpoSections(container, items) {
+      if (!container || !Array.isArray(items)) return;
+      container.innerHTML = items.map((item) => `
+        <div class="expo-card">
+          <div class="expo-card-num">${item.section || ''}</div>
+          <h4>${item.title || ''}</h4>
+          <p>${item.text || ''}</p>
+        </div>
+      `).join('');
+    }
+
     setText('#page-exhibition .page-hero-label', exhibition?.hero?.label);
     setHTML('#page-exhibition .page-hero h1', exhibition?.hero?.title ? `${exhibition.hero.title.replace(/\s+(\S+)$/, ' <em>$1</em>')}` : null);
     setText('#page-exhibition .page-hero-subtitle', exhibition?.hero?.subtitle);
@@ -217,14 +246,74 @@
       setText(`${base} .subtitle`, data?.subtitle);
     });
 
-    if (Array.isArray(exhibition?.concept?.paragraphs)) {
-      const conceptContainer = document.querySelector('#page-exhibition [data-sync-section="concept"] .content-narrow');
-      if (conceptContainer) {
-        const conceptParagraphs = exhibition.concept.paragraphs
-          .map((text) => `<p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">${text}</p>`)
-          .join('');
-        conceptContainer.innerHTML = conceptParagraphs;
-      }
+    renderParagraphs(
+      document.querySelector('#page-exhibition [data-sync-section="concept"] .content-narrow'),
+      exhibition?.concept?.paragraphs
+    );
+
+    renderParagraphs(
+      document.querySelector('#page-exhibition [data-sync-section="continuity"] .content-narrow'),
+      exhibition?.continuity?.paragraphs
+    );
+
+    setText('#page-exhibition [data-sync-section="titleMeaning"] .quote', exhibition?.titleMeaning?.quote);
+    const titleMeaningContainer = document.querySelector('#page-exhibition [data-sync-section="titleMeaning"] .content-narrow');
+    if (titleMeaningContainer && Array.isArray(exhibition?.titleMeaning?.paragraphs)) {
+      const quote = titleMeaningContainer.querySelector('.quote');
+      const paragraphsHtml = exhibition.titleMeaning.paragraphs
+        .map((text) => `<p class="dark">${text}</p>`)
+        .join('');
+      titleMeaningContainer.innerHTML = `${quote ? quote.outerHTML : ''}${paragraphsHtml}`;
+    }
+
+    const unityTextContainer = document.querySelector('#page-exhibition [data-sync-section="unity"] .content-two-col > div');
+    renderParagraphs(unityTextContainer, exhibition?.unity?.paragraphs);
+    setText('#page-exhibition [data-sync-section="unity"] .editorial-note-card h4', exhibition?.unity?.note?.title);
+    setText('#page-exhibition [data-sync-section="unity"] .editorial-note-card p', exhibition?.unity?.note?.text);
+
+    renderMainLineItems(
+      document.querySelector('#page-exhibition [data-sync-section="mainLines"] .expo-editorial-grid'),
+      exhibition?.mainLines?.items
+    );
+
+    renderExpoSections(
+      document.querySelector('#page-exhibition [data-sync-section="structure"] .expo-sections'),
+      exhibition?.structure?.items
+    );
+
+    const viewerPathNarrow = document.querySelector('#page-exhibition [data-sync-section="viewerPath"] .content-narrow');
+    const viewerPathNote = viewerPathNarrow
+      ? viewerPathNarrow.querySelector('.editorial-note-card.compact')
+      : null;
+    const viewerPathNoteHTML = viewerPathNote ? viewerPathNote.outerHTML : '';
+    if (viewerPathNarrow && Array.isArray(exhibition?.viewerPath?.paragraphs)) {
+      viewerPathNarrow.innerHTML = exhibition.viewerPath.paragraphs
+        .map((text) => `<p class="dark">${text}</p>`)
+        .join('') + viewerPathNoteHTML;
+    }
+    setText('#page-exhibition [data-sync-section="viewerPath"] .editorial-note-card.compact h4', exhibition?.viewerPath?.note?.title);
+    setText('#page-exhibition [data-sync-section="viewerPath"] .editorial-note-card.compact p', exhibition?.viewerPath?.note?.text);
+
+    const digitalNarrow = document.querySelector('#page-exhibition [data-sync-section="digitalExtension"] .content-narrow');
+    const digitalButtonsWrap = digitalNarrow
+      ? digitalNarrow.querySelector('div[style*="display: flex"]')
+      : null;
+    const digitalButtonsHTML = digitalButtonsWrap ? digitalButtonsWrap.outerHTML : '';
+    if (digitalNarrow && Array.isArray(exhibition?.digitalExtension?.paragraphs)) {
+      digitalNarrow.innerHTML = exhibition.digitalExtension.paragraphs
+        .map((text) => `<p class="dark">${text}</p>`)
+        .join('') + digitalButtonsHTML;
+    }
+    const syncedDigitalButtonsWrap = document.querySelector('#page-exhibition [data-sync-section="digitalExtension"] .content-narrow > div[style*="display: flex"]');
+    if (syncedDigitalButtonsWrap && Array.isArray(exhibition?.digitalExtension?.buttons)) {
+      const buttons = syncedDigitalButtonsWrap.querySelectorAll('a');
+      exhibition.digitalExtension.buttons.slice(0, buttons.length).forEach((item, idx) => {
+        buttons[idx].textContent = item.label || buttons[idx].textContent;
+        if (item.route) {
+          buttons[idx].setAttribute('data-route', item.route);
+          buttons[idx].setAttribute('href', `#${item.route}`);
+        }
+      });
     }
   }
 
@@ -234,37 +323,66 @@
     setHTML('#page-artist .page-hero h1', about?.hero?.title ? about.hero.title.replace(/\s+(\S+)$/, ' <em>$1</em>') : null);
     setText('#page-artist .page-hero-subtitle', about?.hero?.subtitle);
 
-    setText('#artist-intro .artist-intro-headline', about?.intro?.headline);
+    setText('#artist-family .artist-intro-headline', about?.intro?.headline);
     if (Array.isArray(about?.intro?.paragraphs)) {
-      document.querySelectorAll('#artist-intro .artist-intro-text p').forEach((p, idx) => {
+      document.querySelectorAll('#artist-family .artist-intro-text p').forEach((p, idx) => {
         if (about.intro.paragraphs[idx]) p.textContent = about.intro.paragraphs[idx];
       });
     }
 
-    setText('#artist-life-geo h2', about?.biography?.title);
     if (Array.isArray(about?.biography?.paragraphs)) {
-      const bioTarget = document.querySelector('#artist-life-geo .artist-module:first-child');
-      if (bioTarget) {
-        const ps = bioTarget.querySelectorAll('p.dark');
-        about.biography.paragraphs.slice(0, ps.length).forEach((text, idx) => {
-          ps[idx].textContent = text;
-        });
-      }
+      document.querySelectorAll('#artist-family .artist-family-body p.dark').forEach((p, idx) => {
+        if (about.biography.paragraphs[idx]) p.textContent = about.biography.paragraphs[idx];
+      });
     }
 
-    setText('#artist-north h2', about?.geography?.title);
+    setText('#artist-school h2', about?.school?.title);
+    if (Array.isArray(about?.school?.paragraphs)) {
+      document.querySelectorAll('#artist-school .content-narrow p.dark').forEach((p, idx) => {
+        if (about.school.paragraphs[idx]) p.textContent = about.school.paragraphs[idx];
+      });
+    }
+
+    setText('#artist-routes h2', about?.geography?.title);
     if (Array.isArray(about?.geography?.paragraphs)) {
-      document.querySelectorAll('#artist-north .artist-focus-grid > div p.dark').forEach((p, idx) => {
+      document.querySelectorAll('#artist-routes .artist-focus-grid > div p.dark').forEach((p, idx) => {
         if (about.geography.paragraphs[idx]) p.textContent = about.geography.paragraphs[idx];
       });
     }
 
     setText('#artist-index h2', about?.themes?.title);
     if (Array.isArray(about?.themes?.items)) {
+      const themeContainer = document.querySelector('#artist-index .artist-index-layout > div');
+      if (themeContainer) {
+        themeContainer.innerHTML = [
+          '<div class="artist-index-list">',
+          ...about.themes.items.map((item) => `<span>${item.title}</span>`),
+          '</div>'
+        ].join('');
+      }
+
+      const themeAside = document.querySelector('#artist-index .artist-index-layout .artist-module');
+      if (themeAside) {
+        themeAside.innerHTML = [
+          '<h3 class="dark">Темы и мотивы</h3>',
+          ...about.themes.items.map((item) => `<p class="dark"><strong>${item.title}.</strong> ${item.text || ''}</p>`)
+        ].join('');
+      }
+
       const chips = document.querySelectorAll('#artist-index .artist-index-list span');
       about.themes.items.slice(0, chips.length).forEach((item, idx) => {
         chips[idx].textContent = item.title;
       });
+    }
+
+    setText('#artist-method h2', about?.language?.title);
+    if (Array.isArray(about?.language?.paragraphs)) {
+      const languageIntro = document.querySelector('#artist-method .artist-method-intro');
+      if (languageIntro) {
+        languageIntro.innerHTML = about.language.paragraphs
+          .map((text) => `<p class="dark">${text}</p>`)
+          .join('');
+      }
     }
 
     setText('#artist-legacy h2', about?.legacy?.title);
@@ -273,6 +391,7 @@
         if (about.legacy.paragraphs[idx]) p.textContent = about.legacy.paragraphs[idx];
       });
     }
+
   }
 
   function syncVisit(visit) {
