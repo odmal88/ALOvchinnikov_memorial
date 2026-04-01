@@ -49,6 +49,14 @@
             document.body.appendChild(contentSyncScript);
         }))
         .then(() => {
+            if (window.__contentSyncPromise && typeof window.__contentSyncPromise.then === 'function') {
+                return window.__contentSyncPromise.catch((error) => {
+                    console.error('Content sync promise error:', error);
+                });
+            }
+            return null;
+        })
+        .then(() => {
             const appScript = document.createElement('script');
             appScript.src = 'app.js';
             document.body.appendChild(appScript);

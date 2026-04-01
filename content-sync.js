@@ -39,10 +39,49 @@
     return lines.join('<br>');
   }
 
+  function splitLinesFromNode(node) {
+    if (!node) return [];
+    return node.innerHTML
+      .split(/<br\s*\/?>/i)
+      .map((line) => line.replace(/<[^>]+>/g, '').trim())
+      .filter(Boolean);
+  }
+
+  function findVisitDetailBlockByTitle(title) {
+    const blocks = document.querySelectorAll('#page-visit .visit-details-grid .visit-detail-block');
+    return Array.from(blocks).find((block) => {
+      const h4 = block.querySelector('h4');
+      return h4 && h4.textContent.trim() === title;
+    }) || null;
+  }
+
+  function setVisitDetailValue(title, value, options = {}) {
+    if (!value) return;
+    const { preserveExtraLines = false } = options;
+    const block = findVisitDetailBlockByTitle(title);
+    if (!block) return;
+
+    const valueNode = block.querySelector('p');
+    if (!valueNode) return;
+
+    const newLines = String(value).split('\n').map((line) => line.trim()).filter(Boolean);
+    if (!preserveExtraLines) {
+      valueNode.innerHTML = newLines.join('<br>');
+      return;
+    }
+
+    const existingLines = splitLinesFromNode(valueNode);
+    const mergedLines = existingLines.length > newLines.length
+      ? newLines.concat(existingLines.slice(newLines.length))
+      : newLines;
+
+    valueNode.innerHTML = mergedLines.join('<br>');
+  }
   function syncShared(site) {
     if (!site) return;
 
     const dates = site?.dates?.display;
+    const datesFull = site?.dates?.displayFull;
     const openingShort = site?.opening?.displayShort;
     const openingFull = site?.opening?.display;
     const venueName = site?.venue?.name;
@@ -59,11 +98,11 @@
     setText('#page-home .home-visit-teaser .visit-info h3', venueName);
     setHTML('#page-home .home-visit-teaser .visit-text', [dates, `Открытие выставки — ${openingShort}`, `${city}, ${address}`, admission].filter(Boolean).join('<br>'));
 
-    setText('#page-visit .visit-detail-block:nth-child(1) p', site?.dates?.displayFull || dates);
-    setText('#page-visit .visit-detail-block:nth-child(2) p', openingFull);
-    setHTML('#page-visit .visit-detail-block:nth-child(3) p', [venueName, address, city].filter(Boolean).join('<br>'));
-    setHTML('#page-visit .visit-detail-block:nth-child(4) p', [hours, closedDay].filter(Boolean).join('<br>'));
-    setText('#page-visit .visit-detail-block:nth-child(5) p', admission);
+    setVisitDetailValue('Даты проведения', datesFull || dates);
+    setVisitDetailValue('Открытие выставки', openingFull);
+    setVisitDetailValue('Место', [venueName, address, city].filter(Boolean).join('\n'), { preserveExtraLines: true });
+    setVisitDetailValue('Часы работы', [hours, closedDay].filter(Boolean).join('\n'), { preserveExtraLines: true });
+    setVisitDetailValue('Условия посещения', admission, { preserveExtraLines: true });
 
     setHTML('#siteFooter .footer-brand p', [dates, `${venueName}, ${city}`].filter(Boolean).join('<br>'));
   }
@@ -160,31 +199,28 @@
     setHTML('#page-exhibition .page-hero h1', exhibition?.hero?.title ? `${exhibition.hero.title.replace(/\s+(\S+)$/, ' <em>$1</em>')}` : null);
     setText('#page-exhibition .page-hero-subtitle', exhibition?.hero?.subtitle);
 
-    setText('#page-exhibition .content-section:nth-of-type(1) h2', exhibition?.concept?.title);
-    setText('#page-exhibition .content-section:nth-of-type(1) .subtitle', exhibition?.concept?.subtitle);
-    if (Array.isArray(exhibition?.concept?.paragraphs)) {
-      document.querySelectorAll('#page-exhibition .content-section:nth-of-type(1) .content-narrow p').forEach((p, idx) => {
-        if (exhibition.concept.paragraphs[idx]) p.textContent = exhibition.concept.paragraphs[idx];
-      });
-    }
+    const sectionMap = {
+      concept: exhibition?.concept,
+      unity: exhibition?.unity,
+      mainLines: exhibition?.mainLines,
+      viewerPath: exhibition?.viewerPath,
+      titleMeaning: exhibition?.titleMeaning,
+      structure: exhibition?.structure,
+      continuity: exhibition?.continuity,
+      digitalExtension: exhibition?.digitalExtension
+    };
 
-
-    const sections = [
-      ['unity', 2],
-      ['mainLines', 3],
-      ['viewerPath', 4],
-      ['titleMeaning', 5],
-      ['structure', 6],
-      ['continuity', 7],
-      ['digitalExtension', 8]
-    ];
-
-    sections.forEach(([key, order]) => {
-      const data = exhibition[key];
-      const base = `#page-exhibition .content-section:nth-of-type(${order})`;
+    Object.entries(sectionMap).forEach(([key, data]) => {
+      const base = `#page-exhibition [data-sync-section="${key}"]`;
       setText(`${base} h2`, data?.title);
       setText(`${base} .subtitle`, data?.subtitle);
     });
+
+    if (Array.isArray(exhibition?.concept?.paragraphs)) {
+      document.querySelectorAll('#page-exhibition [data-sync-section="concept"] .content-narrow p').forEach((p, idx) => {
+        if (exhibition.concept.paragraphs[idx]) p.textContent = exhibition.concept.paragraphs[idx];
+      });
+    }
   }
 
   function syncAbout(about) {
@@ -228,7 +264,7 @@
 
     setText('#artist-legacy h2', about?.legacy?.title);
     if (Array.isArray(about?.legacy?.paragraphs)) {
-      document.querySelectorAll('#artist-legacy .artist-legacy-note p.dark').forEach((p, idx) => {
+      document.querySelectorAll('#artist-legacy .content-narrow p').forEach((p, idx) => {
         if (about.legacy.paragraphs[idx]) p.textContent = about.legacy.paragraphs[idx];
       });
     }
@@ -241,18 +277,13 @@
     setText('#page-visit .page-hero-subtitle', visit?.hero?.subtitle);
 
     if (Array.isArray(visit?.details?.items)) {
-      document.querySelectorAll('#page-visit .visit-details-grid .visit-detail-block').forEach((block, idx) => {
-        const item = visit.details.items[idx];
-        if (!item) return;
-        const title = block.querySelector('h4');
-        const value = block.querySelector('p');
-        if (title) title.textContent = item.title || title.textContent;
-        if (value) value.innerHTML = String(item.value || '').replace(/\n/g, '<br>');
+      visit.details.items.forEach((item) => {
+        setVisitDetailValue(item.title, item.value, { preserveExtraLines: true });
       });
     }
   }
 
-  Promise.all([
+  const contentSyncPromise = Promise.all([
     fetchJson(JSON_PATHS.site),
     fetchJson(JSON_PATHS.home),
     fetchJson(JSON_PATHS.exhibition),
@@ -270,5 +301,8 @@
     .catch((error) => {
       console.error('Content sync error:', error);
       window.__contentSyncReady = false;
+      throw error;
     });
+
+  window.__contentSyncPromise = contentSyncPromise;
 })();
