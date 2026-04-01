@@ -225,7 +225,8 @@
         '/digital': 'page-digital',
         '/digital/workshop': 'page-workshop',
         '/digital/animated': 'page-animated',
-        '/visit': 'page-visit'
+        '/visit': 'page-visit',
+        '/contacts': 'page-contacts'
     };
 
     const pageTitles = {
@@ -236,7 +237,13 @@
         '/digital': 'Цифровое пространство — Пространство памяти',
         '/digital/workshop': '3D-мастерская — Пространство памяти',
         '/digital/animated': 'Ожившие полотна — Пространство памяти',
-        '/visit': 'Посещение — Пространство памяти'
+        '/visit': 'Посещение — Пространство памяти',
+        '/contacts': 'Контакты — Пространство памяти'
+    };
+
+    // TODO: замените на реальный email проекта
+    const contactConfig = {
+        email: 'TODO@example.com'
     };
 
     // ══════════════════════════════════════════════
@@ -409,10 +416,11 @@
         card.href = '#/works/' + work.slug;
         card.setAttribute('data-route', '/works/' + work.slug);
         card.style.textDecoration = 'none';
+        card.dataset.category = work.category;
         card.innerHTML = `
             <div class="work-image">
                 <div class="work-image-inner">
-                    <i class="fa-solid ${work.icon}" style="color: var(--gold-muted);"></i>
+                    <span class="artwork-label">${categoryLabels[work.category] || ''}</span>
                 </div>
             </div>
             <h4 style="color: var(--deep-blue);">${work.title}</h4>
@@ -447,6 +455,9 @@
         document.getElementById('workSection').textContent = sectionLabel;
         document.getElementById('workCollection').textContent = work.collection;
         document.getElementById('workDescription').textContent = work.description;
+
+        const workSingleImage = document.querySelector('.work-single-image');
+        if (workSingleImage) workSingleImage.dataset.category = work.category;
 
         const iconEl = document.getElementById('workSingleIcon');
         iconEl.className = `fa-solid ${work.icon}`;
@@ -845,6 +856,50 @@
             const category = card.getAttribute('data-category');
             card.style.display = (filter === 'all' || category === filter) ? '' : 'none';
         });
+    });
+
+    // ══════════════════════════════════════════════
+    // CONTACTS FORM
+    // ══════════════════════════════════════════════
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.contact-prefill-btn');
+        if (!btn) return;
+        const topic = btn.getAttribute('data-topic');
+        const select = document.getElementById('field-topic');
+        const form = document.getElementById('contactForm');
+        if (select) select.value = topic;
+        if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    document.addEventListener('submit', (e) => {
+        const form = e.target.closest('#contactForm');
+        if (!form) return;
+        e.preventDefault();
+
+        const data = new FormData(form);
+        const topic = data.get('topic') || 'Обращение через сайт';
+        const lines = [
+            'Имя: ' + (data.get('name') || '—'),
+            'Подпись для публикации: ' + (data.get('byline') || '—'),
+            'Email: ' + (data.get('email') || '—'),
+            'Телефон / Telegram: ' + (data.get('phone') || '—'),
+            'Тема: ' + topic,
+            '',
+            'Сообщение:',
+            data.get('message') || '—',
+            '',
+            'Разрешение на контакт по поводу публикации: ' + (data.get('allow_contact') ? 'Да' : 'Нет'),
+            'Разрешение на публикацию текста: ' + (data.get('allow_publish') ? 'Да' : 'Нет')
+        ];
+
+        const subject = encodeURIComponent(topic);
+        const body = encodeURIComponent(lines.join('\n'));
+        window.location.href = 'mailto:' + contactConfig.email + '?subject=' + subject + '&body=' + body;
+
+        const success = document.getElementById('contactSuccess');
+        if (success) success.style.display = 'block';
+        form.reset();
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
     // ══════════════════════════════════════════════
