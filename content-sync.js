@@ -196,6 +196,35 @@
 
   function syncExhibition(exhibition) {
     if (!exhibition) return;
+
+    function renderParagraphs(container, paragraphs, className = 'dark') {
+      if (!container || !Array.isArray(paragraphs)) return;
+      container.innerHTML = paragraphs
+        .map((text) => `<p class="${className}">${text}</p>`)
+        .join('');
+    }
+
+    function renderMainLineItems(container, items) {
+      if (!container || !Array.isArray(items)) return;
+      container.innerHTML = items.map((item) => `
+        <article class="expo-editorial-item">
+          <h4>${item.title || ''}</h4>
+          <p>${item.text || ''}</p>
+        </article>
+      `).join('');
+    }
+
+    function renderExpoSections(container, items) {
+      if (!container || !Array.isArray(items)) return;
+      container.innerHTML = items.map((item) => `
+        <div class="expo-card">
+          <div class="expo-card-num">${item.section || ''}</div>
+          <h4>${item.title || ''}</h4>
+          <p>${item.text || ''}</p>
+        </div>
+      `).join('');
+    }
+
     setText('#page-exhibition .page-hero-label', exhibition?.hero?.label);
     setHTML('#page-exhibition .page-hero h1', exhibition?.hero?.title ? `${exhibition.hero.title.replace(/\s+(\S+)$/, ' <em>$1</em>')}` : null);
     setText('#page-exhibition .page-hero-subtitle', exhibition?.hero?.subtitle);
@@ -217,14 +246,74 @@
       setText(`${base} .subtitle`, data?.subtitle);
     });
 
-    if (Array.isArray(exhibition?.concept?.paragraphs)) {
-      const conceptContainer = document.querySelector('#page-exhibition [data-sync-section="concept"] .content-narrow');
-      if (conceptContainer) {
-        const conceptParagraphs = exhibition.concept.paragraphs
-          .map((text) => `<p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">${text}</p>`)
-          .join('');
-        conceptContainer.innerHTML = conceptParagraphs;
-      }
+    renderParagraphs(
+      document.querySelector('#page-exhibition [data-sync-section="concept"] .content-narrow'),
+      exhibition?.concept?.paragraphs
+    );
+
+    renderParagraphs(
+      document.querySelector('#page-exhibition [data-sync-section="continuity"] .content-narrow'),
+      exhibition?.continuity?.paragraphs
+    );
+
+    setText('#page-exhibition [data-sync-section="titleMeaning"] .quote', exhibition?.titleMeaning?.quote);
+    const titleMeaningContainer = document.querySelector('#page-exhibition [data-sync-section="titleMeaning"] .content-narrow');
+    if (titleMeaningContainer && Array.isArray(exhibition?.titleMeaning?.paragraphs)) {
+      const quote = titleMeaningContainer.querySelector('.quote');
+      const paragraphsHtml = exhibition.titleMeaning.paragraphs
+        .map((text) => `<p class="dark">${text}</p>`)
+        .join('');
+      titleMeaningContainer.innerHTML = `${quote ? quote.outerHTML : ''}${paragraphsHtml}`;
+    }
+
+    const unityTextContainer = document.querySelector('#page-exhibition [data-sync-section="unity"] .content-two-col > div');
+    renderParagraphs(unityTextContainer, exhibition?.unity?.paragraphs);
+    setText('#page-exhibition [data-sync-section="unity"] .editorial-note-card h4', exhibition?.unity?.note?.title);
+    setText('#page-exhibition [data-sync-section="unity"] .editorial-note-card p', exhibition?.unity?.note?.text);
+
+    renderMainLineItems(
+      document.querySelector('#page-exhibition [data-sync-section="mainLines"] .expo-editorial-grid'),
+      exhibition?.mainLines?.items
+    );
+
+    renderExpoSections(
+      document.querySelector('#page-exhibition [data-sync-section="structure"] .expo-sections'),
+      exhibition?.structure?.items
+    );
+
+    const viewerPathNarrow = document.querySelector('#page-exhibition [data-sync-section="viewerPath"] .content-narrow');
+    const viewerPathNote = viewerPathNarrow
+      ? viewerPathNarrow.querySelector('.editorial-note-card.compact')
+      : null;
+    const viewerPathNoteHTML = viewerPathNote ? viewerPathNote.outerHTML : '';
+    if (viewerPathNarrow && Array.isArray(exhibition?.viewerPath?.paragraphs)) {
+      viewerPathNarrow.innerHTML = exhibition.viewerPath.paragraphs
+        .map((text) => `<p class="dark">${text}</p>`)
+        .join('') + viewerPathNoteHTML;
+    }
+    setText('#page-exhibition [data-sync-section="viewerPath"] .editorial-note-card.compact h4', exhibition?.viewerPath?.note?.title);
+    setText('#page-exhibition [data-sync-section="viewerPath"] .editorial-note-card.compact p', exhibition?.viewerPath?.note?.text);
+
+    const digitalNarrow = document.querySelector('#page-exhibition [data-sync-section="digitalExtension"] .content-narrow');
+    const digitalButtonsWrap = digitalNarrow
+      ? digitalNarrow.querySelector('div[style*="display: flex"]')
+      : null;
+    const digitalButtonsHTML = digitalButtonsWrap ? digitalButtonsWrap.outerHTML : '';
+    if (digitalNarrow && Array.isArray(exhibition?.digitalExtension?.paragraphs)) {
+      digitalNarrow.innerHTML = exhibition.digitalExtension.paragraphs
+        .map((text) => `<p class="dark">${text}</p>`)
+        .join('') + digitalButtonsHTML;
+    }
+    const syncedDigitalButtonsWrap = document.querySelector('#page-exhibition [data-sync-section="digitalExtension"] .content-narrow > div[style*="display: flex"]');
+    if (syncedDigitalButtonsWrap && Array.isArray(exhibition?.digitalExtension?.buttons)) {
+      const buttons = syncedDigitalButtonsWrap.querySelectorAll('a');
+      exhibition.digitalExtension.buttons.slice(0, buttons.length).forEach((item, idx) => {
+        buttons[idx].textContent = item.label || buttons[idx].textContent;
+        if (item.route) {
+          buttons[idx].setAttribute('data-route', item.route);
+          buttons[idx].setAttribute('href', `#${item.route}`);
+        }
+      });
     }
   }
 
