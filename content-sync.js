@@ -77,6 +77,7 @@
 
     valueNode.innerHTML = mergedLines.join('<br>');
   }
+
   function syncShared(site) {
     if (!site) return;
 
@@ -217,9 +218,13 @@
     });
 
     if (Array.isArray(exhibition?.concept?.paragraphs)) {
-      document.querySelectorAll('#page-exhibition [data-sync-section="concept"] .content-narrow p').forEach((p, idx) => {
-        if (exhibition.concept.paragraphs[idx]) p.textContent = exhibition.concept.paragraphs[idx];
-      });
+      const conceptContainer = document.querySelector('#page-exhibition [data-sync-section="concept"] .content-narrow');
+      if (conceptContainer) {
+        const conceptParagraphs = exhibition.concept.paragraphs
+          .map((text) => `<p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.8;">${text}</p>`)
+          .join('');
+        conceptContainer.innerHTML = conceptParagraphs;
+      }
     }
   }
 
