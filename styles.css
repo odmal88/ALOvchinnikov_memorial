@@ -1682,11 +1682,13 @@
             line-height: 1.65;
             color: var(--text-muted);
         }
-        .artist-index-layout {
+        .artist-index-flow {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 28px;
-            align-items: start;
+            gap: 18px;
+        }
+        .artist-index-intro {
+            margin-bottom: 0;
+            max-width: 860px;
         }
         .artist-index-layout--stacked {
             grid-template-columns: 1fr;
