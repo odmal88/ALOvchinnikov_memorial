@@ -1390,6 +1390,9 @@
             padding-top: 124px;
             padding-bottom: 52px;
         }
+        #page-artist .content-section {
+            padding: 64px 48px;
+        }
         .artist-dossier-layout {
             display: grid;
             grid-template-columns: minmax(0, 240px) 1fr;
@@ -1449,6 +1452,10 @@
             gap: 36px;
             align-items: start;
         }
+        .artist-intro-grid--text-only {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
         .artist-intro-text p {
             color: var(--text-muted);
             margin-bottom: 16px;
@@ -1493,8 +1500,9 @@
 
         .artist-focus-grid {
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 28px;
+            grid-template-columns: 1fr;
+            gap: 0;
+            max-width: 860px;
         }
         .artist-focus-card {
             background: #fff;
@@ -2434,6 +2442,7 @@
             .page-hero { padding: 120px 24px 56px; }
             .breadcrumbs { padding: 16px 24px; }
             .content-section { padding: 56px 24px; }
+            #page-artist .content-section { padding: 48px 24px; }
             .content-two-col { grid-template-columns: 1fr; gap: 40px; }
             .catalog-grid { grid-template-columns: 1fr 1fr; }
             .work-single-grid { grid-template-columns: 1fr; }
