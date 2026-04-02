@@ -352,16 +352,14 @@
 
     setText('#artist-index h2', about?.themes?.title);
     if (Array.isArray(about?.themes?.items)) {
-      const themeContainer = document.querySelector('#artist-index .artist-index-layout > div');
+      const themeContainer = document.querySelector('#artist-index .artist-index-list');
       if (themeContainer) {
-        themeContainer.innerHTML = [
-          '<div class="artist-index-list">',
-          ...about.themes.items.map((item) => `<span>${item.title}</span>`),
-          '</div>'
-        ].join('');
+        themeContainer.innerHTML = about.themes.items
+          .map((item) => `<span>${item.title}</span>`)
+          .join('');
       }
 
-      const themeAside = document.querySelector('#artist-index .artist-index-layout .artist-module');
+      const themeAside = document.querySelector('#artist-index .artist-module');
       if (themeAside) {
         themeAside.innerHTML = [
           '<h3 class="dark">Темы и мотивы</h3>',
