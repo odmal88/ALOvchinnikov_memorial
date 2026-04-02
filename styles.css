@@ -1561,9 +1561,10 @@
 
         .artist-index-list {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(260px, 1fr));
             gap: 10px 24px;
-            max-width: 820px;
+            max-width: none;
+            width: 100%;
         }
         .artist-index-list span {
             font-family: var(--serif);
@@ -1687,6 +1688,19 @@
             gap: 28px;
             align-items: start;
         }
+        .artist-index-layout--stacked {
+            grid-template-columns: 1fr;
+        }
+        .artist-index-summary {
+            max-width: 100%;
+        }
+        .artist-index-lead {
+            max-width: 860px;
+            margin-bottom: 18px;
+        }
+        .artist-index-detail {
+            max-width: 860px;
+        }
         .section-status-note {
             margin: 8px 0 0;
             font-size: 13px;
@@ -1723,9 +1737,6 @@
             }
             .artist-archive-grid {
                 grid-template-columns: repeat(2, 1fr);
-            }
-            .artist-index-layout {
-                grid-template-columns: 1fr;
             }
         }
         @media (max-width: 480px) {
@@ -2429,7 +2440,6 @@
             .expo-sections { grid-template-columns: 1fr; }
             .expo-editorial-grid { grid-template-columns: 1fr; }
             .digital-hub-grid { grid-template-columns: 1fr; }
-            .artist-index-layout { grid-template-columns: 1fr; }
             .animated-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 560px) {
