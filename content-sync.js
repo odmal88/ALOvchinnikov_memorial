@@ -4,7 +4,8 @@
     home: '09_SOURCE_JSON/pages/home.json',
     exhibition: '09_SOURCE_JSON/pages/exhibition.json',
     about: '09_SOURCE_JSON/pages/about.json',
-    visit: '09_SOURCE_JSON/pages/visit.json'
+    visit: '09_SOURCE_JSON/pages/visit.json',
+    route: '09_SOURCE_JSON/pages/route.json'
   };
 
   function fetchJson(path) {
@@ -384,6 +385,34 @@
 
   }
 
+  function syncRouteMap(routeData) {
+    const section = document.querySelector('#artist-routes');
+    if (!section) return;
+
+    const note = section.querySelector('.artist-routes-note');
+    const list = section.querySelector('.artist-routes-list');
+    const link = section.querySelector('.artist-routes-link');
+
+    if (!note || !list) return;
+
+    const intro = typeof routeData?.intro === 'string' ? routeData.intro.trim() : '';
+    if (intro) {
+      const sentenceMatch = intro.match(/[^.!?]+[.!?]/);
+      note.textContent = sentenceMatch ? sentenceMatch[0].trim() : intro;
+    }
+
+    const points = Array.isArray(routeData?.points) ? routeData.points : [];
+    list.innerHTML = points
+      .map((point) => `<li>${point?.title || point?.shortLabel || ''}</li>`)
+      .filter(Boolean)
+      .join('');
+
+    if (link) {
+      link.setAttribute('href', '#/route');
+      link.setAttribute('data-route', '/route');
+    }
+  }
+
   function syncVisit(visit) {
     if (!visit) return;
     setText('#page-visit .page-hero-label', visit?.hero?.label || 'Посещение');
@@ -402,14 +431,16 @@
     fetchJson(JSON_PATHS.home),
     fetchJson(JSON_PATHS.exhibition),
     fetchJson(JSON_PATHS.about),
-    fetchJson(JSON_PATHS.visit)
+    fetchJson(JSON_PATHS.visit),
+    fetchJson(JSON_PATHS.route)
   ])
-    .then(([site, home, exhibition, about, visit]) => {
+    .then(([site, home, exhibition, about, visit, route]) => {
       syncShared(site);
       syncHome(home);
       syncExhibition(exhibition);
       syncAbout(about);
       syncVisit(visit);
+      syncRouteMap(route);
       window.__contentSyncReady = true;
     })
     .catch((error) => {
