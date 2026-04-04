@@ -1497,43 +1497,42 @@
             grid-template-columns: 1.2fr 1fr;
             gap: 28px;
         }
-        .artist-focus-card {
+        .artist-routes-compact {
             background: #fff;
             border: 1px solid var(--border-light);
-            padding: 22px;
+            padding: 20px;
+            display: grid;
+            gap: 14px;
+            align-content: start;
+            min-width: 0;
         }
-        .artist-focus-image {
-            aspect-ratio: var(--artwork-ratio);
-            background: var(--deep-blue);
-            border: 1px solid var(--border-dark);
-            margin-bottom: 16px;
+        .artist-routes-note {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .artist-routes-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
-        .artist-focus-image i {
-            color: var(--gold-muted);
-            opacity: 0.45;
-            font-size: 34px;
-        }
-        .artist-focus-image span {
-            font-size: 11px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text-light);
-            opacity: 0.45;
-            text-align: center;
-            padding: 0 14px;
-        }
-        .artist-focus-card h4 {
-            font-family: var(--serif);
-            font-size: 21px;
-            font-weight: 400;
+        .artist-routes-list li {
+            border: 1px solid rgba(18,28,57,0.14);
+            background: #f8f5ef;
             color: var(--deep-blue);
-            margin-bottom: 10px;
+            font-size: 12px;
+            line-height: 1.3;
+            padding: 5px 9px;
+            border-radius: 999px;
         }
+        .artist-routes-link {
+            justify-self: start;
+        }
+
 
         .artist-method-grid {
             display: grid;
@@ -1732,8 +1731,9 @@
             .artist-focus-grid {
                 grid-template-columns: 1fr;
             }
-            .artist-focus-card {
+            .artist-routes-compact {
                 order: 2;
+                padding: 16px;
             }
             .artist-diptych {
                 grid-template-columns: 1fr;
@@ -1761,7 +1761,12 @@
             .artist-theme-grid {
                 grid-template-columns: 1fr;
             }
+            .artist-routes-list li {
+                font-size: 11px;
+                padding: 4px 8px;
+            }
         }
+
 
         /* ── Timeline ── */
         .timeline {
