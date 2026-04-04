@@ -85,13 +85,18 @@
                         <p class="dark"></p>
                         <p class="dark"></p>
                     </div>
-                    <aside class="artist-focus-card">
-                        <div class="artist-focus-image">
-                            <i class="fa-solid fa-mountain-sun"></i>
-                            <span>Северный лист и этюд</span>
+                    <aside class="artist-route-map-card" aria-label="Схематическая карта маршрутов художника">
+                        <div class="artist-route-map" role="group" aria-label="Карта маршрутов">
+                            <svg class="artist-route-map-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                                <path class="artist-route-map-outline" d="M13 20 L29 13 L48 12 L63 17 L74 29 L68 43 L60 54 L55 68 L49 77 L43 89 L34 95 L30 91 L38 78 L45 64 L48 52 L41 44 L28 35 L18 30 Z"></path>
+                                <path class="artist-route-map-south" d="M39 88 L48 92 L44 97 L35 94 Z"></path>
+                                <polyline class="artist-route-map-route" points=""></polyline>
+                            </svg>
+                            <div class="artist-route-map-points" role="list"></div>
                         </div>
-                        <div class="artist-fact-box compact">
-                            <span style="font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; color: var(--text-muted); text-transform: uppercase;">Важно для понимания</span>
+                        <div class="artist-route-map-caption" aria-live="polite">
+                            <h4></h4>
+                            <p></p>
                         </div>
                     </aside>
                 </div>
