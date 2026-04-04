@@ -1,3 +1,118 @@
+<style>
+#page-artist .artist-route-map-card {
+  display: grid;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid var(--border-light);
+  padding: 22px;
+  align-self: start;
+}
+
+#page-artist .artist-route-map-shell {
+  background: #E7E1D8;
+  border: 1px solid rgba(18, 28, 57, 0.12);
+  padding: 12px;
+}
+
+#page-artist .artist-route-map-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+#page-artist .artist-route-map-outline,
+#page-artist .artist-route-map-crimea {
+  fill: none;
+  stroke: #8F9399;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+#page-artist .artist-route-map-point {
+  fill: #B8894D;
+  stroke: #F4EFE8;
+  stroke-width: 6;
+  vector-effect: non-scaling-stroke;
+  cursor: pointer;
+  transition: fill 0.2s ease, stroke 0.2s ease, opacity 0.2s ease;
+}
+
+#page-artist .artist-route-map-point:hover {
+  opacity: 0.9;
+}
+
+#page-artist .artist-route-map-point.is-active {
+  fill: #7A542E;
+  stroke: #FBF8F3;
+}
+
+#page-artist .artist-route-map-toolbar {
+  display: grid;
+  gap: 8px;
+}
+
+#page-artist .artist-route-map-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-muted);
+}
+
+#page-artist .artist-route-select {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--deep-blue);
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 18px;
+  padding: 12px 16px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#page-artist .artist-route-select:focus {
+  border-color: var(--gold);
+}
+
+#page-artist .artist-route-map-detail {
+  display: grid;
+  gap: 8px;
+}
+
+#page-artist .artist-route-map-detail h3 {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--deep-blue);
+  margin: 0;
+}
+
+#page-artist .artist-route-map-detail p {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  #page-artist .artist-route-map-card {
+    padding: 18px;
+  }
+
+  #page-artist .artist-route-map-shell {
+    padding: 10px;
+  }
+}
+</style>
+
     <div class="page" id="page-artist">
 
         <div class="page-hero">
@@ -85,13 +200,21 @@
                         <p class="dark"></p>
                         <p class="dark"></p>
                     </div>
-                    <aside class="artist-focus-card">
-                        <div class="artist-focus-image">
-                            <i class="fa-solid fa-mountain-sun"></i>
-                            <span>Северный лист и этюд</span>
+                    <aside class="artist-route-map-card" aria-label="Карта маршрутов художника">
+                        <div class="artist-route-map-shell">
+                            <svg class="artist-route-map-svg" viewBox="0 0 1000 860" role="img" aria-label="Ключевые места художественного маршрута Александра Овчинникова">
+                                <path class="artist-route-map-outline" d="M165 150 L250 100 L340 96 L420 118 L478 154 L525 195 L571 206 L648 202 L720 215 L784 245 L850 290 L897 340 L920 406 L914 460 L877 527 L824 581 L748 625 L705 668 L648 720 L585 760 L525 785 L455 797 L410 790 L365 752 L327 700 L300 646 L265 604 L218 552 L186 488 L162 418 L145 346 L140 266 L148 192 Z"></path>
+                                <path class="artist-route-map-crimea" d="M434 798 L484 811 L535 840 L500 864 L437 860 L404 835 Z"></path>
+                                <g class="artist-route-map-markers"></g>
+                            </svg>
                         </div>
-                        <div class="artist-fact-box compact">
-                            <span style="font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; color: var(--text-muted); text-transform: uppercase;">Важно для понимания</span>
+                        <div class="artist-route-map-toolbar">
+                            <label class="artist-route-map-label" for="artist-route-select">Все подтверждённые места маршрута</label>
+                            <select id="artist-route-select" class="artist-route-select" aria-label="Выбрать место маршрута"></select>
+                        </div>
+                        <div class="artist-route-map-detail">
+                            <h3></h3>
+                            <p></p>
                         </div>
                     </aside>
                 </div>
