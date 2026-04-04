@@ -4,7 +4,8 @@
     home: '09_SOURCE_JSON/pages/home.json',
     exhibition: '09_SOURCE_JSON/pages/exhibition.json',
     about: '09_SOURCE_JSON/pages/about.json',
-    visit: '09_SOURCE_JSON/pages/visit.json'
+    visit: '09_SOURCE_JSON/pages/visit.json',
+    route: '09_SOURCE_JSON/pages/route.json'
   };
 
   function fetchJson(path) {
@@ -384,6 +385,75 @@
 
   }
 
+  function syncRouteMap(routeData) {
+    const section = document.querySelector('#artist-routes');
+    if (!section) return;
+
+    const map = section.querySelector('.artist-route-map');
+    const pointsWrap = section.querySelector('.artist-route-map-points');
+    const captionTitle = section.querySelector('.artist-route-map-caption h4');
+    const captionText = section.querySelector('.artist-route-map-caption p');
+    const routeLine = section.querySelector('.artist-route-map-route');
+
+    if (!map || !pointsWrap || !captionTitle || !captionText || !routeLine) return;
+
+    const points = Array.isArray(routeData?.points)
+      ? routeData.points.filter((point) => Number.isFinite(Number(point?.x)) && Number.isFinite(Number(point?.y)))
+      : [];
+
+    if (!points.length) {
+      pointsWrap.innerHTML = '';
+      routeLine.setAttribute('points', '');
+      captionTitle.textContent = '';
+      captionText.textContent = '';
+      return;
+    }
+
+    routeLine.setAttribute('points', points.map((point) => `${point.x},${point.y}`).join(' '));
+    pointsWrap.innerHTML = '';
+
+    function setActivePoint(pointId) {
+      const active = points.find((item) => item.id === pointId) || points[0];
+      captionTitle.textContent = active.title || '';
+      captionText.textContent = active.text || '';
+
+      pointsWrap.querySelectorAll('.artist-route-point').forEach((button) => {
+        const isActive = button.dataset.pointId === active.id;
+        button.classList.toggle('is-active', isActive);
+        button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    points.forEach((point, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'artist-route-point';
+      button.dataset.pointId = point.id || `route-point-${index}`;
+      button.style.left = `${Math.min(100, Math.max(0, Number(point.x)))}%`;
+      button.style.top = `${Math.min(100, Math.max(0, Number(point.y)))}%`;
+      button.setAttribute('role', 'listitem');
+      button.setAttribute('aria-label', point.title || point.shortLabel || `Точка ${index + 1}`);
+      button.setAttribute('aria-pressed', 'false');
+
+      const marker = document.createElement('span');
+      marker.className = 'artist-route-point-dot';
+      marker.setAttribute('aria-hidden', 'true');
+
+      const label = document.createElement('span');
+      label.className = 'artist-route-point-label';
+      label.textContent = point.shortLabel || point.title || `Точка ${index + 1}`;
+
+      button.append(marker, label);
+      button.addEventListener('click', () => setActivePoint(button.dataset.pointId));
+      button.addEventListener('mouseenter', () => setActivePoint(button.dataset.pointId));
+      button.addEventListener('focus', () => setActivePoint(button.dataset.pointId));
+
+      pointsWrap.appendChild(button);
+    });
+
+    setActivePoint(points[0].id);
+  }
+
   function syncVisit(visit) {
     if (!visit) return;
     setText('#page-visit .page-hero-label', visit?.hero?.label || 'Посещение');
@@ -402,14 +472,16 @@
     fetchJson(JSON_PATHS.home),
     fetchJson(JSON_PATHS.exhibition),
     fetchJson(JSON_PATHS.about),
-    fetchJson(JSON_PATHS.visit)
+    fetchJson(JSON_PATHS.visit),
+    fetchJson(JSON_PATHS.route)
   ])
-    .then(([site, home, exhibition, about, visit]) => {
+    .then(([site, home, exhibition, about, visit, route]) => {
       syncShared(site);
       syncHome(home);
       syncExhibition(exhibition);
       syncAbout(about);
       syncVisit(visit);
+      syncRouteMap(route);
       window.__contentSyncReady = true;
     })
     .catch((error) => {
