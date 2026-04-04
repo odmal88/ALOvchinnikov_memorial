@@ -85,13 +85,20 @@
                         <p class="dark"></p>
                         <p class="dark"></p>
                     </div>
-                    <aside class="artist-focus-card">
-                        <div class="artist-focus-image">
-                            <i class="fa-solid fa-mountain-sun"></i>
-                            <span>Северный лист и этюд</span>
+                    <aside class="artist-route-map-card" aria-label="Географическая карта маршрутов художника">
+                        <div class="artist-route-map" role="group" aria-label="Географическая карта ключевых мест">
+                            <svg class="artist-route-map-svg" viewBox="0 0 420 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                                <rect class="artist-route-map-water" x="0" y="0" width="420" height="300"></rect>
+                                <path class="artist-route-map-land" d="M52 40 L88 24 L128 22 L161 30 L185 39 L202 53 L214 66 L229 70 L250 68 L279 74 L306 86 L333 103 L352 126 L356 148 L349 170 L333 190 L313 203 L291 214 L278 229 L263 240 L244 249 L225 256 L205 262 L185 264 L169 257 L158 246 L148 230 L138 219 L122 207 L108 193 L95 178 L85 164 L75 149 L66 133 L59 118 L53 101 L50 84 L48 68 Z"></path>
+                                <path class="artist-route-map-crimea" d="M178 266 L193 270 L208 279 L201 287 L185 286 L171 277 Z"></path>
+                            </svg>
+                            <div class="artist-route-map-points" role="list"></div>
+                            <div class="artist-route-map-active-label" aria-hidden="true"></div>
                         </div>
-                        <div class="artist-fact-box compact">
-                            <span style="font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; color: var(--text-muted); text-transform: uppercase;">Важно для понимания</span>
+                        <div class="artist-route-map-legend" role="list" aria-label="Легенда точек маршрута"></div>
+                        <div class="artist-route-map-caption" aria-live="polite">
+                            <h4></h4>
+                            <p></p>
                         </div>
                     </aside>
                 </div>
