@@ -4,7 +4,8 @@
     home: '09_SOURCE_JSON/pages/home.json',
     exhibition: '09_SOURCE_JSON/pages/exhibition.json',
     about: '09_SOURCE_JSON/pages/about.json',
-    visit: '09_SOURCE_JSON/pages/visit.json'
+    visit: '09_SOURCE_JSON/pages/visit.json',
+    route: '09_SOURCE_JSON/pages/route.json'
   };
 
   function fetchJson(path) {
@@ -384,6 +385,87 @@
 
   }
 
+  function syncRouteMap(routeData) {
+    const section = document.querySelector('#artist-routes');
+    if (!section) return;
+
+    const mapImage = section.querySelector('.artist-route-map-image');
+    const pointsWrap = section.querySelector('.artist-route-map-points');
+    const chipsWrap = section.querySelector('.artist-route-map-chips');
+    const detailTitle = section.querySelector('.artist-route-map-detail h4');
+    const detailText = section.querySelector('.artist-route-map-detail-text');
+    const detailMeta = section.querySelector('.artist-route-map-detail-meta');
+
+    if (!mapImage || !pointsWrap || !chipsWrap || !detailTitle || !detailText || !detailMeta) return;
+
+    const mapData = routeData?.map || {};
+    if (typeof mapData.asset === 'string' && mapData.asset.trim()) {
+      mapImage.src = mapData.asset;
+    }
+
+    const points = Array.isArray(routeData?.points)
+      ? routeData.points.filter((point) => Number.isFinite(Number(point?.x)) && Number.isFinite(Number(point?.y)))
+      : [];
+
+    pointsWrap.innerHTML = '';
+    chipsWrap.innerHTML = '';
+
+    function setActivePoint(pointId) {
+      const active = points.find((item) => item.id === pointId) || points[0];
+      if (!active) {
+        detailTitle.textContent = '';
+        detailText.textContent = '';
+        detailMeta.textContent = '';
+        return;
+      }
+
+      detailTitle.textContent = active.title || '';
+      detailText.textContent = active.text || '';
+      detailMeta.textContent = [active.period, active.kind].filter(Boolean).join(' · ');
+
+      section.querySelectorAll('[data-route-point-id]').forEach((node) => {
+        const isActive = node.dataset.routePointId === active.id;
+        node.classList.toggle('is-active', isActive);
+        node.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    points.forEach((point, index) => {
+      const pointId = point.id || `route-point-${index}`;
+      const x = Math.max(0, Math.min(100, Number(point.x)));
+      const y = Math.max(0, Math.min(100, Number(point.y)));
+
+      const marker = document.createElement('button');
+      marker.type = 'button';
+      marker.className = 'artist-route-marker';
+      marker.dataset.routePointId = pointId;
+      marker.style.left = `${x}%`;
+      marker.style.top = `${y}%`;
+      marker.setAttribute('role', 'listitem');
+      marker.setAttribute('aria-label', point.title || point.shortLabel || `Точка ${index + 1}`);
+      marker.setAttribute('aria-pressed', 'false');
+      marker.innerHTML = '<span aria-hidden="true"></span>';
+
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'artist-route-chip';
+      chip.dataset.routePointId = pointId;
+      chip.setAttribute('role', 'listitem');
+      chip.setAttribute('aria-pressed', 'false');
+      chip.textContent = point.title || point.shortLabel || `Точка ${index + 1}`;
+
+      [marker, chip].forEach((control) => {
+        control.addEventListener('click', () => setActivePoint(pointId));
+        control.addEventListener('focus', () => setActivePoint(pointId));
+      });
+
+      pointsWrap.appendChild(marker);
+      chipsWrap.appendChild(chip);
+    });
+
+    setActivePoint(points[0]?.id);
+  }
+
   function syncVisit(visit) {
     if (!visit) return;
     setText('#page-visit .page-hero-label', visit?.hero?.label || 'Посещение');
@@ -402,14 +484,16 @@
     fetchJson(JSON_PATHS.home),
     fetchJson(JSON_PATHS.exhibition),
     fetchJson(JSON_PATHS.about),
-    fetchJson(JSON_PATHS.visit)
+    fetchJson(JSON_PATHS.visit),
+    fetchJson(JSON_PATHS.route)
   ])
-    .then(([site, home, exhibition, about, visit]) => {
+    .then(([site, home, exhibition, about, visit, route]) => {
       syncShared(site);
       syncHome(home);
       syncExhibition(exhibition);
       syncAbout(about);
       syncVisit(visit);
+      syncRouteMap(route);
       window.__contentSyncReady = true;
     })
     .catch((error) => {
