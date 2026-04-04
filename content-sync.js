@@ -352,25 +352,17 @@
 
     setText('#artist-index h2', about?.themes?.title);
     if (Array.isArray(about?.themes?.items)) {
-      const themeContainer = document.querySelector('#artist-index .artist-index-list');
+      const themeContainer = document.querySelector('#artist-index .artist-theme-grid');
       if (themeContainer) {
         themeContainer.innerHTML = about.themes.items
-          .map((item) => `<span>${item.title}</span>`)
+          .map((item) => `
+            <article class="artist-theme-card">
+              <h3>${item.title || ''}</h3>
+              <p class="dark">${item.text || ''}</p>
+            </article>
+          `)
           .join('');
       }
-
-      const themeAside = document.querySelector('#artist-index .artist-module');
-      if (themeAside) {
-        themeAside.innerHTML = [
-          '<h3 class="dark">Темы и мотивы</h3>',
-          ...about.themes.items.map((item) => `<p class="dark"><strong>${item.title}.</strong> ${item.text || ''}</p>`)
-        ].join('');
-      }
-
-      const chips = document.querySelectorAll('#artist-index .artist-index-list span');
-      about.themes.items.slice(0, chips.length).forEach((item, idx) => {
-        chips[idx].textContent = item.title;
-      });
     }
 
     setText('#artist-method h2', about?.language?.title);
