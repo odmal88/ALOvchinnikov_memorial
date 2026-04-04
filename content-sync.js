@@ -4,7 +4,8 @@
     home: '09_SOURCE_JSON/pages/home.json',
     exhibition: '09_SOURCE_JSON/pages/exhibition.json',
     about: '09_SOURCE_JSON/pages/about.json',
-    visit: '09_SOURCE_JSON/pages/visit.json'
+    visit: '09_SOURCE_JSON/pages/visit.json',
+    route: '09_SOURCE_JSON/pages/route.json'
   };
 
   function fetchJson(path) {
@@ -384,6 +385,129 @@
 
   }
 
+  function syncRouteMap(routeData) {
+    const section = document.querySelector('#artist-routes');
+    if (!section) return;
+
+    const map = section.querySelector('.artist-route-map');
+    const pointsWrap = section.querySelector('.artist-route-map-points');
+    const legendWrap = section.querySelector('.artist-route-map-legend');
+    const captionTitle = section.querySelector('.artist-route-map-caption h4');
+    const captionText = section.querySelector('.artist-route-map-caption p');
+    const routeLine = section.querySelector('.artist-route-map-route');
+
+    if (!map || !pointsWrap || !legendWrap || !captionTitle || !captionText || !routeLine) return;
+
+    const GEO_BOUNDS = {
+      minLat: 43.5,
+      maxLat: 66.5,
+      minLon: 26,
+      maxLon: 48
+    };
+
+    const MAP_FRAME = {
+      left: 36,
+      top: 26,
+      width: 266,
+      height: 226
+    };
+
+    function projectPoint(lat, lon) {
+      const clampedLat = Math.max(GEO_BOUNDS.minLat, Math.min(GEO_BOUNDS.maxLat, Number(lat)));
+      const clampedLon = Math.max(GEO_BOUNDS.minLon, Math.min(GEO_BOUNDS.maxLon, Number(lon)));
+      const lonRange = GEO_BOUNDS.maxLon - GEO_BOUNDS.minLon;
+      const latRange = GEO_BOUNDS.maxLat - GEO_BOUNDS.minLat;
+      const x = MAP_FRAME.left + ((clampedLon - GEO_BOUNDS.minLon) / lonRange) * MAP_FRAME.width;
+      const y = MAP_FRAME.top + ((GEO_BOUNDS.maxLat - clampedLat) / latRange) * MAP_FRAME.height;
+      return { x, y };
+    }
+
+    const points = Array.isArray(routeData?.points)
+      ? routeData.points
+        .filter((point) => Number.isFinite(Number(point?.lat)) && Number.isFinite(Number(point?.lon)))
+        .map((point) => {
+          const projected = projectPoint(point.lat, point.lon);
+          return {
+            ...point,
+            projectedX: projected.x,
+            projectedY: projected.y
+          };
+        })
+      : [];
+
+    if (!points.length) {
+      pointsWrap.innerHTML = '';
+      legendWrap.innerHTML = '';
+      routeLine.setAttribute('points', '');
+      captionTitle.textContent = '';
+      captionText.textContent = '';
+      return;
+    }
+
+    routeLine.setAttribute(
+      'points',
+      points.map((point) => `${point.projectedX.toFixed(1)},${point.projectedY.toFixed(1)}`).join(' ')
+    );
+
+    pointsWrap.innerHTML = '';
+    legendWrap.innerHTML = '';
+
+    function setActivePoint(pointId) {
+      const active = points.find((item) => item.id === pointId) || points[0];
+      captionTitle.textContent = active.title || '';
+      captionText.textContent = active.text || '';
+
+      section.querySelectorAll('[data-route-point-id]').forEach((el) => {
+        const isActive = el.dataset.routePointId === active.id;
+        el.classList.toggle('is-active', isActive);
+        if (el.matches('button')) el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    points.forEach((point, index) => {
+      const pointId = point.id || `route-point-${index}`;
+
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'artist-route-point';
+      button.dataset.routePointId = pointId;
+      button.style.left = `${(point.projectedX / 360) * 100}%`;
+      button.style.top = `${(point.projectedY / 270) * 100}%`;
+      button.setAttribute('role', 'listitem');
+      button.setAttribute('aria-label', point.title || point.shortLabel || `Точка ${index + 1}`);
+      button.setAttribute('aria-pressed', 'false');
+
+      const marker = document.createElement('span');
+      marker.className = 'artist-route-point-dot';
+      marker.setAttribute('aria-hidden', 'true');
+
+      const label = document.createElement('span');
+      label.className = 'artist-route-point-label';
+      label.textContent = point.shortLabel || point.title || `Точка ${index + 1}`;
+
+      button.append(marker, label);
+
+      const legendButton = document.createElement('button');
+      legendButton.type = 'button';
+      legendButton.className = 'artist-route-legend-item';
+      legendButton.dataset.routePointId = pointId;
+      legendButton.setAttribute('role', 'listitem');
+      legendButton.setAttribute('aria-pressed', 'false');
+      legendButton.textContent = point.title || point.shortLabel || `Точка ${index + 1}`;
+
+      [button, legendButton].forEach((control) => {
+        control.addEventListener('click', () => setActivePoint(pointId));
+        control.addEventListener('focus', () => setActivePoint(pointId));
+      });
+      button.addEventListener('mouseenter', () => setActivePoint(pointId));
+
+      pointsWrap.appendChild(button);
+      legendWrap.appendChild(legendButton);
+    });
+
+    setActivePoint(points[0].id);
+  }
+
   function syncVisit(visit) {
     if (!visit) return;
     setText('#page-visit .page-hero-label', visit?.hero?.label || 'Посещение');
@@ -402,14 +526,16 @@
     fetchJson(JSON_PATHS.home),
     fetchJson(JSON_PATHS.exhibition),
     fetchJson(JSON_PATHS.about),
-    fetchJson(JSON_PATHS.visit)
+    fetchJson(JSON_PATHS.visit),
+    fetchJson(JSON_PATHS.route)
   ])
-    .then(([site, home, exhibition, about, visit]) => {
+    .then(([site, home, exhibition, about, visit, route]) => {
       syncShared(site);
       syncHome(home);
       syncExhibition(exhibition);
       syncAbout(about);
       syncVisit(visit);
+      syncRouteMap(route);
       window.__contentSyncReady = true;
     })
     .catch((error) => {

@@ -85,13 +85,21 @@
                         <p class="dark"></p>
                         <p class="dark"></p>
                     </div>
-                    <aside class="artist-focus-card">
-                        <div class="artist-focus-image">
-                            <i class="fa-solid fa-mountain-sun"></i>
-                            <span>Северный лист и этюд</span>
+                    <aside class="artist-route-map-card" aria-label="Географическая карта маршрутов художника">
+                        <div class="artist-route-map" role="group" aria-label="Географическая карта ключевых мест">
+                            <svg class="artist-route-map-svg" viewBox="0 0 360 270" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                                <rect class="artist-route-map-water" x="0" y="0" width="360" height="270"></rect>
+                                <path class="artist-route-map-land" d="M26 36 L58 24 L96 21 L128 28 L151 33 L181 32 L216 43 L244 58 L275 73 L298 95 L309 120 L298 147 L281 169 L262 181 L249 197 L227 210 L212 223 L192 232 L168 235 L147 225 L133 208 L124 193 L113 180 L95 162 L81 146 L65 130 L49 113 L36 96 L30 78 Z"></path>
+                                <path class="artist-route-map-crimea" d="M144 235 L162 240 L176 250 L167 257 L150 256 L137 248 Z"></path>
+                                <path class="artist-route-map-volga" d="M194 84 C190 98, 198 112, 205 127 C210 138, 213 150, 217 165 C222 180, 230 191, 236 201"></path>
+                                <polyline class="artist-route-map-route" points=""></polyline>
+                            </svg>
+                            <div class="artist-route-map-points" role="list"></div>
                         </div>
-                        <div class="artist-fact-box compact">
-                            <span style="font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; color: var(--text-muted); text-transform: uppercase;">Важно для понимания</span>
+                        <div class="artist-route-map-legend" role="list" aria-label="Легенда точек маршрута"></div>
+                        <div class="artist-route-map-caption" aria-live="polite">
+                            <h4></h4>
+                            <p></p>
                         </div>
                     </aside>
                 </div>
