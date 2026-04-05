@@ -1497,43 +1497,103 @@
             grid-template-columns: 1.2fr 1fr;
             gap: 28px;
         }
-        .artist-focus-card {
+        .artist-route-map-card {
             background: #fff;
             border: 1px solid var(--border-light);
-            padding: 22px;
-        }
-        .artist-focus-image {
-            aspect-ratio: var(--artwork-ratio);
-            background: var(--deep-blue);
-            border: 1px solid var(--border-dark);
-            margin-bottom: 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            padding: 18px;
+            display: grid;
             gap: 12px;
+            min-width: 0;
+            align-content: start;
         }
-        .artist-focus-image i {
-            color: var(--gold-muted);
-            opacity: 0.45;
-            font-size: 34px;
+        .artist-route-map-shell {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 900 / 650;
+            border: 1px solid rgba(18,28,57,0.16);
+            background: #f6f2ea;
+            overflow: hidden;
         }
-        .artist-focus-image span {
-            font-size: 11px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text-light);
-            opacity: 0.45;
-            text-align: center;
-            padding: 0 14px;
+        .artist-route-map-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
         }
-        .artist-focus-card h4 {
-            font-family: var(--serif);
-            font-size: 21px;
-            font-weight: 400;
+        .artist-route-map-points {
+            position: absolute;
+            inset: 0;
+        }
+        .artist-route-marker {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            border: 0;
+            background: transparent;
+            padding: 0;
+            cursor: pointer;
+        }
+        .artist-route-marker span {
+            width: 10px;
+            height: 10px;
+            display: block;
+            border-radius: 50%;
+            background: #b8894d;
+            border: 1px solid rgba(18,28,57,0.4);
+            box-shadow: 0 0 0 2px rgba(246,242,234,0.9);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .artist-route-marker.is-active span,
+        .artist-route-marker:hover span,
+        .artist-route-marker:focus-visible span {
+            background: #7b502d;
+            transform: scale(1.2);
+        }
+        .artist-route-marker:focus-visible,
+        .artist-route-chip:focus-visible {
+            outline: none;
+        }
+        .artist-route-map-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+        .artist-route-chip {
+            border: 1px solid rgba(18,28,57,0.15);
+            background: #f8f5ef;
             color: var(--deep-blue);
-            margin-bottom: 10px;
+            font-size: 12px;
+            line-height: 1.25;
+            padding: 5px 9px;
+            border-radius: 999px;
+            cursor: pointer;
         }
+        .artist-route-chip.is-active,
+        .artist-route-chip:hover,
+        .artist-route-chip:focus-visible {
+            border-color: rgba(123,80,45,0.6);
+            background: #f1e8db;
+        }
+        .artist-route-map-detail h4 {
+            margin: 0 0 6px;
+            font-family: var(--serif);
+            font-size: 20px;
+            color: var(--deep-blue);
+            font-weight: 400;
+        }
+        .artist-route-map-detail-text {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+        .artist-route-map-detail-meta {
+            margin: 8px 0 0;
+            font-size: 12px;
+            color: var(--gold-muted);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
 
         .artist-method-grid {
             display: grid;
@@ -1732,8 +1792,9 @@
             .artist-focus-grid {
                 grid-template-columns: 1fr;
             }
-            .artist-focus-card {
+            .artist-route-map-card {
                 order: 2;
+                padding: 14px;
             }
             .artist-diptych {
                 grid-template-columns: 1fr;
@@ -1761,7 +1822,16 @@
             .artist-theme-grid {
                 grid-template-columns: 1fr;
             }
+            .artist-route-chip {
+                font-size: 11px;
+                padding: 4px 8px;
+            }
+            .artist-route-marker span {
+                width: 9px;
+                height: 9px;
+            }
         }
+
 
         /* ── Timeline ── */
         .timeline {

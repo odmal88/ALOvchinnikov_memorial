@@ -202,19 +202,14 @@
                     </div>
                     <aside class="artist-route-map-card" aria-label="Карта маршрутов художника">
                         <div class="artist-route-map-shell">
-                            <svg class="artist-route-map-svg" viewBox="0 0 1000 860" role="img" aria-label="Ключевые места художественного маршрута Александра Овчинникова">
-                                <path class="artist-route-map-outline" d="M165 150 L250 100 L340 96 L420 118 L478 154 L525 195 L571 206 L648 202 L720 215 L784 245 L850 290 L897 340 L920 406 L914 460 L877 527 L824 581 L748 625 L705 668 L648 720 L585 760 L525 785 L455 797 L410 790 L365 752 L327 700 L300 646 L265 604 L218 552 L186 488 L162 418 L145 346 L140 266 L148 192 Z"></path>
-                                <path class="artist-route-map-crimea" d="M434 798 L484 811 L535 840 L500 864 L437 860 L404 835 Z"></path>
-                                <g class="artist-route-map-markers"></g>
-                            </svg>
+                            <img class="artist-route-map-image" alt="Карта европейской части России и Крыма" loading="lazy">
+                            <div class="artist-route-map-points" role="list"></div>
                         </div>
-                        <div class="artist-route-map-toolbar">
-                            <label class="artist-route-map-label" for="artist-route-select">Все подтверждённые места маршрута</label>
-                            <select id="artist-route-select" class="artist-route-select" aria-label="Выбрать место маршрута"></select>
-                        </div>
-                        <div class="artist-route-map-detail">
-                            <h3></h3>
-                            <p></p>
+                        <div class="artist-route-map-chips" role="list" aria-label="Точки маршрута"></div>
+                        <div class="artist-route-map-detail" aria-live="polite">
+                            <h4></h4>
+                            <p class="artist-route-map-detail-text"></p>
+                            <p class="artist-route-map-detail-meta"></p>
                         </div>
                     </aside>
                 </div>

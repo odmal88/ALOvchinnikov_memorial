@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" role="img" aria-label="Контур европейской части России и Крыма">
+  <rect width="900" height="650" fill="#f6f2ea"/>
+  <path d="M120 96 L168 68 L230 54 L290 52 L338 62 L382 78 L420 96 L448 118 L468 138 L498 144 L548 140 L606 150 L664 172 L716 206 L752 244 L768 286 L764 326 L742 366 L706 402 L670 426 L636 440 L614 462 L594 488 L568 512 L536 536 L498 560 L456 578 L418 590 L382 596 L352 590 L326 574 L304 550 L286 528 L268 500 L246 478 L220 456 L198 432 L176 406 L160 378 L146 348 L136 318 L128 286 L122 252 L118 218 L116 186 L116 154 Z"
+        fill="#e9e1d5" stroke="#4c5a66" stroke-width="2.2" stroke-linejoin="round"/>
+  <path d="M150 184 L166 176 L182 178 L194 188 L194 202 L180 212 L162 210 L150 198 Z" fill="#f6f2ea" stroke="#4c5a66" stroke-width="1.2"/>
+  <path d="M146 220 L160 214 L174 218 L182 228 L178 238 L164 244 L150 240 L144 230 Z" fill="#f6f2ea" stroke="#4c5a66" stroke-width="1.2"/>
+  <path d="M388 594 L424 604 L458 620 L438 634 L394 632 L360 616 Z" fill="#e9e1d5" stroke="#4c5a66" stroke-width="2" stroke-linejoin="round"/>
+</svg>
