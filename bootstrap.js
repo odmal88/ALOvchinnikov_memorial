@@ -1,4 +1,11 @@
 (function bootstrapApp() {
+    const BUILD_ID = '2026-04-05-route-map-v3';
+
+    function withBuildId(path) {
+        const separator = path.includes('?') ? '&' : '?';
+        return `${path}${separator}build=${encodeURIComponent(BUILD_ID)}`;
+    }
+
     const components = {
         '#component-header': 'components/header.html',
         '#component-mobile-menu': 'components/mobile-menu.html',
@@ -18,17 +25,10 @@
         'pages/contacts.html'
     ];
 
-    function fetchText(path) {
-        return fetch(path).then((res) => {
-            if (!res.ok) throw new Error(`Failed to load: ${path}`);
-            return res.text();
-        });
-    }
-
     function loadScript(path) {
         return new Promise((resolve) => {
             const script = document.createElement('script');
-            script.src = path;
+            script.src = withBuildId(path);
             script.onload = resolve;
             script.onerror = resolve;
             document.body.appendChild(script);
@@ -37,17 +37,30 @@
 
     Promise.all([
         ...Object.entries(components).map(([selector, path]) =>
-            fetchText(path).then((html) => {
+            fetch(withBuildId(path), { cache: 'no-store' }).then((res) => {
+                if (!res.ok) throw new Error(`Failed to load: ${path}`);
+                return res.text();
+            }).then((html) => {
                 const host = document.querySelector(selector);
                 if (host) host.innerHTML = html;
             })
         ),
-        Promise.all(pages.map((path) => fetchText(path))).then((chunks) => {
+        Promise.all(pages.map((path) =>
+            fetch(withBuildId(path), { cache: 'no-store' }).then((res) => {
+                if (!res.ok) throw new Error(`Failed to load: ${path}`);
+                return res.text();
+            })
+        )).then((chunks) => {
             const root = document.getElementById('pages-root');
             if (root) root.innerHTML = chunks.join('\n');
         })
     ])
-        .then(() => fetchText('components/home-teasers.html'))
+        .then(() =>
+            fetch(withBuildId('components/home-teasers.html'), { cache: 'no-store' }).then((res) => {
+                if (!res.ok) throw new Error('Failed to load: components/home-teasers.html');
+                return res.text();
+            })
+        )
         .then((teasersHtml) => {
             const teasersHost = document.querySelector('[data-component="home-teasers"]');
             if (teasersHost) teasersHost.innerHTML = teasersHtml;
@@ -64,7 +77,7 @@
         .then(() => loadScript('artist-route-map.js'))
         .then(() => {
             const appScript = document.createElement('script');
-            appScript.src = 'app.js';
+            appScript.src = withBuildId('app.js');
             document.body.appendChild(appScript);
         })
         .catch((error) => {
