@@ -1,110 +1,264 @@
 (function initArtistRouteMap() {
   const ROUTE_JSON_PATH = '09_SOURCE_JSON/pages/route.json';
-  const MAP_SVG_PATH = 'assets/maps/russia_exhibition_context.svg';
+  const D3_URL = 'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js';
+  const TOPOJSON_URL = 'https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js';
+  const WORLD_ATLAS_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
+  const LAKES_URL = 'https://cdn.jsdelivr.net/gh/nvkelso/natural-earth-vector@master/geojson/ne_110m_lakes.geojson';
+  const RIVERS_URL = 'https://cdn.jsdelivr.net/gh/nvkelso/natural-earth-vector@master/geojson/ne_110m_rivers_lake_centerlines.geojson';
+
+  const PERIOD_COLORS = {
+    base: '#8C6239',
+    historical_city: '#A27449',
+    early_wide: '#BE8A55',
+    volga: '#C69764',
+    mature_return: '#AD7C4B',
+    north: '#5E7D90',
+    south: '#8F5B62'
+  };
+
+  function loadScript(src) {
+    if (document.querySelector(`script[src="${src}"]`)) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
 
   function fetchJson(path) {
-    return fetch(path).then((res) => {
+    return fetch(path, { cache: 'no-store' }).then((res) => {
       if (!res.ok) throw new Error(`Failed to load JSON: ${path}`);
       return res.json();
     });
   }
 
-  function fetchText(path) {
-    return fetch(path).then((res) => {
-      if (!res.ok) throw new Error(`Failed to load asset: ${path}`);
-      return res.text();
-    });
+  function asFeatureCollection(json) {
+    if (!json) return null;
+    if (json.type === 'FeatureCollection') return json;
+    if (Array.isArray(json.features)) return { type: 'FeatureCollection', features: json.features };
+    return null;
   }
 
-  function syncArtistRouteMap(route, svgText) {
-    const card = document.querySelector('#artist-routes .artist-route-map-card');
-    if (!card || !route || !svgText) return;
+  function renderMap(route, worldAtlas, lakesJson, riversJson) {
+    const host = document.querySelector('#artist-routes .artist-route-map-card');
+    if (!host || !route || !Array.isArray(route.points)) return;
 
-    const shell = card.querySelector('.artist-route-map-shell');
-    const select = card.querySelector('.artist-route-select');
-    const detailTitle = card.querySelector('.artist-route-map-detail h3');
-    const detailText = card.querySelector('.artist-route-map-detail p');
+    const mapShell = host.querySelector('.artist-route-map-shell');
+    const canvas = host.querySelector('.artist-route-map-canvas');
+    const tooltip = host.querySelector('.artist-route-map-tooltip');
+    const legend = host.querySelector('.artist-route-map-legend');
+    const detailTitle = host.querySelector('.artist-route-map-detail h4');
+    const detailText = host.querySelector('.artist-route-map-detail-text');
+    const detailMeta = host.querySelector('.artist-route-map-detail-meta');
 
-    if (!shell || !select || !detailTitle || !detailText) return;
+    if (!mapShell || !canvas || !tooltip || !legend || !detailTitle || !detailText || !detailMeta) return;
 
-    shell.innerHTML = svgText;
-    const svg = shell.querySelector('svg');
-    if (!svg) return;
+    const d3 = window.d3;
+    const topojson = window.topojson;
 
-    let markersGroup = svg.querySelector('.artist-route-map-markers');
-    if (!markersGroup) {
-      markersGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      markersGroup.setAttribute('class', 'artist-route-map-markers');
-      svg.appendChild(markersGroup);
+    canvas.innerHTML = '';
+
+    const width = 960;
+    const height = 650;
+
+    const projectionConfig = route.map || {};
+    const projection = d3.geoConicEquidistant()
+      .center(projectionConfig.center || [76, 60])
+      .rotate(projectionConfig.rotate || [-40, 0])
+      .parallels(projectionConfig.parallels || [55, 68])
+      .scale(projectionConfig.scale || 560)
+      .translate(projectionConfig.translate || [470, 315]);
+
+    const path = d3.geoPath(projection);
+    const graticule = d3.geoGraticule().step([10, 10]);
+
+    const land = topojson.feature(worldAtlas, worldAtlas.objects.land);
+    const countryBorders = topojson.mesh(worldAtlas, worldAtlas.objects.countries, (a, b) => a !== b);
+    const lakes = asFeatureCollection(lakesJson);
+    const rivers = asFeatureCollection(riversJson);
+
+    const svg = d3.select(canvas)
+      .append('svg')
+      .attr('class', 'artist-route-map-svg')
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('aria-hidden', 'true');
+
+    const mapLayer = svg.append('g').attr('class', 'artist-route-map-layer');
+
+    mapLayer.append('path')
+      .datum({ type: 'Sphere' })
+      .attr('class', 'artist-route-water')
+      .attr('d', path);
+
+    mapLayer.append('path')
+      .datum(graticule())
+      .attr('class', 'artist-route-graticule')
+      .attr('d', path);
+
+    if (rivers) {
+      mapLayer.append('g')
+        .attr('class', 'artist-route-rivers')
+        .selectAll('path')
+        .data(rivers.features)
+        .join('path')
+        .attr('d', path);
     }
 
-    const points = Array.isArray(route.points)
-      ? route.points.filter((point) => Number.isFinite(point.x) && Number.isFinite(point.y))
-      : [];
-
-    if (!points.length) return;
-
-    select.innerHTML = points.map((point) => `<option value="${point.id}">${point.title}</option>`).join('');
-    markersGroup.innerHTML = '';
-
-    const markerNodes = new Map();
-
-    function setActive(activeId) {
-      const activePoint = points.find((point) => point.id === activeId);
-      if (!activePoint) return;
-
-      select.value = activeId;
-      detailTitle.textContent = activePoint.title;
-      detailText.textContent = activePoint.text;
-
-      markerNodes.forEach((node, id) => {
-        const isActive = id === activeId;
-        node.classList.toggle('is-active', isActive);
-        node.setAttribute('r', isActive ? '7.5' : '6');
-      });
+    if (lakes) {
+      mapLayer.append('g')
+        .attr('class', 'artist-route-lakes')
+        .selectAll('path')
+        .data(lakes.features)
+        .join('path')
+        .attr('d', path);
     }
 
-    points.forEach((point) => {
-      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      circle.setAttribute('cx', String(point.x));
-      circle.setAttribute('cy', String(point.y));
-      circle.setAttribute('r', '6');
-      circle.setAttribute('tabindex', '0');
-      circle.setAttribute('role', 'button');
-      circle.setAttribute('aria-label', point.title);
-      circle.setAttribute('fill', '#B8894D');
-      circle.setAttribute('stroke', '#FBF8F3');
-      circle.setAttribute('stroke-width', '3');
-      circle.setAttribute('vector-effect', 'non-scaling-stroke');
-      circle.classList.add('artist-route-map-point');
+    mapLayer.append('path')
+      .datum(land)
+      .attr('class', 'artist-route-land')
+      .attr('d', path);
 
-      const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-      title.textContent = point.title;
-      circle.appendChild(title);
+    mapLayer.append('path')
+      .datum(countryBorders)
+      .attr('class', 'artist-route-borders')
+      .attr('d', path);
 
-      circle.addEventListener('click', () => setActive(point.id));
-      circle.addEventListener('keydown', (event) => {
+    const routeLine = {
+      type: 'LineString',
+      coordinates: route.points.map((point) => [point.lon, point.lat])
+    };
+
+    mapLayer.append('path')
+      .datum(routeLine)
+      .attr('class', 'artist-route-line')
+      .attr('d', path);
+
+    const pointsLayer = mapLayer.append('g').attr('class', 'artist-route-points');
+
+    const pointNodes = pointsLayer
+      .selectAll('circle')
+      .data(route.points)
+      .join('circle')
+      .attr('class', (d) => `artist-route-point period-${d.period || 'base'}`)
+      .attr('r', 5.5)
+      .attr('fill', (d) => PERIOD_COLORS[d.period] || '#B8894D')
+      .attr('transform', (d) => {
+        const projected = projection([d.lon, d.lat]);
+        return projected ? `translate(${projected[0]},${projected[1]})` : 'translate(-999,-999)';
+      })
+      .attr('tabindex', 0)
+      .attr('role', 'button')
+      .attr('aria-label', (d) => d.title);
+
+    let activeId = route.map?.activePointId || route.points[0]?.id;
+
+    function updateDetail(point) {
+      detailTitle.textContent = point.title;
+      detailText.textContent = point.text;
+      const periodLabel = route.map?.periodLabels?.[point.period] || point.period || '';
+      const categoryLabel = route.map?.categoryLabels?.[point.category] || point.category || '';
+      detailMeta.textContent = [periodLabel, categoryLabel].filter(Boolean).join(' · ');
+    }
+
+    function setActive(id) {
+      const point = route.points.find((entry) => entry.id === id);
+      if (!point) return;
+      activeId = point.id;
+      pointNodes
+        .classed('is-active', (d) => d.id === activeId)
+        .attr('r', (d) => (d.id === activeId ? 8 : 5.5));
+      updateDetail(point);
+    }
+
+    function showTooltip(event, point) {
+      const periodLabel = route.map?.periodLabels?.[point.period] || point.period;
+      tooltip.hidden = false;
+      tooltip.innerHTML = `<strong>${point.title}</strong><span>${periodLabel || ''}</span>`;
+      const shellRect = mapShell.getBoundingClientRect();
+      const x = event.clientX - shellRect.left + 12;
+      const y = event.clientY - shellRect.top + 12;
+      tooltip.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    function hideTooltip() {
+      tooltip.hidden = true;
+    }
+
+    pointNodes
+      .on('click', (_, d) => setActive(d.id))
+      .on('mouseenter', function (event, d) {
+        showTooltip(event, d);
+        d3.select(this).classed('is-hover', true);
+      })
+      .on('mousemove', (event, d) => showTooltip(event, d))
+      .on('mouseleave', function () {
+        hideTooltip();
+        d3.select(this).classed('is-hover', false);
+      })
+      .on('focus', (event, d) => showTooltip(event, d))
+      .on('blur', hideTooltip)
+      .on('keydown', (event, d) => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
-          setActive(point.id);
+          setActive(d.id);
         }
       });
 
-      markersGroup.appendChild(circle);
-      markerNodes.set(point.id, circle);
+    const legendTitle = route.map?.legendTitle || 'Периоды';
+    const uniquePeriods = Array.from(new Set(route.points.map((point) => point.period)));
+    legend.innerHTML = `
+      <p class="artist-route-map-legend-title">${legendTitle}</p>
+      <ul class="artist-route-map-legend-list">
+        ${uniquePeriods.map((period) => `
+          <li>
+            <span class="dot" style="background:${PERIOD_COLORS[period] || '#B8894D'}"></span>
+            <span>${route.map?.periodLabels?.[period] || period}</span>
+          </li>
+        `).join('')}
+      </ul>
+    `;
+
+    const zoomCfg = route.map?.zoom || {};
+    const zoomBehavior = d3.zoom()
+      .scaleExtent([zoomCfg.min || 1, zoomCfg.max || 7])
+      .on('zoom', (event) => {
+        mapLayer.attr('transform', event.transform);
+      });
+
+    svg.call(zoomBehavior);
+
+    host.querySelector('[data-zoom="in"]')?.addEventListener('click', () => {
+      svg.transition().duration(220).call(zoomBehavior.scaleBy, zoomCfg.step || 1.35);
     });
 
-    select.addEventListener('change', () => {
-      setActive(select.value);
+    host.querySelector('[data-zoom="out"]')?.addEventListener('click', () => {
+      svg.transition().duration(220).call(zoomBehavior.scaleBy, 1 / (zoomCfg.step || 1.35));
     });
 
-    setActive(route?.map?.activePointId || points[0].id);
+    host.querySelector('.artist-route-map-reset')?.addEventListener('click', () => {
+      svg.transition().duration(260).call(zoomBehavior.transform, d3.zoomIdentity);
+    });
+
+    setActive(activeId);
   }
 
   Promise.all([
-    fetchJson(ROUTE_JSON_PATH),
-    fetchText(MAP_SVG_PATH)
+    loadScript(D3_URL),
+    loadScript(TOPOJSON_URL)
   ])
-    .then(([route, svgText]) => syncArtistRouteMap(route, svgText))
-    .catch((error) => console.error('Artist route map error:', error));
+    .then(() => Promise.all([
+      fetchJson(ROUTE_JSON_PATH),
+      fetchJson(WORLD_ATLAS_URL),
+      fetchJson(LAKES_URL),
+      fetchJson(RIVERS_URL)
+    ]))
+    .then(([route, worldAtlas, lakes, rivers]) => {
+      renderMap(route, worldAtlas, lakes, rivers);
+    })
+    .catch((error) => {
+      console.error('Artist route map error:', error);
+    });
 })();
