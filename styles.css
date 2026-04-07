@@ -1492,12 +1492,10 @@
             text-transform: uppercase;
         }
 
-        .artist-focus-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 28px;
+        #page-artist #artist-routes .artist-route-text {
+            max-width: 960px;
         }
-        .artist-route-map-card {
+        #page-artist #artist-routes #wrap.artist-route-map-card {
             background: #fff;
             border: 1px solid var(--border-light);
             padding: 18px;
@@ -1505,88 +1503,163 @@
             gap: 12px;
             min-width: 0;
             align-content: start;
+            width: 100%;
+            margin-top: 24px;
         }
-        .artist-route-map-shell {
+        #page-artist #artist-routes #head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+        #page-artist #artist-routes #head p {
+            margin: 0;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gold-muted);
+        }
+        #page-artist #artist-routes .route-map-actions {
+            display: flex;
+            gap: 6px;
+        }
+        #page-artist #artist-routes .route-map-actions button {
+            border: 1px solid rgba(18,28,57,0.2);
+            background: #fff;
+            color: var(--deep-blue);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        #page-artist #artist-routes #map-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 900 / 650;
+            aspect-ratio: 960 / 650;
             border: 1px solid rgba(18,28,57,0.16);
-            background: #f6f2ea;
+            background: #edf2f7;
             overflow: hidden;
         }
-        .artist-route-map-image {
+        #page-artist #artist-routes #msvg {
             width: 100%;
             height: 100%;
-            object-fit: contain;
             display: block;
         }
-        .artist-route-map-points {
+        #page-artist #artist-routes #mtip {
             position: absolute;
-            inset: 0;
+            z-index: 6;
+            pointer-events: none;
+            background: rgba(18,28,57,0.95);
+            color: #fff;
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 12px;
+            display: grid;
+            gap: 2px;
+            box-shadow: 0 10px 20px rgba(18,28,57,0.24);
+            transform: translate(-9999px, -9999px);
         }
-        .artist-route-marker {
-            position: absolute;
-            transform: translate(-50%, -50%);
-            border: 0;
-            background: transparent;
-            padding: 0;
+        #page-artist #artist-routes #mtip strong {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        #page-artist #artist-routes #mtip span {
+            color: rgba(255,255,255,0.82);
+            display: block;
+        }
+        #page-artist #artist-routes .artist-route-water {
+            fill: #e9f0f6;
+        }
+        #page-artist #artist-routes .artist-route-graticule {
+            fill: none;
+            stroke: rgba(37,53,87,0.18);
+            stroke-width: 0.6;
+        }
+        #page-artist #artist-routes .artist-route-rivers path {
+            fill: none;
+            stroke: rgba(72,126,173,0.35);
+            stroke-width: 0.9;
+        }
+        #page-artist #artist-routes .artist-route-lakes path {
+            fill: rgba(130,174,204,0.55);
+            stroke: rgba(72,126,173,0.4);
+            stroke-width: 0.5;
+        }
+        #page-artist #artist-routes .artist-route-land {
+            fill: #f4efe6;
+            stroke: rgba(58,66,84,0.36);
+            stroke-width: 0.8;
+        }
+        #page-artist #artist-routes .artist-route-borders {
+            fill: none;
+            stroke: rgba(58,66,84,0.28);
+            stroke-width: 0.5;
+        }
+        #page-artist #artist-routes .artist-route-line {
+            fill: none;
+            stroke: rgba(122,84,46,0.7);
+            stroke-width: 1.5;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+            stroke-dasharray: 4 3;
+        }
+        #page-artist #artist-routes .artist-route-point {
+            stroke: #fbf7f0;
+            stroke-width: 2.2;
             cursor: pointer;
+            transition: r 0.15s ease, opacity 0.15s ease;
         }
-        .artist-route-marker span {
-            width: 10px;
-            height: 10px;
-            display: block;
-            border-radius: 50%;
-            background: #b8894d;
-            border: 1px solid rgba(18,28,57,0.4);
-            box-shadow: 0 0 0 2px rgba(246,242,234,0.9);
-            transition: transform 0.2s ease, background-color 0.2s ease;
+        #page-artist #artist-routes .artist-route-point.is-hover,
+        #page-artist #artist-routes .artist-route-point.is-active {
+            opacity: 1;
         }
-        .artist-route-marker.is-active span,
-        .artist-route-marker:hover span,
-        .artist-route-marker:focus-visible span {
-            background: #7b502d;
-            transform: scale(1.2);
+        #page-artist #artist-routes .artist-route-point:not(.is-active):not(.is-hover) {
+            opacity: 0.86;
         }
-        .artist-route-marker:focus-visible,
-        .artist-route-chip:focus-visible {
-            outline: none;
-        }
-        .artist-route-map-chips {
+        #page-artist #artist-routes #mleg {
             display: flex;
             flex-wrap: wrap;
-            gap: 7px;
+            gap: 8px;
+            margin: 0;
         }
-        .artist-route-chip {
-            border: 1px solid rgba(18,28,57,0.15);
-            background: #f8f5ef;
-            color: var(--deep-blue);
+        #page-artist #artist-routes #mleg button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             font-size: 12px;
-            line-height: 1.25;
-            padding: 5px 9px;
+            color: var(--text-muted);
+            border: 1px solid rgba(18,28,57,0.16);
+            background: #f8f5ef;
             border-radius: 999px;
+            padding: 5px 10px;
             cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
         }
-        .artist-route-chip.is-active,
-        .artist-route-chip:hover,
-        .artist-route-chip:focus-visible {
-            border-color: rgba(123,80,45,0.6);
-            background: #f1e8db;
+        #page-artist #artist-routes #mleg .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            display: inline-block;
         }
-        .artist-route-map-detail h4 {
+        #page-artist #artist-routes #mleg button.is-active {
+            background: #f0e7da;
+            border-color: rgba(122,84,46,0.5);
+            color: var(--deep-blue);
+        }
+        #page-artist #artist-routes #mstatus h4 {
             margin: 0 0 6px;
             font-family: var(--serif);
             font-size: 20px;
             color: var(--deep-blue);
             font-weight: 400;
         }
-        .artist-route-map-detail-text {
+        #page-artist #artist-routes #mstatus .artist-route-map-detail-text {
             margin: 0;
             font-size: 14px;
             line-height: 1.6;
             color: var(--text-muted);
         }
-        .artist-route-map-detail-meta {
+        #page-artist #artist-routes #mstatus .artist-route-map-detail-meta {
             margin: 8px 0 0;
             font-size: 12px;
             color: var(--gold-muted);
@@ -1789,12 +1862,13 @@
             .artist-life-geo-grid {
                 grid-template-columns: 1fr;
             }
-            .artist-focus-grid {
-                grid-template-columns: 1fr;
-            }
-            .artist-route-map-card {
-                order: 2;
+            #page-artist #artist-routes .artist-route-map-card {
                 padding: 14px;
+                margin-top: 18px;
+            }
+            #page-artist #artist-routes #head {
+                flex-direction: column;
+                align-items: flex-start;
             }
             .artist-diptych {
                 grid-template-columns: 1fr;
@@ -1822,13 +1896,8 @@
             .artist-theme-grid {
                 grid-template-columns: 1fr;
             }
-            .artist-route-chip {
+            #page-artist #artist-routes #mleg button {
                 font-size: 11px;
-                padding: 4px 8px;
-            }
-            .artist-route-marker span {
-                width: 9px;
-                height: 9px;
             }
         }
 
