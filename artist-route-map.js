@@ -1,10 +1,29 @@
 (function initArtistRouteMap() {
   const ROUTE_JSON_PATH = '09_SOURCE_JSON/pages/route.json';
-  const D3_URL = 'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js';
-  const TOPOJSON_URL = 'https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js';
-  const WORLD_ATLAS_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
-  const LAKES_URL = 'https://cdn.jsdelivr.net/gh/nvkelso/natural-earth-vector@master/geojson/ne_110m_lakes.geojson';
-  const RIVERS_URL = 'https://cdn.jsdelivr.net/gh/nvkelso/natural-earth-vector@master/geojson/ne_110m_rivers_lake_centerlines.geojson';
+  const LOCAL_FALLBACK_MAP = 'assets/maps/russia_europe_crimea.svg';
+
+  const D3_URLS = [
+    'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js',
+    'https://unpkg.com/d3@7/dist/d3.min.js'
+  ];
+
+  const TOPOJSON_URLS = [
+    'https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js',
+    'https://unpkg.com/topojson-client@3/dist/topojson-client.min.js'
+  ];
+
+  const WORLD_ATLAS_URLS = [
+    'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json',
+    'https://unpkg.com/world-atlas@2/countries-110m.json'
+  ];
+
+  const LAKES_URLS = [
+    'https://cdn.jsdelivr.net/gh/nvkelso/natural-earth-vector@master/geojson/ne_110m_lakes.geojson'
+  ];
+
+  const RIVERS_URLS = [
+    'https://cdn.jsdelivr.net/gh/nvkelso/natural-earth-vector@master/geojson/ne_110m_rivers_lake_centerlines.geojson'
+  ];
 
   const PERIOD_COLORS = {
     base: '#5D9ECF',
@@ -16,16 +35,58 @@
     south: '#C46A31'
   };
 
-  function loadScript(src) {
-    if (document.querySelector(`script[src="${src}"]`)) return Promise.resolve();
+  function setModuleStatus(message) {
+    const status = document.querySelector('#page-artist #artist-routes #mstatus');
+    if (status) status.textContent = message;
+  }
+
+  function waitForMapHost() {
     return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = src;
-      script.async = true;
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
+      const immediate = document.querySelector('#page-artist #artist-routes .artist-route-map-module');
+      if (immediate) {
+        resolve(immediate);
+        return;
+      }
+
+      const timeout = window.setTimeout(() => {
+        observer.disconnect();
+        reject(new Error('Map host not found in DOM'));
+      }, 10000);
+
+      const observer = new MutationObserver(() => {
+        const found = document.querySelector('#page-artist #artist-routes .artist-route-map-module');
+        if (!found) return;
+        window.clearTimeout(timeout);
+        observer.disconnect();
+        resolve(found);
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
     });
+  }
+
+  function loadScriptFromUrls(urls) {
+    let index = 0;
+
+    function tryNext() {
+      if (index >= urls.length) {
+        return Promise.reject(new Error(`Failed to load script from URLs: ${urls.join(', ')}`));
+      }
+
+      const src = urls[index++];
+      if (document.querySelector(`script[src="${src}"]`)) return Promise.resolve();
+
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.async = true;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      }).catch(tryNext);
+    }
+
+    return tryNext();
   }
 
   function fetchJson(path) {
@@ -33,6 +94,17 @@
       if (!res.ok) throw new Error(`Failed to load JSON: ${path}`);
       return res.json();
     });
+  }
+
+  function fetchJsonFromUrls(urls, { optional = false } = {}) {
+    const tryUrl = (i) => {
+      if (i >= urls.length) {
+        if (optional) return Promise.resolve(null);
+        return Promise.reject(new Error(`Failed to fetch from URLs: ${urls.join(', ')}`));
+      }
+      return fetchJson(urls[i]).catch(() => tryUrl(i + 1));
+    };
+    return tryUrl(0);
   }
 
   function asFeatureCollection(json) {
@@ -56,6 +128,79 @@
         <span>${labels[key]}</span>
       </div>
     `).join('');
+  }
+
+
+  function renderFallbackMap(route) {
+    const host = document.querySelector('#page-artist #artist-routes .artist-route-map-module');
+    if (!host || !route || !Array.isArray(route.points) || route.points.length === 0) return;
+
+    const canvas = host.querySelector('#msvg');
+    const tooltip = host.querySelector('#mtip');
+    const status = host.querySelector('#mstatus');
+    const legend = host.querySelector('#mleg');
+    const detailWrap = document.querySelector('#page-artist #artist-routes .artist-route-map-detail');
+    const detailTitle = detailWrap?.querySelector('h4');
+    const detailText = detailWrap?.querySelector('.artist-route-map-detail-text');
+    const detailMeta = detailWrap?.querySelector('.artist-route-map-detail-meta');
+    if (!canvas || !tooltip || !status || !legend || !detailTitle || !detailText || !detailMeta) return;
+
+    buildLegend(legend, route);
+
+    canvas.innerHTML = `
+      <div class="artist-route-fallback-map-wrap">
+        <img src="${LOCAL_FALLBACK_MAP}" alt="Карта России" class="artist-route-fallback-base" />
+        <svg class="artist-route-fallback-overlay" viewBox="0 0 1320 720" aria-hidden="true"></svg>
+      </div>
+    `;
+
+    const overlay = canvas.querySelector('.artist-route-fallback-overlay');
+    if (!overlay) return;
+
+    const lonMin = 19;
+    const lonMax = 190;
+    const latMin = 41;
+    const latMax = 82;
+
+    function project(lon, lat) {
+      const x = ((lon - lonMin) / (lonMax - lonMin)) * 1320;
+      const y = ((latMax - lat) / (latMax - latMin)) * 720;
+      return [x, y];
+    }
+
+    route.points.forEach((point) => {
+      const [x, y] = project(point.lon, point.lat);
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', x.toFixed(1));
+      circle.setAttribute('cy', y.toFixed(1));
+      circle.setAttribute('r', '5.2');
+      circle.setAttribute('fill', PERIOD_COLORS[point.period] || '#B8894D');
+      circle.setAttribute('stroke', 'rgba(248,239,223,0.95)');
+      circle.setAttribute('stroke-width', '1.6');
+      circle.style.cursor = 'pointer';
+      circle.addEventListener('mouseenter', (event) => {
+        tooltip.hidden = false;
+        tooltip.innerHTML = `<strong>${point.title}</strong>`;
+        tooltip.style.transform = `translate(${event.offsetX + 12}px, ${event.offsetY + 12}px)`;
+      });
+      circle.addEventListener('mouseleave', () => {
+        tooltip.hidden = true;
+      });
+      circle.addEventListener('click', () => {
+        const periodLabel = route.map?.periodLabels?.[point.period] || point.period || '';
+        const categoryLabel = route.map?.categoryLabels?.[point.category] || point.category || '';
+        detailTitle.textContent = point.title;
+        detailText.textContent = point.text;
+        detailMeta.textContent = [periodLabel, categoryLabel].filter(Boolean).join(' · ');
+      });
+      overlay.appendChild(circle);
+    });
+
+    const first = route.points[0];
+    detailTitle.textContent = first.title;
+    detailText.textContent = first.text;
+    detailMeta.textContent = [route.map?.periodLabels?.[first.period], route.map?.categoryLabels?.[first.category]].filter(Boolean).join(' · ');
+    status.textContent = 'Fallback-режим: базовая карта + точки маршрута (без D3/TopoJSON).';
   }
 
   function renderMap(route, worldAtlas, lakesJson, riversJson) {
@@ -161,7 +306,7 @@
       detailTitle.textContent = point.title;
       detailText.textContent = point.text;
       detailMeta.textContent = [periodLabel, categoryLabel].filter(Boolean).join(' · ');
-      status.textContent = `Равноотстоящий конус · параллели 49° и 68.5° · меридиан 94°E`;
+      status.textContent = 'Равноотстоящий конус · параллели 49° и 68.5° · меридиан 94°E';
     }
 
     function setActive(id) {
@@ -232,17 +377,27 @@
     setActive(activeId);
   }
 
-  Promise.all([loadScript(D3_URL), loadScript(TOPOJSON_URL)])
-    .then(() => Promise.all([
-      fetchJson(ROUTE_JSON_PATH),
-      fetchJson(WORLD_ATLAS_URL),
-      fetchJson(LAKES_URL),
-      fetchJson(RIVERS_URL)
+  waitForMapHost()
+    .then(() => fetchJson(ROUTE_JSON_PATH))
+    .then((route) => Promise.all([
+      Promise.resolve(route),
+      window.d3 ? Promise.resolve() : loadScriptFromUrls(D3_URLS),
+      window.topojson ? Promise.resolve() : loadScriptFromUrls(TOPOJSON_URLS)
+    ]))
+    .then(([route]) => Promise.all([
+      Promise.resolve(route),
+      fetchJsonFromUrls(WORLD_ATLAS_URLS),
+      fetchJsonFromUrls(LAKES_URLS, { optional: true }),
+      fetchJsonFromUrls(RIVERS_URLS, { optional: true })
     ]))
     .then(([route, worldAtlas, lakes, rivers]) => {
       renderMap(route, worldAtlas, lakes, rivers);
     })
     .catch((error) => {
       console.error('Artist route map error:', error);
+      setModuleStatus('Сеть ограничена: показываем базовую карту с точками маршрута.');
+      fetchJson(ROUTE_JSON_PATH).then((route) => renderFallbackMap(route)).catch(() => {
+        setModuleStatus('Карта временно недоступна: не удалось загрузить маршрутные данные.');
+      });
     });
 })();

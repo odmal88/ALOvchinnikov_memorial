@@ -1566,6 +1566,23 @@
         }
         #page-artist #artist-routes #mtip strong { font-size: 13px; font-weight: 500; }
         #page-artist #artist-routes #mtip span { color: rgba(255,255,255,0.82); }
+        #page-artist #artist-routes .artist-route-fallback-map-wrap {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        #page-artist #artist-routes .artist-route-fallback-base {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        #page-artist #artist-routes .artist-route-fallback-overlay {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
         #page-artist #artist-routes #mstatus {
             margin: 0;
             padding: 10px 16px;
