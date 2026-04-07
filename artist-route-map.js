@@ -42,27 +42,41 @@
     return null;
   }
 
+  function buildLegend(host, route) {
+    if (!host) return;
+    const labels = route?.map?.periodLabels || {};
+    const keys = Object.keys(labels).filter((key) => PERIOD_COLORS[key]);
+    host.innerHTML = keys.map((key) => `
+      <div class="artist-route-map-legend-item">
+        <span class="dot" style="background:${PERIOD_COLORS[key]}"></span>
+        <span>${labels[key]}</span>
+      </div>
+    `).join('');
+  }
+
   function renderMap(route, worldAtlas, lakesJson, riversJson) {
-    const host = document.querySelector('#artist-routes .artist-route-map-card');
-    if (!host || !route || !Array.isArray(route.points)) return;
+    const host = document.querySelector('#page-artist #artist-routes .artist-route-map-module');
+    if (!host || !route || !Array.isArray(route.points) || route.points.length === 0) return;
 
-    const mapShell = host.querySelector('.artist-route-map-shell');
-    const canvas = host.querySelector('.artist-route-map-canvas');
-    const tooltip = host.querySelector('.artist-route-map-tooltip');
-    const chips = host.querySelector('.artist-route-map-chips');
-    const detailTitle = host.querySelector('.artist-route-map-detail h4');
-    const detailText = host.querySelector('.artist-route-map-detail-text');
-    const detailMeta = host.querySelector('.artist-route-map-detail-meta');
+    const mapShell = host.querySelector('#map-container');
+    const canvas = host.querySelector('#msvg');
+    const tooltip = host.querySelector('#mtip');
+    const status = host.querySelector('#mstatus');
+    const legend = host.querySelector('#mleg');
+    const detailWrap = document.querySelector('#page-artist #artist-routes .artist-route-map-detail');
+    const detailTitle = detailWrap?.querySelector('h4');
+    const detailText = detailWrap?.querySelector('.artist-route-map-detail-text');
+    const detailMeta = detailWrap?.querySelector('.artist-route-map-detail-meta');
 
-    if (!mapShell || !canvas || !tooltip || !chips || !detailTitle || !detailText || !detailMeta) return;
+    if (!mapShell || !canvas || !tooltip || !status || !legend || !detailTitle || !detailText || !detailMeta) return;
 
     const d3 = window.d3;
     const topojson = window.topojson;
+    const width = 1280;
+    const height = 760;
 
     canvas.innerHTML = '';
-
-    const width = 960;
-    const height = 650;
+    buildLegend(legend, route);
 
     const projectionConfig = route.map || {};
     const projection = d3.geoConicEquidistant()
@@ -88,62 +102,32 @@
 
     const mapLayer = svg.append('g').attr('class', 'artist-route-map-layer');
 
-    mapLayer.append('path')
-      .datum({ type: 'Sphere' })
-      .attr('class', 'artist-route-water')
-      .attr('d', path);
-
-    mapLayer.append('path')
-      .datum(graticule())
-      .attr('class', 'artist-route-graticule')
-      .attr('d', path);
+    mapLayer.append('path').datum({ type: 'Sphere' }).attr('class', 'artist-route-water').attr('d', path);
+    mapLayer.append('path').datum(graticule()).attr('class', 'artist-route-graticule').attr('d', path);
 
     if (rivers) {
-      mapLayer.append('g')
-        .attr('class', 'artist-route-rivers')
-        .selectAll('path')
-        .data(rivers.features)
-        .join('path')
-        .attr('d', path);
+      mapLayer.append('g').attr('class', 'artist-route-rivers').selectAll('path').data(rivers.features).join('path').attr('d', path);
     }
-
     if (lakes) {
-      mapLayer.append('g')
-        .attr('class', 'artist-route-lakes')
-        .selectAll('path')
-        .data(lakes.features)
-        .join('path')
-        .attr('d', path);
+      mapLayer.append('g').attr('class', 'artist-route-lakes').selectAll('path').data(lakes.features).join('path').attr('d', path);
     }
 
-    mapLayer.append('path')
-      .datum(land)
-      .attr('class', 'artist-route-land')
-      .attr('d', path);
+    mapLayer.append('path').datum(land).attr('class', 'artist-route-land').attr('d', path);
+    mapLayer.append('path').datum(countryBorders).attr('class', 'artist-route-borders').attr('d', path);
 
     mapLayer.append('path')
-      .datum(countryBorders)
-      .attr('class', 'artist-route-borders')
-      .attr('d', path);
-
-    const routeLine = {
-      type: 'LineString',
-      coordinates: route.points.map((point) => [point.lon, point.lat])
-    };
-
-    mapLayer.append('path')
-      .datum(routeLine)
+      .datum({ type: 'LineString', coordinates: route.points.map((point) => [point.lon, point.lat]) })
       .attr('class', 'artist-route-line')
       .attr('d', path);
 
-    const pointsLayer = mapLayer.append('g').attr('class', 'artist-route-points');
-
-    const pointNodes = pointsLayer
+    const pointNodes = mapLayer
+      .append('g')
+      .attr('class', 'artist-route-points')
       .selectAll('circle')
       .data(route.points)
       .join('circle')
       .attr('class', (d) => `artist-route-point period-${d.period || 'base'}`)
-      .attr('r', 5.5)
+      .attr('r', 6)
       .attr('fill', (d) => PERIOD_COLORS[d.period] || '#B8894D')
       .attr('transform', (d) => {
         const projected = projection([d.lon, d.lat]);
@@ -153,33 +137,30 @@
       .attr('role', 'button')
       .attr('aria-label', (d) => d.title);
 
-    let activeId = route.map?.activePointId || route.points[0]?.id;
+    let activeId = route.map?.activePointId || route.points[0].id;
 
     function updateDetail(point) {
-      detailTitle.textContent = point.title;
-      detailText.textContent = point.text;
       const periodLabel = route.map?.periodLabels?.[point.period] || point.period || '';
       const categoryLabel = route.map?.categoryLabels?.[point.category] || point.category || '';
+
+      detailTitle.textContent = point.title;
+      detailText.textContent = point.text;
       detailMeta.textContent = [periodLabel, categoryLabel].filter(Boolean).join(' · ');
+      status.textContent = `Активная точка: ${point.title}${periodLabel ? ` — ${periodLabel}` : ''}`;
     }
 
     function setActive(id) {
       const point = route.points.find((entry) => entry.id === id);
       if (!point) return;
       activeId = point.id;
-      pointNodes
-        .classed('is-active', (d) => d.id === activeId)
-        .attr('r', (d) => (d.id === activeId ? 8 : 5.5));
-      chips.querySelectorAll('.artist-route-map-chip').forEach((node) => {
-        node.classList.toggle('is-active', node.getAttribute('data-point-id') === activeId);
-      });
+      pointNodes.classed('is-active', (d) => d.id === activeId).attr('r', (d) => (d.id === activeId ? 9 : 6));
       updateDetail(point);
     }
 
     function showTooltip(event, point) {
-      const periodLabel = route.map?.periodLabels?.[point.period] || point.period;
+      const periodLabel = route.map?.periodLabels?.[point.period] || point.period || '';
       tooltip.hidden = false;
-      tooltip.innerHTML = `<strong>${point.title}</strong><span>${periodLabel || ''}</span>`;
+      tooltip.innerHTML = `<strong>${point.title}</strong><span>${periodLabel}</span>`;
       const shellRect = mapShell.getBoundingClientRect();
       const x = event.clientX - shellRect.left + 12;
       const y = event.clientY - shellRect.top + 12;
@@ -210,19 +191,6 @@
         }
       });
 
-    chips.innerHTML = route.points.map((point) => `
-      <button type="button" class="artist-route-map-chip" data-point-id="${point.id}" role="listitem">
-        <span class="dot" style="background:${PERIOD_COLORS[point.period] || '#B8894D'}"></span>
-        <span>${point.shortLabel || point.title}</span>
-      </button>
-    `).join('');
-
-    chips.querySelectorAll('.artist-route-map-chip').forEach((chip) => {
-      chip.addEventListener('click', () => {
-        setActive(chip.getAttribute('data-point-id'));
-      });
-    });
-
     const zoomCfg = route.map?.zoom || {};
     const zoomBehavior = d3.zoom()
       .scaleExtent([zoomCfg.min || 1, zoomCfg.max || 7])
@@ -247,10 +215,7 @@
     setActive(activeId);
   }
 
-  Promise.all([
-    loadScript(D3_URL),
-    loadScript(TOPOJSON_URL)
-  ])
+  Promise.all([loadScript(D3_URL), loadScript(TOPOJSON_URL)])
     .then(() => Promise.all([
       fetchJson(ROUTE_JSON_PATH),
       fetchJson(WORLD_ATLAS_URL),
