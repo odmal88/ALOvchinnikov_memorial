@@ -86,18 +86,29 @@
                     <p class="dark"></p>
                     <p class="dark"></p>
                 </div>
-                <aside class="artist-route-map-card" aria-label="Карта маршрутов художника">
-                    <div class="artist-route-map-shell">
-                        <div class="artist-route-map-canvas" role="img" aria-label="Карта России с маршрутами художника"></div>
-                        <div class="artist-route-map-tooltip" role="status" aria-live="polite" hidden></div>
+
+                <div id="wrap" class="artist-route-map-module" aria-label="Карта маршрутов художника">
+                    <div id="head" class="artist-route-map-head">
+                        <h3 class="artist-route-map-title">География маршрутов</h3>
+                        <div class="artist-route-map-actions" role="group" aria-label="Управление картой">
+                            <button type="button" data-zoom="in" aria-label="Увеличить карту">+</button>
+                            <button type="button" data-zoom="out" aria-label="Уменьшить карту">−</button>
+                            <button type="button" class="artist-route-map-reset">Сброс</button>
+                        </div>
                     </div>
-                    <div class="artist-route-map-chips" role="list" aria-label="Точки маршрута"></div>
-                    <div class="artist-route-map-detail" aria-live="polite">
-                        <h4></h4>
-                        <p class="artist-route-map-detail-text"></p>
-                        <p class="artist-route-map-detail-meta"></p>
+                    <div id="map-container" class="artist-route-map-shell">
+                        <div id="msvg" class="artist-route-map-canvas" role="img" aria-label="Карта России с маршрутами художника"></div>
+                        <div id="mtip" class="artist-route-map-tooltip" role="status" aria-live="polite" hidden></div>
                     </div>
-                </aside>
+                    <p id="mstatus" class="artist-route-map-status" aria-live="polite"></p>
+                    <div id="mleg" class="artist-route-map-legend" aria-label="Легенда карты"></div>
+                </div>
+
+                <div class="artist-route-map-detail" aria-live="polite">
+                    <h4></h4>
+                    <p class="artist-route-map-detail-text"></p>
+                    <p class="artist-route-map-detail-meta"></p>
+                </div>
             </div>
         </section>
 
