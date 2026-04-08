@@ -35,6 +35,13 @@
     south: '#C46A31'
   };
 
+  const PROJECTION_FACTORIES = {
+    conicEquidistant: () => window.d3.geoConicEquidistant(),
+    mercator: () => window.d3.geoMercator(),
+    naturalEarth1: () => window.d3.geoNaturalEarth1(),
+    equalEarth: () => window.d3.geoEqualEarth()
+  };
+
   function setModuleStatus(message) {
     const status = document.querySelector('#page-artist #artist-routes #mstatus');
     if (status) status.textContent = message;
@@ -116,6 +123,76 @@
 
   function getRussiaFeature(countriesFeatureCollection) {
     return countriesFeatureCollection?.features?.find((feature) => Number(feature?.id) === 643) || null;
+  }
+
+  function toFiniteNumber(value) {
+    const number = Number(value);
+    return Number.isFinite(number) ? number : null;
+  }
+
+  function toPair(values) {
+    if (!Array.isArray(values) || values.length < 2) return null;
+    const first = toFiniteNumber(values[0]);
+    const second = toFiniteNumber(values[1]);
+    if (first == null || second == null) return null;
+    return [first, second];
+  }
+
+  function createProjection(route, russiaFeature, width, height) {
+    const d3 = window.d3;
+    const projectionName = route?.map?.projection;
+    const projectionFactory = PROJECTION_FACTORIES[projectionName] || PROJECTION_FACTORIES.conicEquidistant;
+    const projection = projectionFactory();
+
+    const rotate = toPair(route?.map?.rotate);
+    const parallels = toPair(route?.map?.parallels);
+    const center = toPair(route?.map?.center);
+    const scale = toFiniteNumber(route?.map?.scale);
+    const translate = toPair(route?.map?.translate);
+
+    if (typeof projection.rotate === 'function' && rotate) projection.rotate(rotate);
+    if (typeof projection.parallels === 'function' && parallels) projection.parallels(parallels);
+    if (typeof projection.center === 'function' && center) projection.center(center);
+    if (typeof projection.scale === 'function' && scale) projection.scale(scale);
+    if (typeof projection.translate === 'function' && translate) projection.translate(translate);
+
+    const hasManualScale = scale != null;
+    const hasManualTranslate = translate != null;
+
+    if (!hasManualScale && !hasManualTranslate && russiaFeature) {
+      projection.fitExtent([[20, 14], [width - 20, height - 24]], russiaFeature);
+    } else if (!hasManualTranslate && typeof projection.translate === 'function') {
+      projection.translate([width / 2, height / 2]);
+    }
+
+    if (!hasManualScale && typeof projection.scale === 'function') {
+      const currentScale = toFiniteNumber(projection.scale());
+      if (currentScale == null) projection.scale(530);
+    }
+
+    return projection;
+  }
+
+  function describeProjection(route) {
+    const projectionName = route?.map?.projection || 'conicEquidistant';
+    const rotate = toPair(route?.map?.rotate);
+    const parallels = toPair(route?.map?.parallels);
+
+    const titleMap = {
+      conicEquidistant: 'Равноотстоящий конус',
+      mercator: 'Меркатор',
+      naturalEarth1: 'Natural Earth',
+      equalEarth: 'Equal Earth'
+    };
+
+    const parts = [titleMap[projectionName] || projectionName];
+    if (parallels) {
+      parts.push(`параллели ${parallels[0]}° и ${parallels[1]}°`);
+    }
+    if (rotate) {
+      parts.push(`меридиан ${Math.abs(rotate[0])}°${rotate[0] < 0 ? 'E' : 'W'}`);
+    }
+    return parts.join(' · ');
   }
 
   function buildLegend(host, route) {
@@ -231,15 +308,7 @@
     const countryBorders = topojson.mesh(worldAtlas, worldAtlas.objects.countries, (a, b) => a !== b);
     const russiaFeature = getRussiaFeature(countries);
 
-    const projection = d3.geoConicEquidistant()
-      .rotate(route?.map?.rotate || [-94, 0])
-      .parallels(route?.map?.parallels || [49, 68.5]);
-
-    if (russiaFeature) {
-      projection.fitExtent([[20, 14], [width - 20, height - 24]], russiaFeature);
-    } else {
-      projection.center([95, 62]).translate([width / 2, height / 2]).scale(530);
-    }
+    const projection = createProjection(route, russiaFeature, width, height);
 
     const path = d3.geoPath(projection);
     const graticule = d3.geoGraticule().step([10, 10]);
@@ -306,7 +375,7 @@
       detailTitle.textContent = point.title;
       detailText.textContent = point.text;
       detailMeta.textContent = [periodLabel, categoryLabel].filter(Boolean).join(' · ');
-      status.textContent = 'Равноотстоящий конус · параллели 49° и 68.5° · меридиан 94°E';
+      status.textContent = describeProjection(route);
     }
 
     function setActive(id) {
