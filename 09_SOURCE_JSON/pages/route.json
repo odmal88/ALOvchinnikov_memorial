@@ -4,11 +4,8 @@
   "map": {
     "activePointId": "spb",
     "projection": "conicEquidistant",
-    "center": [76, 60],
-    "rotate": [-40, 0],
-    "parallels": [55, 68],
-    "scale": 560,
-    "translate": [470, 315],
+    "rotate": [-94, 0],
+    "parallels": [49, 68.5],
     "zoom": {
       "min": 1,
       "max": 7,

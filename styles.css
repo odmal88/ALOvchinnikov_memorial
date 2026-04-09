@@ -2030,8 +2030,9 @@
 
         .artist-theme-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(260px, 1fr));
             gap: 16px;
+            max-width: none;
             width: 100%;
         }
         .artist-theme-card {
@@ -2171,9 +2172,18 @@
             gap: 20px;
             width: 100%;
         }
+        .artist-index-layout--stacked {
+            grid-template-columns: 1fr;
+        }
+        .artist-index-summary {
+            max-width: 100%;
+        }
         .artist-index-lead {
-            max-width: 780px;
-            margin-bottom: 0;
+            max-width: 860px;
+            margin-bottom: 18px;
+        }
+        .artist-index-detail {
+            max-width: 860px;
         }
         .section-status-note {
             margin: 8px 0 0;
