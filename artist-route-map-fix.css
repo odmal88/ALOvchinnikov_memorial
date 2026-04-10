@@ -1,0 +1,28 @@
+#page-artist #artist-routes #map-container {
+    height: 620px;
+    min-height: 0;
+}
+
+#page-artist #artist-routes #msvg {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+}
+
+#page-artist #artist-routes .artist-route-map-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    #page-artist #artist-routes #map-container { height: 440px; }
+}
+
+@media (max-width: 480px) {
+    #page-artist #artist-routes #map-container { height: 360px; }
+}
