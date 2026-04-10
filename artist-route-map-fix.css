@@ -26,3 +26,6 @@
 @media (max-width: 480px) {
     #page-artist #artist-routes #map-container { height: 360px; }
 }
+#page-artist #artist-routes .artist-route-line {
+    display: none;
+}
