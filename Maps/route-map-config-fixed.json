@@ -1,0 +1,29 @@
+{
+  "activePointId": "spb",
+  "projection": "conicEquidistant",
+  "rotate": [-94, 0],
+  "parallels": [49, 68.5],
+  "zoom": {
+    "min": 1,
+    "max": 7,
+    "step": 1.35
+  },
+  "legendTitle": "Маршрутные периоды",
+  "periodLabels": {
+    "base": "Базовый контекст",
+    "historical_city": "Историко-городская линия",
+    "early_wide": "Ранний широкий маршрут",
+    "volga": "Волжская линия",
+    "mature_return": "Зрелые возвраты",
+    "north": "Русский Север",
+    "south": "Южный маршрут"
+  },
+  "categoryLabels": {
+    "base": "Центр биографии",
+    "city": "Городской узел",
+    "route": "Маршрутная точка",
+    "volga": "Волжский узел",
+    "north": "Северный узел",
+    "south": "Южный узел"
+  }
+}
