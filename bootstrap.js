@@ -1,5 +1,5 @@
 (function bootstrapApp() {
-    const BUILD_ID = '2026-04-09-route-map-v6';
+    const BUILD_ID = '2026-04-10-route-map-v7';
 
     function withBuildId(path) {
         const separator = path.includes('?') ? '&' : '?';
