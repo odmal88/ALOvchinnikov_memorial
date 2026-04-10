@@ -1,0 +1,87 @@
+diff --git a/09_SOURCE_JSON/pages/route.json b/09_SOURCE_JSON/pages/route.json
+index 3069b77..8f0f111 100644
+--- a/09_SOURCE_JSON/pages/route.json
++++ b/09_SOURCE_JSON/pages/route.json
+@@ -3,11 +3,8 @@
+   "intro": "География искусства Александра Овчинникова образует не только карту Русского Севера, но и более широкий маршрут художественной памяти. Карта показывает пространства наблюдения и этюдной работы, из которых складывался его художественный мир.",
+   "map": {
+     "activePointId": "spb",
+     "projection": "conicEquidistant",
+-    "center": [76, 60],
+-    "rotate": [-40, 0],
+-    "parallels": [55, 68],
+-    "scale": 560,
+-    "translate": [470, 315],
++    "rotate": [-94, 0],
++    "parallels": [49, 68.5],
+     "zoom": {
+       "min": 1,
+       "max": 7,
+diff --git a/artist-route-map-fix.css b/artist-route-map-fix.css
+new file mode 100644
+index 0000000..43d2d19
+--- /dev/null
++++ b/artist-route-map-fix.css
+@@ -0,0 +1,29 @@
++#page-artist #artist-routes #map-container {
++    height: 620px;
++    min-height: 0;
++}
++
++#page-artist #artist-routes #msvg {
++    position: absolute;
++    inset: 0;
++    display: block;
++    width: 100%;
++    height: 100%;
++    max-width: 100%;
++}
++
++#page-artist #artist-routes .artist-route-map-svg {
++    display: block;
++    width: 100%;
++    height: 100%;
++    max-width: 100%;
++}
++
++@media (max-width: 768px) {
++    #page-artist #artist-routes #map-container { height: 440px; }
++}
++
++@media (max-width: 480px) {
++    #page-artist #artist-routes #map-container { height: 360px; }
++}
+diff --git a/bootstrap.js b/bootstrap.js
+index dbfd87f..b8ec1dd 100644
+--- a/bootstrap.js
++++ b/bootstrap.js
+@@ -1,5 +1,5 @@
+ (function bootstrapApp() {
+-    const BUILD_ID = '2026-04-08-route-map-v5';
++    const BUILD_ID = '2026-04-09-route-map-v6';
+
+     function withBuildId(path) {
+         const separator = path.includes('?') ? '&' : '?';
+diff --git a/index.html b/index.html
+index 30e28c2..b39ef7c 100644
+--- a/index.html
++++ b/index.html
+@@ -8,7 +8,8 @@
+     <meta property="og:description" content="Мемориальная выставка произведений Л.А. и А.Л. Овчинниковых: 14–26 апреля 2026, Голубой зал Союза художников, открытие выставки — 14 апреля в 18:30, каталог работ, 3D-мастерская, ожившие полотна, цифровой архив.">
+     <meta property="og:type" content="website">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+-    <link rel="stylesheet" href="styles.css?v=2026-04-08-route-map-v5">
++    <link rel="stylesheet" href="styles.css?v=2026-04-09-route-map-v6">
++    <link rel="stylesheet" href="artist-route-map-fix.css?v=2026-04-09-route-map-v6">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+@@ -25,6 +26,6 @@
+     <div id="pages-root"></div>
+     <div id="component-footer"></div>
+
+-    <script src="bootstrap.js?v=2026-04-08-route-map-v5"></script>
++    <script src="bootstrap.js?v=2026-04-09-route-map-v6"></script>
+ </body>
+ </html>
