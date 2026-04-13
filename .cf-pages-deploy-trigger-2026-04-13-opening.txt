@@ -1,0 +1,4 @@
+Cloudflare Pages production deploy trigger.
+Date: 2026-04-13
+Reason: pre-opening publish
+This file exists only to create a technical commit and trigger automatic deployment from main.
