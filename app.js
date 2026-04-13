@@ -611,7 +611,7 @@ function createCatalogCard(work) {
             imageClass: 'catalog-thumb'
         })}
         <h4>${escapeHtml(work.title)}</h4>
-        <div class="catalog-cycle">Цикл: ${escapeHtml(label)}</div>
+        <div class="catalog-cycle">Раздел: ${escapeHtml(label)}</div>
         <span class="catalog-meta" style="color: var(--text-muted);">${escapeHtml(meta || 'Без даты')}</span>
         <div class="catalog-technique" style="color: var(--text-muted);">${escapeHtml(techLine || 'Данные уточняются')}</div>
     `;

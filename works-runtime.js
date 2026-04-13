@@ -257,7 +257,7 @@
                         </div>
                     </div>
                     <h4>${escapeHtml(work.title)}</h4>
-                    <div class="catalog-cycle">Цикл: ${escapeHtml(categoryLabel)}</div>
+                    <div class="catalog-cycle">Раздел: ${escapeHtml(categoryLabel)}</div>
                     <span class="catalog-meta" style="color: var(--text-muted);">${escapeHtml(work.year)}</span>
                     <div class="catalog-technique" style="color: var(--text-muted);">${escapeHtml(work.technique)} · ${escapeHtml(work.size)}</div>
                 </a>
