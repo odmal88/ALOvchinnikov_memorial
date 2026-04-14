@@ -1,5 +1,5 @@
 (function bootstrapApp() {
-    const BUILD_ID = '2026-04-13-works-runtime-v2';
+    const BUILD_ID = '2026-04-13-home-selected-works-v3';
 
     function withBuildId(path) {
         const separator = path.includes('?') ? '&' : '?';
@@ -74,6 +74,7 @@
             }
             return null;
         })
+        .then(() => loadScript('home-selected-works-sync.js'))
         .then(() => loadScript('artist-route-map.js'))
         .then(() => loadScript('app.js'))
         .then(() => loadScript('works-runtime.js'))

@@ -53,24 +53,36 @@
     },
     "items": [
       {
-        "title": "Северный пейзаж",
-        "meta": "А.Л. Овчинников · 1998 · 80 x 120 см",
-        "route": "/works/severniy-peyzazh"
+        "title": "Емельян Пугачёв / эскиз к дипломной работе /",
+        "meta": "А.Л. Овчинников · 1984",
+        "route": "/works/emelyan-pugachev-eskiz-k-diplomnoy-rabote",
+        "image": "assets/works/thumbs/033.jpg",
+        "category": "history",
+        "label": "Историческая тема"
       },
       {
-        "title": "Вечерний свет. Вологда",
-        "meta": "А.Л. Овчинников · 2005 · 60 x 90 см",
-        "route": "/works/vecherniy-svet-vologda"
+        "title": "Лесная часовня (этюд)",
+        "meta": "А.Л. Овчинников · 1984 · к/м",
+        "route": "/works/lesnaya-chasovnya-etyud",
+        "image": "assets/works/thumbs/108.jpg",
+        "category": "history",
+        "label": "Историческая тема"
       },
       {
-        "title": "Зимний день в Петербурге",
-        "meta": "А.Л. Овчинников · 2010 · 50 x 70 см",
-        "route": "/works/zimniy-den-v-peterburge"
+        "title": "Старые сени",
+        "meta": "А.Л. Овчинников · 1989 · 100 × 150 см",
+        "route": "/works/starye-seni",
+        "image": "assets/works/thumbs/034.jpg",
+        "category": "interior",
+        "label": "Камерный мир"
       },
       {
-        "title": "Нижегородские дали",
-        "meta": "А.Л. Овчинников · 2012 · 70 x 100 см",
-        "route": "/works/nizhegorodskie-dali"
+        "title": "Кабанчик",
+        "meta": "А.Л. Овчинников · 2010",
+        "route": "/works/kabanchik",
+        "image": "assets/works/thumbs/013.jpg",
+        "category": "north",
+        "label": "Русский Север"
       }
     ]
   },
