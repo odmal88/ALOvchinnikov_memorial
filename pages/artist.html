@@ -1,176 +1,178 @@
+<div class="page" id="page-artist">
 
-
-    <div class="page" id="page-artist">
-
-        <div class="page-hero">
-            <div class="hero-texture"></div>
-            <div class="container">
-                <div class="page-hero-label">О художнике</div>
-                <h1>Александр Львович <em>Овчинников</em></h1>
-                <div class="page-hero-subtitle">Биография, семья, маршруты и художественный мир</div>
-            </div>
+    <div class="page-hero">
+        <div class="hero-texture"></div>
+        <div class="container">
+            <div class="page-hero-label">О художнике</div>
+            <h1>Александр Львович <em>Овчинников</em></h1>
+            <div class="page-hero-subtitle">Биография, семья, маршруты и художественный мир</div>
         </div>
-
-        <div class="breadcrumbs">
-            <div class="breadcrumbs-inner">
-                <a href="#/" data-route="/">Главная</a>
-                <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
-                <span class="current">Художник</span>
-            </div>
-        </div>
-
-        <section class="content-section bg-cool" id="artist-family" style="padding-top: 72px;">
-            <div class="content-block reveal artist-dossier-layout">
-                <aside class="artist-toc" aria-label="Оглавление страницы художника">
-                    <h3>Содержание</h3>
-                    <button type="button" onclick="document.getElementById('artist-family').scrollIntoView({behavior:'smooth', block:'start'});">Семья и истоки</button>
-                    <button type="button" onclick="document.getElementById('artist-school').scrollIntoView({behavior:'smooth', block:'start'});">Академическая школа</button>
-                    <button type="button" onclick="document.getElementById('artist-routes').scrollIntoView({behavior:'smooth', block:'start'});">Маршруты художника</button>
-                    <button type="button" onclick="document.getElementById('artist-method').scrollIntoView({behavior:'smooth', block:'start'});">Живописный язык и техника</button>
-                    <button type="button" onclick="document.getElementById('artist-index').scrollIntoView({behavior:'smooth', block:'start'});">Художественный мир</button>
-                    <button type="button" onclick="document.getElementById('artist-workshop').scrollIntoView({behavior:'smooth', block:'start'});">Мастерская</button>
-                    <button type="button" onclick="document.getElementById('artist-etude').scrollIntoView({behavior:'smooth', block:'start'});">Незавершённое и этюдное</button>
-                    <button type="button" onclick="document.getElementById('artist-legacy').scrollIntoView({behavior:'smooth', block:'start'});">Наследие</button>
-                </aside>
-
-                <div class="artist-intro-main">
-                    <h2 class="dark">Семья и истоки</h2>
-                    <div class="divider gold"></div>
-                    <div class="artist-intro-headline"></div>
-
-                    <div class="artist-intro-grid">
-                        <div class="artist-portrait">
-                            <div class="artist-portrait-placeholder">
-                                <i class="fa-solid fa-image-portrait"></i>
-                            </div>
-                            <div class="artist-portrait-frame"></div>
-                        </div>
-
-                        <div class="artist-intro-text">
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                        </div>
-                    </div>
-
-                    <div class="artist-family-body" style="margin-top: 28px;">
-                        <p class="dark"></p>
-                        <p class="dark"></p>
-                        <p class="dark"></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section bg-light" id="artist-school">
-            <div class="content-block reveal">
-                <h2 class="dark">Академическая школа</h2>
-                <div class="divider gold"></div>
-                <div class="content-narrow" style="margin-top: 32px;">
-                    <p class="dark"></p>
-                    <p class="dark"></p>
-                    <p class="dark"></p>
-                </div>
-                <div class="artist-fact-box" style="margin-top: 24px;">
-                    <span style="font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; color: var(--text-muted); text-transform: uppercase;">Ключевые вехи</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section bg-cool" id="artist-routes">
-            <div class="content-block reveal">
-                <h2 class="dark">Маршруты художника</h2>
-                <div class="divider gold"></div>
-                <div class="artist-route-text" style="margin-top: 36px;">
-                    <p class="dark"></p>
-                    <p class="dark"></p>
-                    <p class="dark"></p>
-                </div>
-
-                <div id="wrap" class="artist-route-map-module" aria-label="Карта маршрутов художника">
-                    <div id="head" class="artist-route-map-head">
-                        <h3 class="artist-route-map-title">География маршрутов</h3>
-                        <div class="artist-route-map-actions" role="group" aria-label="Управление картой">
-                            <button type="button" data-zoom="in" aria-label="Увеличить карту">+</button>
-                            <button type="button" data-zoom="out" aria-label="Уменьшить карту">−</button>
-                            <button type="button" class="artist-route-map-reset">Сброс</button>
-                        </div>
-                    </div>
-                    <div id="map-container" class="artist-route-map-shell">
-                        <div id="msvg" class="artist-route-map-canvas" role="img" aria-label="Карта России с маршрутами художника"></div>
-                        <div id="mtip" class="artist-route-map-tooltip" role="status" aria-live="polite" hidden></div>
-                    </div>
-                    <p id="mstatus" class="artist-route-map-status" aria-live="polite"></p>
-                    <div id="mleg" class="artist-route-map-legend" aria-label="Легенда карты"></div>
-                </div>
-
-                <div class="artist-route-map-detail" aria-live="polite">
-                    <h4></h4>
-                    <p class="artist-route-map-detail-text"></p>
-                    <p class="artist-route-map-detail-meta"></p>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section bg-light" id="artist-method">
-            <div class="content-block reveal">
-                <h2 class="dark">Живописный язык и техника</h2>
-                <div class="divider gold"></div>
-                <div class="artist-method-intro" style="margin-top: 32px;">
-                    <p class="dark"></p>
-                    <p class="dark"></p>
-                    <p class="dark"></p>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section bg-cool" id="artist-index">
-            <div class="content-block reveal">
-                <h2 class="dark">Художественный мир</h2>
-                <div class="divider gold"></div>
-                <div class="artist-index-layout artist-index-layout--stacked" style="margin-top: 32px;">
-                    <div class="artist-index-summary">
-                        <p class="dark artist-index-lead">Этот раздел собирает ключевые мотивы в цельную картину художественного мира.</p>
-                        <div class="artist-theme-grid"></div>
-                    </div>
-                    <aside class="artist-module artist-index-detail"></aside>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section bg-light" id="artist-workshop">
-            <div class="content-block reveal">
-                <h2 class="dark">Мастерская как автопортрет</h2>
-                <div class="divider gold"></div>
-                <div class="artist-workshop-entry">
-                    <p class="dark">Мастерская художника сохранена как мемориальное пространство. В её устройстве читается биография метода: натурные этюды, рабочие состояния, инструменты и материалы складываются в автопортрет художника, созданный не словами, а вещами и следами работы.</p>
-                    <a href="#/digital/workshop" data-route="/digital/workshop" class="btn btn-light">Перейти в 3D-мастерскую</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section bg-cool" id="artist-etude">
-            <div class="content-block reveal">
-                <h2 class="dark">Незавершённое и этюдное</h2>
-                <div class="subtitle dark">Рабочие состояния как часть наследия</div>
-                <div class="divider gold"></div>
-                <div class="artist-etude-note">
-                    <p class="dark">Незавершённые вещи, этюды и промежуточные состояния показывают живой ход работы: как формируется композиция, как уточняется цветовая среда, как меняется масштаб замысла от листа к большому полотну.</p>
-                    <p class="dark">Этот слой важен не меньше завершённых произведений, поскольку позволяет увидеть внутреннюю лабораторию художника и ритм его мышления.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section bg-light" id="artist-legacy">
-            <div class="content-block reveal">
-                <h2 class="dark">Наследие</h2>
-                <div class="divider gold"></div>
-                <div class="content-narrow" style="margin-top: 32px;">
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                </div>
-            </div>
-        </section>
-
     </div>
+
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <a href="#/" data-route="/">Главная</a>
+            <span class="sep"><i class="fa-solid fa-chevron-right" style="color: var(--text-muted);"></i></span>
+            <span class="current">Художник</span>
+        </div>
+    </div>
+
+    <section class="content-section bg-cool" id="artist-family" style="padding-top: 72px;">
+        <div class="content-block reveal artist-dossier-layout">
+            <aside class="artist-toc" aria-label="Оглавление страницы художника">
+                <h3>Содержание</h3>
+                <button type="button" onclick="document.getElementById('artist-family').scrollIntoView({behavior:'smooth', block:'start'});">Семья и истоки</button>
+                <button type="button" onclick="document.getElementById('artist-school').scrollIntoView({behavior:'smooth', block:'start'});">Академическая школа</button>
+                <button type="button" onclick="document.getElementById('artist-routes').scrollIntoView({behavior:'smooth', block:'start'});">Маршруты художника</button>
+                <button type="button" onclick="document.getElementById('artist-method').scrollIntoView({behavior:'smooth', block:'start'});">Живописный язык и техника</button>
+                <button type="button" onclick="document.getElementById('artist-index').scrollIntoView({behavior:'smooth', block:'start'});">Художественный мир</button>
+                <button type="button" onclick="document.getElementById('artist-workshop').scrollIntoView({behavior:'smooth', block:'start'});">Мастерская</button>
+                <button type="button" onclick="document.getElementById('artist-etude').scrollIntoView({behavior:'smooth', block:'start'});">Незавершённое и этюдное</button>
+                <button type="button" onclick="document.getElementById('artist-legacy').scrollIntoView({behavior:'smooth', block:'start'});">Наследие</button>
+            </aside>
+
+            <div class="artist-intro-main">
+                <h2 class="dark">Семья и истоки</h2>
+                <div class="divider gold"></div>
+                <div class="artist-intro-headline"></div>
+
+                <div class="artist-intro-grid">
+                    <div class="artist-portrait">
+                        <img
+                            src="assets/artist-portrait-archival.jpg"
+                            alt="Архивный портрет Александра Львовича Овчинникова"
+                            loading="lazy"
+                            decoding="async"
+                            style="width: 100%; height: 100%; object-fit: cover; display: block;"
+                        >
+                        <div class="artist-portrait-frame"></div>
+                    </div>
+
+                    <div class="artist-intro-text">
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                    </div>
+                </div>
+
+                <div class="artist-family-body" style="margin-top: 28px;">
+                    <p class="dark"></p>
+                    <p class="dark"></p>
+                    <p class="dark"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section bg-light" id="artist-school">
+        <div class="content-block reveal">
+            <h2 class="dark">Академическая школа</h2>
+            <div class="divider gold"></div>
+            <div class="content-narrow" style="margin-top: 32px;">
+                <p class="dark"></p>
+                <p class="dark"></p>
+                <p class="dark"></p>
+            </div>
+            <div class="artist-fact-box" style="margin-top: 24px;">
+                <span style="font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; color: var(--text-muted); text-transform: uppercase;">Ключевые вехи</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section bg-cool" id="artist-routes">
+        <div class="content-block reveal">
+            <h2 class="dark">Маршруты художника</h2>
+            <div class="divider gold"></div>
+            <div class="artist-route-text" style="margin-top: 36px;">
+                <p class="dark"></p>
+                <p class="dark"></p>
+                <p class="dark"></p>
+            </div>
+
+            <div id="wrap" class="artist-route-map-module" aria-label="Карта маршрутов художника">
+                <div id="head" class="artist-route-map-head">
+                    <h3 class="artist-route-map-title">География маршрутов</h3>
+                    <div class="artist-route-map-actions" role="group" aria-label="Управление картой">
+                        <button type="button" data-zoom="in" aria-label="Увеличить карту">+</button>
+                        <button type="button" data-zoom="out" aria-label="Уменьшить карту">−</button>
+                        <button type="button" class="artist-route-map-reset">Сброс</button>
+                    </div>
+                </div>
+                <div id="map-container" class="artist-route-map-shell">
+                    <div id="msvg" class="artist-route-map-canvas" role="img" aria-label="Карта России с маршрутами художника"></div>
+                    <div id="mtip" class="artist-route-map-tooltip" role="status" aria-live="polite" hidden></div>
+                </div>
+                <p id="mstatus" class="artist-route-map-status" aria-live="polite"></p>
+                <div id="mleg" class="artist-route-map-legend" aria-label="Легенда карты"></div>
+            </div>
+
+            <div class="artist-route-map-detail" aria-live="polite">
+                <h4></h4>
+                <p class="artist-route-map-detail-text"></p>
+                <p class="artist-route-map-detail-meta"></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section bg-light" id="artist-method">
+        <div class="content-block reveal">
+            <h2 class="dark">Живописный язык и техника</h2>
+            <div class="divider gold"></div>
+            <div class="artist-method-intro" style="margin-top: 32px;">
+                <p class="dark"></p>
+                <p class="dark"></p>
+                <p class="dark"></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section bg-cool" id="artist-index">
+        <div class="content-block reveal">
+            <h2 class="dark">Художественный мир</h2>
+            <div class="divider gold"></div>
+            <div class="artist-index-layout artist-index-layout--stacked" style="margin-top: 32px;">
+                <div class="artist-index-summary">
+                    <p class="dark artist-index-lead">Этот раздел собирает ключевые мотивы в цельную картину художественного мира.</p>
+                    <div class="artist-theme-grid"></div>
+                </div>
+                <aside class="artist-module artist-index-detail"></aside>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section bg-light" id="artist-workshop">
+        <div class="content-block reveal">
+            <h2 class="dark">Мастерская как автопортрет</h2>
+            <div class="divider gold"></div>
+            <div class="artist-workshop-entry">
+                <p class="dark">Мастерская художника сохранена как мемориальное пространство. В её устройстве читается биография метода: натурные этюды, рабочие состояния, инструменты и материалы складываются в автопортрет художника, созданный не словами, а вещами и следами работы.</p>
+                <a href="#/digital/workshop" data-route="/digital/workshop" class="btn btn-light">Перейти в 3D-мастерскую</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section bg-cool" id="artist-etude">
+        <div class="content-block reveal">
+            <h2 class="dark">Незавершённое и этюдное</h2>
+            <div class="subtitle dark">Рабочие состояния как часть наследия</div>
+            <div class="divider gold"></div>
+            <div class="artist-etude-note">
+                <p class="dark">Незавершённые вещи, этюды и промежуточные состояния показывают живой ход работы: как формируется композиция, как уточняется цветовая среда, как меняется масштаб замысла от листа к большому полотну.</p>
+                <p class="dark">Этот слой важен не меньше завершённых произведений, поскольку позволяет увидеть внутреннюю лабораторию художника и ритм его мышления.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section bg-light" id="artist-legacy">
+        <div class="content-block reveal">
+            <h2 class="dark">Наследие</h2>
+            <div class="divider gold"></div>
+            <div class="content-narrow" style="margin-top: 32px;">
+                <p></p>
+                <p></p>
+                <p></p>
+            </div>
+        </div>
+    </section>
+
+</div>
