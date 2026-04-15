@@ -138,6 +138,89 @@
     return [first, second];
   }
 
+  function toLngLatBounds(points) {
+    if (!Array.isArray(points) || points.length === 0) return null;
+    let minLon = Infinity;
+    let maxLon = -Infinity;
+    let minLat = Infinity;
+    let maxLat = -Infinity;
+
+    points.forEach((point) => {
+      const lon = toFiniteNumber(point?.lon);
+      const lat = toFiniteNumber(point?.lat);
+      if (lon == null || lat == null) return;
+      minLon = Math.min(minLon, lon);
+      maxLon = Math.max(maxLon, lon);
+      minLat = Math.min(minLat, lat);
+      maxLat = Math.max(maxLat, lat);
+    });
+
+    if (!Number.isFinite(minLon) || !Number.isFinite(maxLon) || !Number.isFinite(minLat) || !Number.isFinite(maxLat)) {
+      return null;
+    }
+
+    return { minLon, maxLon, minLat, maxLat };
+  }
+
+  function buildViewportFeature(route) {
+    const viewport = route?.map?.viewport;
+    if (viewport?.focus !== 'points') return null;
+
+    const sourceBounds = toLngLatBounds(route?.points);
+    if (!sourceBounds) return null;
+
+    const minLon = viewport?.minLon != null ? toFiniteNumber(viewport.minLon) : sourceBounds.minLon;
+    const maxLon = viewport?.maxLon != null ? toFiniteNumber(viewport.maxLon) : sourceBounds.maxLon;
+    const minLat = viewport?.minLat != null ? toFiniteNumber(viewport.minLat) : sourceBounds.minLat;
+    const maxLat = viewport?.maxLat != null ? toFiniteNumber(viewport.maxLat) : sourceBounds.maxLat;
+
+    const expandNorth = toFiniteNumber(viewport?.expandNorth) || 0;
+    const expandSouth = toFiniteNumber(viewport?.expandSouth) || 0;
+    const expandWest = toFiniteNumber(viewport?.expandWest) || 0;
+    const expandEast = toFiniteNumber(viewport?.expandEast) || 0;
+
+    const clampedMinLon = Math.max(-180, minLon - expandWest);
+    const clampedMaxLon = Math.min(180, maxLon + expandEast);
+    const clampedMinLat = Math.max(-89.5, minLat - expandSouth);
+    const clampedMaxLat = Math.min(89.5, maxLat + expandNorth);
+
+    if (clampedMinLon >= clampedMaxLon || clampedMinLat >= clampedMaxLat) return null;
+
+    return {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [[
+          [clampedMinLon, clampedMinLat],
+          [clampedMaxLon, clampedMinLat],
+          [clampedMaxLon, clampedMaxLat],
+          [clampedMinLon, clampedMaxLat],
+          [clampedMinLon, clampedMinLat]
+        ]]
+      }
+    };
+  }
+
+  function resolveFitExtent(width, height, route) {
+    const viewport = route?.map?.viewport || {};
+    const paddingCfg = viewport?.padding;
+    const defaultPadding = { top: 14, right: 20, bottom: 24, left: 20 };
+    const uniform = toFiniteNumber(paddingCfg);
+    const padding = uniform != null
+      ? { top: uniform, right: uniform, bottom: uniform, left: uniform }
+      : {
+        top: toFiniteNumber(paddingCfg?.top) ?? defaultPadding.top,
+        right: toFiniteNumber(paddingCfg?.right) ?? defaultPadding.right,
+        bottom: toFiniteNumber(paddingCfg?.bottom) ?? defaultPadding.bottom,
+        left: toFiniteNumber(paddingCfg?.left) ?? defaultPadding.left
+      };
+
+    return [
+      [padding.left, padding.top],
+      [Math.max(padding.left + 1, width - padding.right), Math.max(padding.top + 1, height - padding.bottom)]
+    ];
+  }
+
   function createProjection(route, russiaFeature, width, height) {
     const d3 = window.d3;
     const projectionName = route?.map?.projection;
@@ -158,9 +241,12 @@
 
     const hasManualScale = scale != null;
     const hasManualTranslate = translate != null;
+    const viewportFeature = buildViewportFeature(route);
+    const fitFeature = viewportFeature || russiaFeature;
+    const fitExtent = resolveFitExtent(width, height, route);
 
-    if (!hasManualScale && !hasManualTranslate && russiaFeature) {
-      projection.fitExtent([[20, 14], [width - 20, height - 24]], russiaFeature);
+    if (!hasManualScale && !hasManualTranslate && fitFeature) {
+      projection.fitExtent(fitExtent, fitFeature);
     } else if (!hasManualTranslate && typeof projection.translate === 'function') {
       projection.translate([width / 2, height / 2]);
     }
