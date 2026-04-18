@@ -155,9 +155,8 @@ const pageTitles = {
     '/contacts': 'Контакты — Пространство памяти'
 };
 
-// TODO: замените на реальный email проекта
 const contactConfig = {
-    email: 'TODO@example.com'
+    email: 'od03@yandex.ru'
 };
 
 // ══════════════════════════════════════════════
