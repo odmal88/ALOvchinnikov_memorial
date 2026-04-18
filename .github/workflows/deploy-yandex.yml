@@ -1,0 +1,55 @@
+name: Deploy to Yandex Object Storage
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: yandex-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Ensure AWS CLI is available
+        run: |
+          aws --version || (sudo apt-get update && sudo apt-get install -y awscli)
+
+      - name: Deploy site to Yandex bucket
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.YC_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.YC_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ru-central1
+          AWS_EC2_METADATA_DISABLED: "true"
+          YC_BUCKET_NAME: ${{ secrets.YC_BUCKET_NAME }}
+          YC_ENDPOINT: https://storage.yandexcloud.net
+        run: |
+          set -euo pipefail
+
+          BUCKET="s3://${YC_BUCKET_NAME}"
+
+          aws --endpoint-url="${YC_ENDPOINT}" s3 sync . "${BUCKET}" \
+            --exclude "*" \
+            --include "index.html" \
+            --include "styles.css" \
+            --include "artist-route-map-fix.css" \
+            --include "works-runtime.css" \
+            --include "bootstrap.js" \
+            --include "content-sync.js" \
+            --include "artist-route-map.js" \
+            --include "app.js" \
+            --include "works-runtime.js" \
+            --include ".nojekyll" \
+            --delete
+
+          aws --endpoint-url="${YC_ENDPOINT}" s3 sync components "${BUCKET}/components" --delete
+          aws --endpoint-url="${YC_ENDPOINT}" s3 sync pages "${BUCKET}/pages" --delete
+          aws --endpoint-url="${YC_ENDPOINT}" s3 sync assets "${BUCKET}/assets" --delete
+          aws --endpoint-url="${YC_ENDPOINT}" s3 sync 09_SOURCE_JSON "${BUCKET}/09_SOURCE_JSON" --delete
