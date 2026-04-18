@@ -343,6 +343,20 @@
         if (about.school.paragraphs[idx]) p.textContent = about.school.paragraphs[idx];
       });
     }
+    const factBox = document.querySelector('#artist-school .artist-fact-box');
+    if (factBox && Array.isArray(about?.school?.milestones) && about.school.milestones.length) {
+      factBox.innerHTML = `
+        <span style="font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; color: var(--text-muted); text-transform: uppercase;">Ключевые вехи</span>
+        <div style="display: grid; gap: 12px; margin-top: 16px;">
+          ${about.school.milestones.map((item, idx) => `
+            <div style="display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: start; padding-top: ${idx === 0 ? '0' : '12px'}; border-top: ${idx === 0 ? 'none' : '1px solid rgba(17, 28, 68, 0.12)'};">
+              <strong style="font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; color: var(--text-muted); text-transform: uppercase;">${item.year || ''}</strong>
+              <span style="color: var(--deep-blue); line-height: 1.5;">${item.text || ''}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
 
     setText('#artist-routes h2', about?.geography?.title);
     if (Array.isArray(about?.geography?.paragraphs)) {
