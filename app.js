@@ -156,7 +156,9 @@ const pageTitles = {
 };
 
 const contactConfig = {
-    email: 'od03@yandex.ru'
+    email: 'od03@yandex.ru',
+    submitUrl: 'https://formsubmit.co/ajax/od03@yandex.ru',
+    subjectPrefix: 'Пространство памяти'
 };
 
 // ══════════════════════════════════════════════
@@ -1147,35 +1149,60 @@ document.addEventListener('click', (e) => {
     if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
-document.addEventListener('submit', (e) => {
+document.addEventListener('submit', async (e) => {
     const form = e.target.closest('#contactForm');
     if (!form) return;
     e.preventDefault();
 
+    const success = document.getElementById('contactSuccess');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn ? submitBtn.textContent : '';
+
     const data = new FormData(form);
     const topic = data.get('topic') || 'Обращение через сайт';
-    const lines = [
-        'Имя: ' + (data.get('name') || '—'),
-        'Подпись для публикации: ' + (data.get('byline') || '—'),
-        'Email: ' + (data.get('email') || '—'),
-        'Телефон / Telegram: ' + (data.get('phone') || '—'),
-        'Тема: ' + topic,
-        '',
-        'Сообщение:',
-        data.get('message') || '—',
-        '',
-        'Разрешение на контакт по поводу публикации: ' + (data.get('allow_contact') ? 'Да' : 'Нет'),
-        'Разрешение на публикацию текста: ' + (data.get('allow_publish') ? 'Да' : 'Нет')
-    ];
+    data.append('_subject', `[${contactConfig.subjectPrefix}] ${topic}`);
+    data.append('_template', 'table');
+    data.append('_honey', '');
 
-    const subject = encodeURIComponent(topic);
-    const body = encodeURIComponent(lines.join('\n'));
-    window.location.href = 'mailto:' + contactConfig.email + '?subject=' + subject + '&body=' + body;
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Отправка...';
+    }
 
-    const success = document.getElementById('contactSuccess');
-    if (success) success.style.display = 'block';
-    form.reset();
-    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    try {
+        const response = await fetch(contactConfig.submitUrl, {
+            method: 'POST',
+            body: data,
+            headers: {
+                Accept: 'application/json'
+            }
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || result.success === false) {
+            throw new Error(result.message || 'Не удалось отправить сообщение.');
+        }
+
+        if (success) {
+            success.innerHTML = '<p>Спасибо. Сообщение отправлено.</p><p style="color: var(--text-muted);">Если это первое письмо с этой формы, подтвердите приём формы в письме от FormSubmit на адресе od03@yandex.ru. После подтверждения все следующие сообщения будут приходить автоматически.</p>';
+            success.style.display = 'block';
+        }
+
+        form.reset();
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (error) {
+        console.error('Contact form submit error:', error);
+        if (success) {
+            success.innerHTML = `<p>Сообщение пока не отправлено.</p><p style="color: var(--text-muted);">${escapeHtml(error.message || 'Попробуйте ещё раз чуть позже.')}</p>`;
+            success.style.display = 'block';
+        }
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText || 'Отправить сообщение';
+        }
+    }
 });
 
 // ══════════════════════════════════════════════
