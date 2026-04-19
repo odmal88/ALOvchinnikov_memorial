@@ -148,13 +148,48 @@
       document.querySelectorAll('#page-home .home-works-section .works-grid .work-card').forEach((card, idx) => {
         const item = home.worksTeaser.items[idx];
         if (!item) return;
+
         const title = card.querySelector('h4');
         const meta = card.querySelector('.work-meta');
+        const imageWrap = card.querySelector('.work-image');
+        const imageInner = card.querySelector('.work-image-inner');
+
         if (title) title.textContent = item.title || title.textContent;
         if (meta) meta.textContent = item.meta || meta.textContent;
+
         if (item.route) {
           card.setAttribute('data-route', item.route);
           card.setAttribute('href', `#${item.route}`);
+        }
+
+        if (item.category) {
+          card.setAttribute('data-category', item.category);
+          if (imageWrap) imageWrap.setAttribute('data-category', item.category);
+        }
+
+        if (imageWrap && imageInner) {
+          imageInner.innerHTML = '';
+
+          if (item.image) {
+            imageWrap.classList.add('has-image');
+
+            const img = document.createElement('img');
+            img.className = 'work-thumb';
+            img.src = item.image;
+            img.alt = item.title || '';
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            img.style.objectFit = 'cover';
+
+            imageInner.appendChild(img);
+          } else {
+            imageWrap.classList.remove('has-image');
+          }
+
+          const label = document.createElement('span');
+          label.className = 'artwork-label';
+          label.textContent = item.label || '';
+          imageInner.appendChild(label);
         }
       });
     }
