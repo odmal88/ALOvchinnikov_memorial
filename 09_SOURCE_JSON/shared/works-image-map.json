@@ -11,7 +11,7 @@
     "thumbnail": "assets/works/thumbs/002.jpg",
     "sourceFile": "1.jpg",
     "resolvedSourceFile": "",
-    "missingImage": true
+    "missingImage": false
   },
   "3": {
     "image": "assets/works/full/003.jpg",
