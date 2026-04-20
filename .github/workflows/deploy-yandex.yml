@@ -44,6 +44,9 @@ jobs:
             --include "bootstrap.js" \
             --include "content-sync.js" \
             --include "artist-route-map.js" \
+            --include "home-selected-works-sync.js" \
+            --include "work-author-overrides.js" \
+            --include "works-animated-runtime.js" \
             --include "app.js" \
             --include "works-runtime.js" \
             --include ".nojekyll" \
