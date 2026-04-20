@@ -1,5 +1,5 @@
 (function initWorksRuntime() {
-    const BUILD_ID = '2026-04-13-works-runtime-v2';
+    const BUILD_ID = '2026-04-20-public-descriptions-v1';
     const WORKS_JSON_PATH = '09_SOURCE_JSON/shared/works-catalog-1-110.json';
     const WORKS_IMAGE_MAP_PATH = '09_SOURCE_JSON/shared/works-image-map.json';
     const WORKS_RUNTIME_MAP_PATH = '09_SOURCE_JSON/shared/works-runtime-map.json';
@@ -125,30 +125,19 @@
     }
 
     function buildDescriptionHtml(record) {
+        const descriptionPublic = String(record.descriptionPublic || '').trim();
+        if (descriptionPublic && descriptionPublic !== '—') {
+            return `<p>${escapeHtml(descriptionPublic)}</p>`;
+        }
+
         const parts = [];
         const editorialNote = String(record.editorialNote || '').trim();
-        const place = String(record.place || '').trim();
-        const textType = String(record.textType || '').trim();
-        const verificationNote = String(record.verificationNote || '').trim();
-        const status = String(record.status || '').trim();
-
         if (editorialNote && editorialNote !== '—') {
             parts.push(`<p>${escapeHtml(editorialNote)}</p>`);
         }
-        if (textType && textType !== '—') {
-            parts.push(`<p><strong>Тип записи:</strong> ${escapeHtml(textType)}</p>`);
-        }
-        if (place && place !== '—') {
-            parts.push(`<p><strong>Место:</strong> ${escapeHtml(place)}</p>`);
-        }
-        if (verificationNote && verificationNote.toLowerCase() !== 'нет') {
-            parts.push(`<p><em>${escapeHtml(verificationNote)}</em></p>`);
-        }
-        if (record.needsVerification || /рабоч/i.test(status)) {
-            parts.push('<p><em>Часть данных по этой работе ещё проходит редакционную сверку.</em></p>');
-        }
+
         if (!parts.length) {
-            parts.push('<p>Пока доступна только базовая карточка произведения. Расширенная аннотация появится после редакционной сверки каталога.</p>');
+            parts.push('<p>Аннотация к произведению будет добавлена позднее.</p>');
         }
 
         return parts.join('');
@@ -181,6 +170,7 @@
             size: parsed.size,
             category,
             sectionSite: String(record.sectionSite || '').trim() || 'Коллекция',
+            collection: String(record.collection || '').trim() || 'Собрание семьи художника',
             status: String(record.status || '').trim() || '—',
             textType: String(record.textType || '').trim() || '',
             verificationNote: String(record.verificationNote || '').trim() || '',
@@ -416,10 +406,8 @@
                 <dd>${escapeHtml(work.place)}</dd>
                 <dt>Раздел</dt>
                 <dd>${escapeHtml(categoryLabel)}</dd>
-                <dt>Раздел сайта</dt>
-                <dd>${escapeHtml(work.sectionSite)}</dd>
-                <dt>Статус</dt>
-                <dd>${escapeHtml(work.status)}</dd>
+                <dt>Собрание</dt>
+                <dd>${escapeHtml(work.collection || 'Собрание семьи художника')}</dd>
             `;
         }
 

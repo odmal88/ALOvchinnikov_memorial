@@ -102,7 +102,7 @@
 // ══════════════════════════════════════════════
 // WORKS DATA RUNTIME
 // ══════════════════════════════════════════════
-const WORKS_BUILD_ID = '2026-04-13-works-runtime-v1';
+const WORKS_BUILD_ID = '2026-04-20-public-descriptions-v1';
 const WORKS_JSON_PATH = '09_SOURCE_JSON/shared/works-catalog-1-110.json';
 const WORKS_IMAGE_MAP_PATH = '09_SOURCE_JSON/shared/works-image-map.json';
 
@@ -381,22 +381,19 @@ function inferCategory(record) {
 }
 
 function buildDescriptionHtml(record) {
+    const descriptionPublic = String(record.descriptionPublic || '').trim();
+    if (descriptionPublic && descriptionPublic !== '—') {
+        return `<p>${escapeHtml(descriptionPublic)}</p>`;
+    }
+
     const parts = [];
-
-    if (record.editorialNote) {
-        parts.push(`<p>${escapeHtml(record.editorialNote)}</p>`);
-    }
-
-    if (record.place) {
-        parts.push(`<p><strong>Место:</strong> ${escapeHtml(record.place)}</p>`);
-    }
-
-    if (record.needsVerification || /рабоч/i.test(record.status || '')) {
-        parts.push('<p><em>Часть данных по этой работе ещё проходит редакционную сверку.</em></p>');
+    const editorialNote = String(record.editorialNote || '').trim();
+    if (editorialNote && editorialNote !== '—') {
+        parts.push(`<p>${escapeHtml(editorialNote)}</p>`);
     }
 
     if (parts.length === 0) {
-        parts.push('<p>Аннотация к произведению будет добавлена после редакционной сверки каталога.</p>');
+        parts.push('<p>Аннотация к произведению будет добавлена позднее.</p>');
     }
 
     return parts.join('');
@@ -437,7 +434,7 @@ function normalizeWorkRecord(record, imageMap, usedSlugs) {
         place: String(merged.place || '').trim() || '—',
         technique: parsed.technique,
         size: parsed.size,
-        collection: 'Собрание семьи художника',
+        collection: String(merged.collection || '').trim() || 'Собрание семьи художника',
         category: inferCategory(merged),
         image: merged.image || '',
         thumbnail: merged.thumbnail || merged.image || '',
