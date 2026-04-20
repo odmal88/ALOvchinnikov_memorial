@@ -16,7 +16,7 @@
     "resolvedSourceFile": "",
     "image": "assets/works/full/001.jpg",
     "thumbnail": "assets/works/thumbs/001.jpg",
-    "missingImage": true,
+    "missingImage": false,
     "batch": "core_1_70",
     "dataCompleteness": "mixed"
   },
