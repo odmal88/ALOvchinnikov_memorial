@@ -1,5 +1,5 @@
 (function bootstrapApp() {
-    const BUILD_ID = '2026-04-20-animated-work-v3';
+    const BUILD_ID = '2026-04-20-hotfix-v2';
 
     function withBuildId(path) {
         const separator = path.includes('?') ? '&' : '?';
@@ -78,7 +78,6 @@
         .then(() => loadScript('artist-route-map.js'))
         .then(() => loadScript('app.js'))
         .then(() => loadScript('works-runtime.js'))
-        .then(() => loadScript('works-animated-runtime.js'))
         .catch((error) => {
             console.error('Bootstrap error:', error);
         });
