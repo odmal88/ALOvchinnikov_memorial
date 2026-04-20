@@ -20,6 +20,9 @@
         bySlug: new Map(),
         loadPromise: null
     };
+    const compatibilityAliasesById = {
+        70: ['lodka-u-kirpichnoi-naberezhnoi', 'lodka-u-kirpichnoj-naberezhnoj']
+    };
 
     function withBuildId(path) {
         const separator = path.includes('?') ? '&' : '?';
@@ -169,11 +172,15 @@
         const aliases = Array.isArray(runtimeEntry.aliases)
             ? Array.from(new Set(runtimeEntry.aliases.map((alias) => slugifyRu(alias)).filter(Boolean).filter((alias) => alias !== slug)))
             : [];
+        const compatibilityAliases = Array.isArray(compatibilityAliasesById[Number(record.id)])
+            ? compatibilityAliasesById[Number(record.id)].map((alias) => slugifyRu(alias)).filter(Boolean)
+            : [];
+        const mergedAliases = Array.from(new Set([...aliases, ...compatibilityAliases].filter((alias) => alias !== slug)));
 
         return {
             id: Number(record.id) || 0,
             slug,
-            aliases,
+            aliases: mergedAliases,
             title: record.title || `Работа ${record.id}`,
             year: String(record.year || '').trim() || '—',
             place: String(record.place || '').trim() || '—',
@@ -232,7 +239,8 @@
 
     function getRouteSlug(path) {
         const match = String(path || '').match(/^\/works\/([^/?#]+)/);
-        return match ? decodeURIComponent(match[1]) : '';
+        if (!match) return '';
+        return decodeURIComponent(match[1]).replace(/^\/+|\/+$/g, '');
     }
 
     function getWorkBySlug(slug) {
