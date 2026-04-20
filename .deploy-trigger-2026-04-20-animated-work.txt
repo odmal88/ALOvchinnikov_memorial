@@ -1,0 +1,3 @@
+Trigger redeploy for animated work runtime.
+Date: 2026-04-20
+Reason: publish works-animated-runtime.js and related root scripts to Yandex Object Storage.
