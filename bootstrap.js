@@ -1,5 +1,5 @@
 (function bootstrapApp() {
-    const BUILD_ID = '2026-04-18-contact-mail-v1';
+    const BUILD_ID = '2026-04-20-animated-work-v3';
 
     function withBuildId(path) {
         const separator = path.includes('?') ? '&' : '?';
