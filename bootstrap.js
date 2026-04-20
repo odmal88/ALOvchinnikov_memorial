@@ -78,6 +78,7 @@
         .then(() => loadScript('artist-route-map.js'))
         .then(() => loadScript('app.js'))
         .then(() => loadScript('works-runtime.js'))
+        .then(() => loadScript('works-animated-runtime.js'))
         .catch((error) => {
             console.error('Bootstrap error:', error);
         });
