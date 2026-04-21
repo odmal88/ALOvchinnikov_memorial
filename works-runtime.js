@@ -1,5 +1,5 @@
 (function initWorksRuntime() {
-    const BUILD_ID = '2026-04-20-public-descriptions-v1';
+    const BUILD_ID = '2026-04-21-works-categories-hotfix-v1';
     const WORKS_JSON_PATH = '09_SOURCE_JSON/shared/works-catalog-1-110.json';
     const WORKS_IMAGE_MAP_PATH = '09_SOURCE_JSON/shared/works-image-map.json';
     const WORKS_RUNTIME_MAP_PATH = '09_SOURCE_JSON/shared/works-runtime-map.json';
@@ -107,7 +107,13 @@
     }
 
     function inferCategory(record) {
-        const haystack = [record.title, record.place, record.sectionSite]
+        const haystack = [
+            record.title,
+            record.place,
+            record.sectionSite,
+            record.editorialNote,
+            record.descriptionPublic
+        ]
             .filter(Boolean)
             .join(' ')
             .toLowerCase();
@@ -117,11 +123,17 @@
         if (has(/пугач|варяг|викинг|монастыр|истор|эпос|покров|часовн|крест|церк/)) return 'history';
         if (has(/интерьер|изб|дом|сени|баня|натюрморт|портрет|утвар|мастерск|семь|хозяй|купан/)) return 'interior';
         if (has(/гравюр|линограв|график|линорит/)) return 'graphics';
-        if (has(/волг|горьк|нижегор|немд|васильсур|городец|балахн|сормов|щёлоков|ялт|алупк|симфероп|крым|швейцар/)) return 'volga';
+        if (has(/волг|волж|горьк|нижегор|немд|васильсур|городец|балахн|сормов|щёлоков|ай-петр|ялт|алупк|симфероп|крым|швейцар/)) return 'volga';
         if (has(/ленинград|петербург|хельсинк|стокгольм|городск|кремл|мост|набереж|сад|улиц|архитектур/)) return 'city';
         if (has(/север|белом|арханг|веркол|мезен|помор|лапланд|тайг|онеж|тундр|олень|каюр|финлянд/)) return 'north';
 
-        return 'north';
+        return '';
+    }
+
+    function isPrimaryCatalogRecord(record) {
+        const author = String(record.author || '').trim().toLowerCase();
+        if (!author) return true;
+        return author.includes('александр') && author.includes('овчинников');
     }
 
     function buildDescriptionHtml(record) {
@@ -164,6 +176,7 @@
             slug,
             aliases,
             title: record.title || `Работа ${record.id}`,
+            author: String(record.author || '').trim() || 'Александр Львович Овчинников',
             year: String(record.year || '').trim() || '—',
             place: String(record.place || '').trim() || '—',
             technique: parsed.technique,
@@ -194,7 +207,9 @@
         ]).then(([catalog, imageMap, runtimeMap]) => {
             const usedSlugs = new Set();
             state.works = Array.isArray(catalog)
-                ? catalog.map((record) => normalizeWork(record, imageMap, runtimeMap, usedSlugs))
+                ? catalog
+                    .filter((record) => isPrimaryCatalogRecord(record))
+                    .map((record) => normalizeWork(record, imageMap, runtimeMap, usedSlugs))
                 : [];
             state.bySlug = new Map();
             state.works.forEach((work) => {
@@ -392,7 +407,7 @@
         if (heroMeta) heroMeta.textContent = buildHeroMeta(work);
         if (breadcrumbTitle) breadcrumbTitle.textContent = work.title;
         if (workTitle) workTitle.textContent = work.title;
-        if (workAuthor) workAuthor.textContent = 'Александр Львович Овчинников';
+        if (workAuthor) workAuthor.textContent = work.author;
 
         if (details) {
             details.innerHTML = `
