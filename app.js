@@ -160,6 +160,7 @@ const contactConfig = {
     submitUrl: 'https://formsubmit.co/ajax/od03@yandex.ru',
     subjectPrefix: 'Пространство памяти'
 };
+const METRIKA_ID = 108720075;
 
 // ══════════════════════════════════════════════
 // DOM REFS
@@ -238,6 +239,12 @@ function escapeHtml(value) {
 function withBuildId(path) {
     const separator = path.includes('?') ? '&' : '?';
     return `${path}${separator}build=${encodeURIComponent(WORKS_BUILD_ID)}`;
+}
+
+function metrikaHit() {
+    if (typeof window.ym === 'function') {
+        ym(METRIKA_ID, 'hit', window.location.href);
+    }
 }
 
 function fetchJson(path) {
@@ -1044,6 +1051,7 @@ function renderPath(path) {
         document.title = getWorkTitle(slug);
         reinitReveals();
         stopWorkshopLoop();
+        metrikaHit();
         return;
     }
 
@@ -1062,6 +1070,8 @@ function renderPath(path) {
     } else {
         stopWorkshopLoop();
     }
+
+    metrikaHit();
 }
 
 function navigateTo(path, updateHash) {
