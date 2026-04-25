@@ -128,7 +128,9 @@ const legacyWorkAliases = {
     'masterskaya-utro': 31,
     'severnaya-derevnya-gravyura': 66,
     'istoricheskiy-motiv': 33,
-    'vasilsursk': 16
+    'vasilsursk': 16,
+    'lodka-u-kirpichnoi-naberezhnoi': 70,
+    'lodka-u-kirpichnoj-naberezhnoj': 70
 };
 
 const routeMap = {
@@ -207,7 +209,7 @@ function setHashPath(path) {
 }
 
 function isWorkPath(path) {
-    return /^\/works\/.+$/.test(path);
+    return /^\/works\/.+\/?$/.test(path);
 }
 
 function isValidPath(path) {
@@ -257,10 +259,23 @@ function fetchJson(path) {
 }
 
 function getWorkBySlug(slug) {
-    if (worksSlugMap.has(slug)) {
-        return worksSlugMap.get(slug);
+    const rawSlug = String(slug || '').trim().replace(/^\/+|\/+$/g, '');
+    const decodedSlug = (() => {
+        try {
+            return decodeURIComponent(rawSlug);
+        } catch (error) {
+            return rawSlug;
+        }
+    })();
+    const normalizedSlug = slugifyRu(decodedSlug);
+
+    if (worksSlugMap.has(decodedSlug)) {
+        return worksSlugMap.get(decodedSlug);
     }
-    const legacyId = legacyWorkAliases[slug];
+    if (worksSlugMap.has(normalizedSlug)) {
+        return worksSlugMap.get(normalizedSlug);
+    }
+    const legacyId = legacyWorkAliases[decodedSlug] || legacyWorkAliases[normalizedSlug];
     if (legacyId) {
         return worksDB.find((work) => work.id === legacyId) || null;
     }
@@ -1043,7 +1058,7 @@ function renderPath(path) {
 
     if (isWorkPath(safePath)) {
         activatePage('page-work-single');
-        const slug = safePath.replace('/works/', '');
+        const slug = safePath.replace('/works/', '').replace(/\/+$/g, '');
         const ok = showWorkPage(slug);
         if (!ok) return;
 
