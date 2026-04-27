@@ -93,13 +93,6 @@
     const hours = site?.visit?.hours;
     const closedDay = site?.visit?.closedDay;
 
-    setText('#page-home .hero-meta .hero-meta-item:nth-child(1) .value', dates);
-    setText('#page-home .hero-meta .hero-meta-item:nth-child(2) .value', venueName);
-    setText('#page-home .hero-meta .hero-meta-item:nth-child(3) .value', city);
-
-    setText('#page-home .home-visit-teaser .visit-info h3', venueName);
-    setHTML('#page-home .home-visit-teaser .visit-text', [dates, `Открытие выставки — ${openingShort}`, `${city}, ${address}`, admission].filter(Boolean).join('<br>'));
-
     setVisitDetailValue('Даты проведения', datesFull || dates);
     setVisitDetailValue('Открытие выставки', openingFull);
     setVisitDetailValue('Место', [venueName, address, city].filter(Boolean).join('\n'), { preserveExtraLines: true });
