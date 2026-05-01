@@ -1,11 +1,12 @@
 (function initWorksRuntime() {
-    const BUILD_ID = '2026-04-21-works-categories-hotfix-v1';
+    const BUILD_ID = '2026-05-01-shared-works-model-v1';
     const WORKS_JSON_PATH = '09_SOURCE_JSON/shared/works-catalog-1-110.json';
     const WORKS_IMAGE_MAP_PATH = '09_SOURCE_JSON/shared/works-image-map.json';
     const WORKS_RUNTIME_MAP_PATH = '09_SOURCE_JSON/shared/works-runtime-map.json';
     const WORKS_CSS_PATH = 'works-runtime.css';
 
-    const categoryLabels = {
+    const worksModel = window.OvchinnikovWorksModel || {};
+    const categoryLabels = worksModel.categoryLabels || {
         north: 'Русский Север',
         city: 'Русский город',
         history: 'Историческая тема',
@@ -37,14 +38,13 @@
 
     function fetchJson(path) {
         return fetch(withBuildId(path), { cache: 'no-store' }).then((response) => {
-            if (!response.ok) {
-                throw new Error(`Failed to load ${path}: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`Failed to load ${path}: ${response.status}`);
             return response.json();
         });
     }
 
     function escapeHtml(value) {
+        if (typeof worksModel.escapeHtml === 'function') return worksModel.escapeHtml(value);
         return String(value ?? '')
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
@@ -53,106 +53,9 @@
             .replace(/'/g, '&#39;');
     }
 
-    function slugifyRu(text) {
-        const map = {
-            а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ё: 'e', ж: 'zh', з: 'z', и: 'i', й: 'y',
-            к: 'k', л: 'l', м: 'm', н: 'n', о: 'o', п: 'p', р: 'r', с: 's', т: 't', у: 'u', ф: 'f',
-            х: 'h', ц: 'ts', ч: 'ch', ш: 'sh', щ: 'sch', ъ: '', ы: 'y', ь: '', э: 'e', ю: 'yu', я: 'ya'
-        };
-        return String(text || '')
-            .trim()
-            .toLowerCase()
-            .split('')
-            .map((char) => map[char] ?? char)
-            .join('')
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-+|-+$/g, '')
-            .replace(/-{2,}/g, '-');
-    }
-
-    function makeUniqueSlug(rawSlug, title, id, usedSlugs) {
-        const base = slugifyRu(rawSlug || title) || `work-${id}`;
-        let slug = base;
-        let suffix = 2;
-
-        while (usedSlugs.has(slug)) {
-            slug = `${base}-${suffix}`;
-            suffix += 1;
-        }
-
-        usedSlugs.add(slug);
-        return slug;
-    }
-
-    function parseSizeAndTechnique(rawSize, title, editorialNote) {
-        const raw = String(rawSize || '').trim();
-        const lower = raw.toLowerCase();
-        const combined = `${title || ''} ${editorialNote || ''}`.toLowerCase();
-
-        let technique = '—';
-        if (combined.includes('линограв') || combined.includes('гравюр') || combined.includes('линорит')) {
-            technique = 'Линогравюра';
-        } else if (lower.includes('х/м')) {
-            technique = 'Холст, масло';
-        } else if (lower.includes('к/м')) {
-            technique = 'Картон, масло';
-        } else if (lower.includes('б/см') || lower.includes('б., см.т.') || lower.includes('смеш')) {
-            technique = 'Бумага, смешанная техника';
-        }
-
-        const sizeMatch = raw.match(/(\d+\s*[xх]\s*\d+(?:\s*[xх]\s*\d+)?)/i);
-        const size = sizeMatch ? sizeMatch[1].replace(/х/gi, '×').replace(/\s+/g, ' ').trim() + ' см' : '—';
-
-        return { technique, size };
-    }
-
-    function inferCategory(record) {
-        const haystack = [
-            record.title,
-            record.place,
-            record.sectionSite,
-            record.editorialNote,
-            record.descriptionPublic
-        ]
-            .filter(Boolean)
-            .join(' ')
-            .toLowerCase();
-
-        const has = (pattern) => pattern.test(haystack);
-
-        if (has(/пугач|варяг|викинг|монастыр|истор|эпос|покров|часовн|крест|церк/)) return 'history';
-        if (has(/интерьер|изб|дом|сени|баня|натюрморт|портрет|утвар|мастерск|семь|хозяй|купан/)) return 'interior';
-        if (has(/гравюр|линограв|график|линорит/)) return 'graphics';
-        if (has(/волг|волж|горьк|нижегор|немд|васильсур|городец|балахн|сормов|щёлоков|ай-петр|ялт|алупк|симфероп|крым|швейцар/)) return 'volga';
-        if (has(/ленинград|петербург|хельсинк|стокгольм|городск|кремл|мост|набереж|сад|улиц|архитектур/)) return 'city';
-        if (has(/север|белом|арханг|веркол|мезен|помор|лапланд|тайг|онеж|тундр|олень|каюр|финлянд/)) return 'north';
-
-        return '';
-    }
-
-    function isPrimaryCatalogRecord(record) {
-        const author = String(record.author || '').trim().toLowerCase();
-        if (!author) return true;
-        return author.includes('александр') && author.includes('овчинников');
-    }
-
-    function buildDescriptionHtml(record) {
-        const descriptionPublic = String(record.descriptionPublic || '').trim();
-        if (descriptionPublic && descriptionPublic !== '—') {
-            return `<p>${escapeHtml(descriptionPublic)}</p>`;
-        }
-
-        const parts = [];
-        const editorialNote = String(record.editorialNote || '').trim();
-        if (editorialNote && editorialNote !== '—') {
-            parts.push(`<p>${escapeHtml(editorialNote)}</p>`);
-        }
-
-        if (!parts.length) {
-            parts.push('<p>Аннотация к произведению будет добавлена позднее.</p>');
-        }
-
-        return parts.join('');
+    function slugifyRu(value) {
+        if (typeof worksModel.slugifyRu === 'function') return worksModel.slugifyRu(value);
+        return String(value || '').trim().toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-').replace(/^-+|-+$/g, '');
     }
 
     function buildHeroMeta(work) {
@@ -161,39 +64,41 @@
         return parts.join(' · ') || 'Произведение из коллекции';
     }
 
-    function normalizeWork(record, imageMap, runtimeMap, usedSlugs) {
-        const imageMeta = imageMap[String(record.id)] || {};
-        const runtimeEntry = runtimeMap && runtimeMap.works ? runtimeMap.works[String(record.id)] || {} : {};
-        const parsed = parseSizeAndTechnique(record.size, record.title, record.editorialNote);
-        const slug = makeUniqueSlug(runtimeEntry.slug, record.title, record.id, usedSlugs);
-        const category = categoryLabels[runtimeEntry.category] ? runtimeEntry.category : inferCategory(record);
-        const aliases = Array.isArray(runtimeEntry.aliases)
-            ? Array.from(new Set(runtimeEntry.aliases.map((alias) => slugifyRu(alias)).filter(Boolean).filter((alias) => alias !== slug)))
-            : [];
+    function normalizeCatalog(catalog, imageMap, runtimeMap) {
+        if (typeof worksModel.normalizeCatalog === 'function') {
+            return worksModel.normalizeCatalog(catalog, imageMap, runtimeMap);
+        }
 
-        return {
+        console.warn('OvchinnikovWorksModel is not loaded. Works runtime will use raw catalog records.');
+        return Array.isArray(catalog) ? catalog.map((record) => ({
             id: Number(record.id) || 0,
-            slug,
-            aliases,
+            slug: slugifyRu(record.slug || record.title || `work-${record.id}`),
+            aliases: [],
             title: record.title || `Работа ${record.id}`,
-            author: String(record.author || '').trim() || 'Александр Львович Овчинников',
+            author: record.author || 'Александр Львович Овчинников',
             year: String(record.year || '').trim() || '—',
             place: String(record.place || '').trim() || '—',
-            technique: parsed.technique,
-            size: parsed.size,
-            category,
-            sectionSite: String(record.sectionSite || '').trim() || 'Коллекция',
-            collection: String(record.collection || '').trim() || 'Собрание семьи художника',
-            status: String(record.status || '').trim() || '—',
-            textType: String(record.textType || '').trim() || '',
-            verificationNote: String(record.verificationNote || '').trim() || '',
-            editorialNote: String(record.editorialNote || '').trim() || '',
+            technique: '—',
+            size: '—',
+            category: 'north',
+            collection: record.collection || 'Собрание семьи художника',
             missingImage: Boolean(record.missingImage),
-            image: record.image || imageMeta.image || '',
-            thumbnail: record.thumbnail || imageMeta.thumbnail || record.image || imageMeta.image || '',
-            needsVerification: Boolean(record.needsVerification),
-            descriptionHtml: buildDescriptionHtml(record)
-        };
+            image: record.image || '',
+            thumbnail: record.thumbnail || record.image || '',
+            descriptionHtml: record.descriptionPublic ? `<p>${escapeHtml(record.descriptionPublic)}</p>` : '<p>Аннотация к произведению будет добавлена позднее.</p>'
+        })) : [];
+    }
+
+    function buildSlugMap(works) {
+        if (typeof worksModel.buildSlugMap === 'function') return worksModel.buildSlugMap(works);
+        const map = new Map();
+        works.forEach((work) => {
+            map.set(work.slug, work);
+            (work.aliases || []).forEach((alias) => {
+                if (!map.has(alias)) map.set(alias, work);
+            });
+        });
+        return map;
     }
 
     function loadWorksRuntime() {
@@ -205,22 +110,16 @@
             fetchJson(WORKS_IMAGE_MAP_PATH).catch(() => ({})),
             fetchJson(WORKS_RUNTIME_MAP_PATH).catch(() => ({ works: {} }))
         ]).then(([catalog, imageMap, runtimeMap]) => {
-            const usedSlugs = new Set();
-            state.works = Array.isArray(catalog)
-                ? catalog
-                    .filter((record) => isPrimaryCatalogRecord(record))
-                    .map((record) => normalizeWork(record, imageMap, runtimeMap, usedSlugs))
-                : [];
-            state.bySlug = new Map();
-            state.works.forEach((work) => {
-                state.bySlug.set(work.slug, work);
-                work.aliases.forEach((alias) => {
-                    if (!state.bySlug.has(alias)) state.bySlug.set(alias, work);
-                });
-            });
+            state.works = normalizeCatalog(catalog, imageMap, runtimeMap);
+            state.bySlug = buildSlugMap(state.works);
+            window.__ovchinnikovWorksRuntime = {
+                works: state.works,
+                bySlug: state.bySlug,
+                categoryLabels
+            };
             return state.works;
         }).catch((error) => {
-            console.error('Works runtime v2 error:', error);
+            console.error('Works runtime error:', error);
             state.works = [];
             state.bySlug = new Map();
             return state.works;
@@ -285,21 +184,16 @@
         root.querySelectorAll('.filter-btn').forEach((button) => {
             if (button.dataset.worksRuntimeBound === '1') return;
             button.dataset.worksRuntimeBound = '1';
-            button.addEventListener('click', () => {
-                applyFilter(root, button.dataset.filter || 'all');
-            });
+            button.addEventListener('click', () => applyFilter(root, button.dataset.filter || 'all'));
         });
     }
 
     function renderWorksIndex(root) {
         if (!root) return;
-
         bindFilters(root);
 
         const subtitle = root.querySelector('.page-hero-subtitle');
-        if (subtitle) {
-            subtitle.textContent = `Каталог произведений Александра Львовича Овчинникова · ${state.works.length} работ`;
-        }
+        if (subtitle) subtitle.textContent = `Каталог произведений Александра Львовича Овчинникова · ${state.works.length} работ`;
 
         const intro = root.querySelector('.works-editorial-intro p');
         if (intro) {
@@ -308,7 +202,6 @@
 
         const grid = root.querySelector('#catalogGrid');
         if (!grid) return;
-
         if (!state.works.length) {
             grid.innerHTML = '<div class="catalog-empty-state"><p>Каталог пока не удалось загрузить. Попробуйте обновить страницу.</p></div>';
             return;
@@ -347,12 +240,8 @@
     function renderRelatedWorks(root, work) {
         const relatedHost = root.querySelector('#workRelated');
         if (!relatedHost) return;
-
         let related = state.works.filter((item) => item.category === work.category && item.slug !== work.slug).slice(0, 3);
-        if (!related.length) {
-            related = state.works.filter((item) => item.slug !== work.slug).slice(0, 3);
-        }
-
+        if (!related.length) related = state.works.filter((item) => item.slug !== work.slug).slice(0, 3);
         relatedHost.innerHTML = related.map(createCardMarkup).join('');
     }
 
@@ -391,7 +280,6 @@
     function renderWorkSingle(root, work) {
         if (!root || !work) return;
         const categoryLabel = categoryLabels[work.category] || 'Коллекция';
-
         const heroCategory = root.querySelector('#workHeroCategory');
         const heroTitle = root.querySelector('#workHeroTitle');
         const heroMeta = root.querySelector('#workHeroMeta');
@@ -408,27 +296,18 @@
         if (breadcrumbTitle) breadcrumbTitle.textContent = work.title;
         if (workTitle) workTitle.textContent = work.title;
         if (workAuthor) workAuthor.textContent = work.author;
-
         if (details) {
             details.innerHTML = `
-                <dt>Год</dt>
-                <dd>${escapeHtml(work.year)}</dd>
-                <dt>Техника</dt>
-                <dd>${escapeHtml(work.technique)}</dd>
-                <dt>Размер</dt>
-                <dd>${escapeHtml(work.size)}</dd>
-                <dt>Место</dt>
-                <dd>${escapeHtml(work.place)}</dd>
-                <dt>Раздел</dt>
-                <dd>${escapeHtml(categoryLabel)}</dd>
-                <dt>Собрание</dt>
-                <dd>${escapeHtml(work.collection || 'Собрание семьи художника')}</dd>
+                <dt>Год</dt><dd>${escapeHtml(work.year)}</dd>
+                <dt>Техника</dt><dd>${escapeHtml(work.technique)}</dd>
+                <dt>Размер</dt><dd>${escapeHtml(work.size)}</dd>
+                <dt>Место</dt><dd>${escapeHtml(work.place)}</dd>
+                <dt>Раздел</dt><dd>${escapeHtml(categoryLabel)}</dd>
+                <dt>Собрание</dt><dd>${escapeHtml(work.collection || 'Собрание семьи художника')}</dd>
             `;
         }
-
         if (description) description.innerHTML = work.descriptionHtml;
         if (links) links.innerHTML = '';
-
         renderDetailImage(root.querySelector('.work-single-image'), work);
         renderRelatedWorks(root, work);
         renderPrevNext(root, work);
@@ -437,33 +316,22 @@
     function renderMissingWork(root, slug) {
         if (!root) return;
         const safeSlug = escapeHtml(slug || 'unknown-work');
-        const heroCategory = root.querySelector('#workHeroCategory');
-        const heroTitle = root.querySelector('#workHeroTitle');
-        const heroMeta = root.querySelector('#workHeroMeta');
-        const breadcrumbTitle = root.querySelector('#workBreadcrumbTitle');
-        const workTitle = root.querySelector('#workTitle');
+        const set = (selector, text) => {
+            const node = root.querySelector(selector);
+            if (node) node.textContent = text;
+        };
+        set('#workHeroCategory', 'Коллекция');
+        set('#workHeroTitle', 'Работа не найдена');
+        set('#workHeroMeta', 'Маршрут существует, но запись каталога не была найдена.');
+        set('#workBreadcrumbTitle', 'Работа не найдена');
+        set('#workTitle', 'Работа не найдена');
         const details = root.querySelector('.work-details');
         const description = root.querySelector('#workDescription');
         const related = root.querySelector('#workRelated');
         const prevLink = root.querySelector('#workPrev');
         const nextLink = root.querySelector('#workNext');
-
-        if (heroCategory) heroCategory.textContent = 'Коллекция';
-        if (heroTitle) heroTitle.textContent = 'Работа не найдена';
-        if (heroMeta) heroMeta.textContent = 'Маршрут существует, но запись каталога не была найдена.';
-        if (breadcrumbTitle) breadcrumbTitle.textContent = 'Работа не найдена';
-        if (workTitle) workTitle.textContent = 'Работа не найдена';
-        if (details) {
-            details.innerHTML = `
-                <dt>Slug</dt>
-                <dd>${safeSlug}</dd>
-                <dt>Статус</dt>
-                <dd>Маршрут требует сверки</dd>
-            `;
-        }
-        if (description) {
-            description.innerHTML = '<p>Для этого маршрута пока не удалось найти карточку в JSON runtime. Проверьте slug или откройте полный каталог работ.</p>';
-        }
+        if (details) details.innerHTML = `<dt>Slug</dt><dd>${safeSlug}</dd><dt>Статус</dt><dd>Маршрут требует сверки</dd>`;
+        if (description) description.innerHTML = '<p>Для этого маршрута пока не удалось найти карточку в JSON runtime. Проверьте slug или откройте полный каталог работ.</p>';
         renderDetailImage(root.querySelector('.work-single-image'), { missingImage: true, category: 'graphics', title: 'Работа не найдена' });
         if (related) related.innerHTML = '';
         if (prevLink) prevLink.style.visibility = 'hidden';
@@ -479,26 +347,16 @@
         loadWorksRuntime().then(() => {
             if (isWorksIndex) {
                 const root = document.getElementById('page-works');
-                if (!root && attemptsLeft > 0) {
-                    setTimeout(() => syncCurrentRoute(attemptsLeft - 1), 60);
-                    return;
-                }
+                if (!root && attemptsLeft > 0) return setTimeout(() => syncCurrentRoute(attemptsLeft - 1), 60);
                 renderWorksIndex(root);
                 return;
             }
-
             if (slug) {
                 const root = document.getElementById('page-work-single');
-                if (!root && attemptsLeft > 0) {
-                    setTimeout(() => syncCurrentRoute(attemptsLeft - 1), 60);
-                    return;
-                }
+                if (!root && attemptsLeft > 0) return setTimeout(() => syncCurrentRoute(attemptsLeft - 1), 60);
                 const work = getWorkBySlug(slug);
-                if (work) {
-                    renderWorkSingle(root, work);
-                } else {
-                    renderMissingWork(root, slug);
-                }
+                if (work) renderWorkSingle(root, work);
+                else renderMissingWork(root, slug);
             }
         });
     }
