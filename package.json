@@ -1,0 +1,10 @@
+{
+  "name": "alovchinnikov-memorial",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:content": "node 09_SOURCE_JSON/build_master.mjs",
+    "validate:content": "node scripts/validate-content.mjs",
+    "check": "npm run build:content && npm run validate:content"
+  }
+}
