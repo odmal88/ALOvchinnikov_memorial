@@ -1,5 +1,5 @@
 (function bootstrapApp() {
-    const BUILD_ID = '2026-04-22-metrika-spa-v1';
+    const BUILD_ID = '2026-05-01-json-first-works-model-v1';
 
     function withBuildId(path) {
         const separator = path.includes('?') ? '&' : '?';
@@ -76,6 +76,7 @@
         })
         .then(() => loadScript('home-selected-works-sync.js'))
         .then(() => loadScript('artist-route-map.js'))
+        .then(() => loadScript('works-model.js'))
         .then(() => loadScript('app.js'))
         .then(() => loadScript('works-runtime.js'))
         .catch((error) => {
