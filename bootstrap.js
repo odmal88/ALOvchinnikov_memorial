@@ -1,5 +1,5 @@
 (function bootstrapApp() {
-    const BUILD_ID = '2026-05-01-json-first-works-model-v1';
+    const BUILD_ID = '2026-05-02-works-category-fallback-v1';
 
     function withBuildId(path) {
         const separator = path.includes('?') ? '&' : '?';
