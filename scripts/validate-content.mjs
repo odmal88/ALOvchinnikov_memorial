@@ -28,6 +28,7 @@ const runtimeFiles = [
   'content-sync.js',
   'home-selected-works-sync.js',
   'artist-route-map.js',
+  'works-model.js',
   'app.js',
   'works-runtime.js'
 ];
