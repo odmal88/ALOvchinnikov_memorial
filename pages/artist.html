@@ -1,5 +1,99 @@
 <div class="page" id="page-artist">
 
+    <style>
+        #page-artist .artist-continuity-card {
+            margin-top: 34px;
+            display: grid;
+            grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
+            gap: 28px;
+            align-items: stretch;
+            padding: 22px;
+            border: 1px solid rgba(18, 28, 57, 0.14);
+            background: rgba(255, 255, 255, 0.58);
+        }
+
+        #page-artist .artist-continuity-card figure {
+            margin: 0;
+        }
+
+        #page-artist .artist-continuity-card img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            border: 1px solid rgba(18, 28, 57, 0.12);
+            background: #f4efe8;
+        }
+
+        #page-artist .artist-continuity-card figcaption {
+            margin-top: 10px;
+            font-family: var(--sans);
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        #page-artist .artist-continuity-card__body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        #page-artist .artist-continuity-card__label {
+            font-family: var(--sans);
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gold-muted);
+            margin-bottom: 10px;
+        }
+
+        #page-artist .artist-continuity-card h3 {
+            font-family: var(--serif);
+            font-size: clamp(22px, 2.4vw, 30px);
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--deep-blue);
+            margin-bottom: 14px;
+        }
+
+        #page-artist .artist-continuity-card p {
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 820px) {
+            #page-artist .artist-dossier-layout {
+                display: block !important;
+            }
+
+            #page-artist .artist-toc {
+                display: none !important;
+            }
+
+            #page-artist .artist-continuity-card {
+                grid-template-columns: 1fr !important;
+                gap: 18px !important;
+                padding: 18px !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                width: 100% !important;
+                overflow: hidden;
+            }
+
+            #page-artist .artist-continuity-card h3 {
+                font-size: 25px !important;
+                line-height: 1.18 !important;
+            }
+
+            #page-artist .artist-continuity-card p {
+                font-size: 15px !important;
+                line-height: 1.65 !important;
+            }
+        }
+    </style>
+
     <div class="page-hero">
         <div class="hero-texture"></div>
         <div class="container">
@@ -56,28 +150,28 @@
                 </div>
 
                 <div class="artist-family-body" style="margin-top: 28px;">
-                    <p class="dark"></p>
-                    <p class="dark"></p>
-                    <p class="dark"></p>
+                    <p class="dark">Александр Овчинников родился 26 апреля 1956 года в Ленинграде в семье художника. Факт рождения в Ленинграде важен не только биографически: это город академической школы, строгой профессиональной культуры и высокой требовательности к живописи.</p>
+                    <p class="dark">Семейная линия в его судьбе имеет принципиальное значение. Отец, Лев Авксентьевич Овчинников, был живописцем, и именно через эту фигуру Александр с детства вошёл в мир художественного труда, в атмосферу мастерской и в ощущение того, что художник живёт внутри культурной преемственности. Уже в три года Александр проявлял живой интерес к рисованию. В 1959 году Лев Авксентьевич запечатлел сына за этим занятием: ребёнок склонился над листом не для позы, а в настоящей сосредоточенности, погружённый в первый опыт линии, бумаги и возникающего образа.</p>
+                    <p class="dark">Этот ранний рисунок важен не только как трогательное семейное свидетельство. В нём Лев Авксентьевич смотрит на сына и как отец, и как художник — внимательно, бережно, с пониманием значения простого жеста. Так в биографии Александра Львовича почти документально обозначается начало будущей художественной судьбы: дом, мастерская, рука, бумага, уважение к натуре и естественное вхождение ребёнка в пространство художественного труда.</p>
                 </div>
 
-                <article class="artist-continuity-card" style="margin-top: 34px; display: grid; grid-template-columns: minmax(180px, 260px) minmax(0, 1fr); gap: 28px; align-items: stretch; padding: 22px; border: 1px solid rgba(18, 28, 57, 0.14); background: rgba(255, 255, 255, 0.58);">
-                    <figure style="margin: 0;">
+                <article class="artist-continuity-card">
+                    <figure>
                         <img
-                            src="assets/portraits/lev-ovchinnikov-workshop.svg"
-                            alt="Лев Авксентьевич Овчинников в мастерской"
+                            src="assets/portraits/aleksandr-za-risovaniem-1959-lev-ovchinnikov.svg"
+                            alt="Рисунок Льва Авксентьевича Овчинникова 1959 года: маленький Александр Овчинников за рисованием"
                             loading="lazy"
                             decoding="async"
-                            style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; border: 1px solid rgba(18, 28, 57, 0.12);"
                         >
-                        <figcaption style="margin-top: 10px; font-family: var(--sans); font-size: 12px; line-height: 1.5; color: var(--text-muted);">
-                            Лев Авксентьевич Овчинников в мастерской. Семейный архив.
+                        <figcaption>
+                            Лев Авксентьевич Овчинников. Александр за рисованием. 1959. Семейный архив. Название условное.
                         </figcaption>
                     </figure>
-                    <div style="display: flex; flex-direction: column; justify-content: center;">
-                        <div style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-muted); margin-bottom: 10px;">семейная художественная линия</div>
-                        <h3 style="font-family: var(--serif); font-size: clamp(22px, 2.4vw, 30px); font-weight: 400; line-height: 1.2; color: var(--deep-blue); margin-bottom: 14px;">Отец художника: Лев Авксентьевич Овчинников</h3>
-                        <p class="dark" style="margin-bottom: 16px;">Лев Авксентьевич Овчинников был для Александра Львовича не только отцом, но и частью той художественной среды, в которой с детства формировались уважение к натуре, мастерской, предмету и повседневному труду художника. Эта связь важна не как биографическая подробность, а как линия профессиональной и человеческой преемственности.</p>
+                    <div class="artist-continuity-card__body">
+                        <div class="artist-continuity-card__label">первый опыт линии</div>
+                        <h3>Александр за рисованием. Рисунок Льва Овчинникова, 1959</h3>
+                        <p class="dark">В этом листе Лев Авксентьевич запечатлел сына не в постановочной позе, а в моменте настоящего детского сосредоточения. Александр склонён над листом, и его движение руки уже связано с главным пространством будущей жизни — бумагой, линией, вниманием к возникающему образу.</p>
+                        <p class="dark">Для истории семьи Овчинниковых этот рисунок важен как ранний знак художественной преемственности: отец-художник видит в простом детском занятии начало самостоятельного взгляда, который позднее станет частью судьбы Александра Львовича.</p>
                         <a href="https://ovchinnikov-la.art" target="_blank" rel="noopener" class="btn btn-light" style="align-self: flex-start;">Открыть архив Льва Овчинникова</a>
                     </div>
                 </article>
