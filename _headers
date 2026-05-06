@@ -1,0 +1,8 @@
+/09_SOURCE_JSON/pages/about.json
+  Cache-Control: no-store
+
+/content-sync.js
+  Cache-Control: no-store
+
+/pages/artist.html
+  Cache-Control: no-store
