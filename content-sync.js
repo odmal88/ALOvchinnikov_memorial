@@ -98,8 +98,6 @@
     setVisitDetailValue('Место', [venueName, address, city].filter(Boolean).join('\n'), { preserveExtraLines: true });
     setVisitDetailValue('Часы работы', [hours, closedDay].filter(Boolean).join('\n'), { preserveExtraLines: true });
     setVisitDetailValue('Условия посещения', admission, { preserveExtraLines: true });
-
-    setHTML('#siteFooter .footer-brand p', [dates, `${venueName}, ${city}`].filter(Boolean).join('<br>'));
   }
 
   function syncHome(home) {
