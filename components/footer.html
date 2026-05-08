@@ -1,15 +1,20 @@
 <footer class="footer" id="siteFooter" style="position:relative;z-index:1;background:#121C39;color:#D4D4D4;padding:0;">
 <style>
 #siteFooter, #siteFooter * { box-sizing: border-box; }
-#siteFooter .footer-inner { max-width: 1240px !important; margin: 0 auto !important; padding: 56px 48px 34px !important; }
-#siteFooter .footer-top { display: grid !important; grid-template-columns: minmax(320px, 1.35fr) minmax(170px, .55fr) minmax(260px, .8fr) !important; gap: 64px !important; align-items: start !important; padding: 0 0 42px !important; border-top: 0 !important; }
+#siteFooter .footer-inner { max-width: 1180px !important; margin: 0 auto !important; padding: 52px 48px 32px !important; }
+#siteFooter .footer-top { display: grid !important; grid-template-columns: minmax(360px, 1.4fr) minmax(200px, .65fr) minmax(240px, .75fr) !important; gap: 58px !important; align-items: start !important; padding: 0 0 36px !important; }
 #siteFooter .footer-brand h3 { font-family: var(--serif); font-size: 25px !important; line-height: 1.18 !important; font-weight: 400 !important; color: #F1EDE8 !important; margin: 0 0 9px !important; }
 #siteFooter .footer-brand-sub { font-family: var(--sans); font-size: 11px !important; line-height: 1.4 !important; letter-spacing: .18em !important; text-transform: uppercase !important; color: #C69653 !important; margin: 0 0 24px !important; }
-#siteFooter .footer-brand p { max-width: 500px !important; margin: 0 !important; font-family: var(--sans); font-size: 14px !important; line-height: 1.72 !important; font-weight: 300 !important; color: rgba(212,212,212,.68) !important; opacity: 1 !important; }
-#siteFooter .footer-nav { display: grid !important; gap: 12px !important; align-content: start !important; margin: 0 !important; }
+#siteFooter .footer-brand p { max-width: 490px !important; margin: 0 !important; font-family: var(--sans); font-size: 14px !important; line-height: 1.72 !important; font-weight: 300 !important; color: rgba(212,212,212,.68) !important; opacity: 1 !important; }
+#siteFooter .footer-group-title { display: block !important; margin: 0 0 16px !important; font-family: var(--sans); font-size: 10px !important; line-height: 1.4 !important; letter-spacing: .16em !important; text-transform: uppercase !important; color: rgba(198,150,83,.82) !important; }
+#siteFooter .footer-nav { display: grid !important; gap: 10px !important; align-content: start !important; margin: 0 !important; }
 #siteFooter .footer-nav a { display: block !important; margin: 0 !important; padding: 0 !important; font-family: var(--sans); font-size: 14px !important; line-height: 1.45 !important; color: rgba(212,212,212,.58) !important; text-decoration: none !important; opacity: 1 !important; transition: color .2s ease !important; }
 #siteFooter .footer-nav a:hover { color: #C69653 !important; }
-#siteFooter .footer-bottom { display: flex !important; justify-content: space-between !important; align-items: center !important; gap: 28px !important; padding: 28px 0 0 !important; margin: 0 !important; border-top: 1px solid rgba(255,255,255,.10) !important; }
+#siteFooter .footer-index { border-top: 1px solid rgba(255,255,255,.10) !important; padding: 22px 0 !important; display: flex !important; flex-wrap: wrap !important; gap: 10px 18px !important; align-items: center !important; }
+#siteFooter .footer-index span { font-family: var(--sans); font-size: 10px !important; line-height: 1.4 !important; letter-spacing: .14em !important; text-transform: uppercase !important; color: rgba(198,150,83,.70) !important; margin-right: 4px !important; }
+#siteFooter .footer-index a { font-family: var(--sans); font-size: 12px !important; line-height: 1.4 !important; color: rgba(212,212,212,.42) !important; text-decoration: none !important; }
+#siteFooter .footer-index a:hover { color: #C69653 !important; }
+#siteFooter .footer-bottom { display: flex !important; justify-content: space-between !important; align-items: center !important; gap: 28px !important; padding: 24px 0 0 !important; margin: 0 !important; border-top: 1px solid rgba(255,255,255,.10) !important; }
 #siteFooter .footer-copy { margin: 0 !important; font-family: var(--sans); font-size: 12px !important; line-height: 1.5 !important; color: rgba(212,212,212,.42) !important; }
 #siteFooter .footer-backtop { font-family: var(--sans); font-size: 12px !important; line-height: 1 !important; color: rgba(212,212,212,.56) !important; text-decoration: none !important; border: 1px solid rgba(212,212,212,.22) !important; padding: 8px 12px !important; }
 #siteFooter .footer-backtop:hover { color: #C69653 !important; border-color: rgba(198,150,83,.55) !important; }
@@ -22,6 +27,8 @@
 <div class="footer-brand-sub">Официальный цифровой архив художника</div>
 <p>Живопись, графика, линогравюра, маршруты и материалы наследия. Сайт собирает произведения, биографию, тексты, выставочные сведения и свидетельства памяти.</p>
 </div>
+<div>
+<span class="footer-group-title">Разделы архива</span>
 <nav class="footer-nav" aria-label="Разделы архива">
 <a href="#/artist" data-route="/artist">О художнике</a>
 <a href="#/works" data-route="/works">Работы</a>
@@ -31,13 +38,21 @@
 <a href="#/exhibition" data-route="/exhibition">Выставки</a>
 <a href="#/contacts" data-route="/contacts">Книга памяти</a>
 </nav>
-<nav class="footer-nav" aria-label="Связанные страницы">
-<a href="https://ovchinnikov-la.art/">Сайт Льва Авксентьевича Овчинникова</a>
-<a href="/aleksandr-lvovich-ovchinnikov.html">Страница Александра Львовича Овчинникова</a>
-<a href="/kartiny-aleksandra-ovchinnikova.html">Картины Александра Овчинникова</a>
+</div>
+<div>
+<span class="footer-group-title">Связанные архивы</span>
+<nav class="footer-nav" aria-label="Связанные архивы">
+<a href="https://ovchinnikov-la.art/">Лев Авксентьевич Овчинников</a>
 <a href="/lev-i-aleksandr-ovchinnikovy.html">Семейная художественная линия</a>
 </nav>
 </div>
+</div>
+<nav class="footer-index" aria-label="Индексные страницы">
+<span>Индексные страницы</span>
+<a href="/aleksandr-lvovich-ovchinnikov.html">Александр Львович Овчинников</a>
+<a href="/kartiny-aleksandra-ovchinnikova.html">Картины Александра Овчинникова</a>
+<a href="/grafika-linogravyura-aleksandr-ovchinnikov.html">Графика и линогравюра</a>
+</nav>
 <div class="footer-bottom">
 <div class="footer-copy">© 2026 Наследники А.Л. Овчинникова. Все права на изображения принадлежат правообладателям.</div>
 <a href="#" class="footer-backtop">Наверх</a>
