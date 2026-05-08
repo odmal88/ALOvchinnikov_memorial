@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="styles.css?v=2026-04-18-home-hero-v3">
     <link rel="stylesheet" href="artist-route-map-fix.css?v=2026-04-18-home-hero-v3">
     <link rel="stylesheet" href="works-runtime.css?v=2026-04-18-home-hero-v3">
+    <link rel="stylesheet" href="home-layout-polish.css?v=2026-05-08-home-polish-v1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
@@ -74,25 +75,5 @@
     <script src="bootstrap.js?v=2026-04-22-metrika-spa-v1"></script>
     <script src="work-author-overrides.js?v=2026-04-19-lev-author-fix"></script>
     <script src="site-identity-overrides.js?v=2026-05-06-footer-identity-v2"></script>
-    <script>
-    (function(){
-      var archiveText='Живопись, графика, линогравюра, маршруты и материалы наследия. Сайт собирает произведения, биографию, тексты, выставочные сведения и свидетельства памяти.';
-      function fixFooter(){
-        var footer=document.getElementById('siteFooter');
-        if(!footer)return;
-        var h=footer.querySelector('.footer-brand h3');
-        var sub=footer.querySelector('.footer-brand-sub');
-        var p=footer.querySelector('.footer-brand p');
-        if(h)h.textContent='Александр Львович Овчинников';
-        if(sub)sub.textContent='Официальный цифровой архив художника';
-        if(p)p.textContent=archiveText;
-      }
-      fixFooter();
-      document.addEventListener('DOMContentLoaded',fixFooter);
-      window.addEventListener('load',fixFooter);
-      window.addEventListener('hashchange',fixFooter);
-      setInterval(fixFooter,200);
-    })();
-    </script>
 </body>
 </html>
