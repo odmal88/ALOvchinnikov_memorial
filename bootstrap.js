@@ -1,5 +1,5 @@
 (function bootstrapApp() {
-    const BUILD_ID = '2026-05-02-works-category-fallback-v1';
+    const BUILD_ID = '2026-05-16-museum-collections-v1';
 
     function withBuildId(path) {
         const separator = path.includes('?') ? '&' : '?';
@@ -74,6 +74,7 @@
             }
             return null;
         })
+        .then(() => loadScript('museum-collections-sync.js'))
         .then(() => loadScript('home-selected-works-sync.js'))
         .then(() => loadScript('artist-route-map.js'))
         .then(() => loadScript('works-model.js'))
